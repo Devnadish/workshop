@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     // <main>
-    <main className="flex  flex-col  gap-6 items-center justify-center p-4   w-full   ">
+    <main className="flex  flex-col  gap-6 items-center justify-center px-4 py-3   w-full   ">
       <Register />
       <About />
       <Comment />
@@ -74,9 +74,12 @@ const Comment = () => {
 const SuperVision = () => {
   return (
     <>
-      <div className="flex flex-col gap-2 items-center justify-center bg-yellow-300 text-2xl px-4 py-1 rounded-md  border-4 border-dashed border-blue-400 shadow-lg lg:flex-row">
-        <p>تحت اشراف المهندس</p>
-        <p className="text-4xl font-bold">معاذ الشريف</p>
+      <div className="flex flex-col gap-1 items-center justify-center bg-yellow-300 text-2xl px-4 py-1 rounded-md  border-4 border-dashed border-blue-400 shadow-lg lg:flex-row w-[80%]">
+        <p className="text-xl text-foreground font-bold   ">
+          الصحفي لصيانة السيارات
+        </p>
+        <p className="text-lg">تحت اشراف المهندس</p>
+        <p className="text-xl font-bold">معاذ الشريف</p>
         <p>جوال : 0509723508</p>
       </div>
     </>

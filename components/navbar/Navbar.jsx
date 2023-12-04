@@ -15,9 +15,9 @@ function Navbar() {
           <BellRing className="text-white" />
         </div>
       </div>
-      <p className="text-xl text-primary-foreground font-bold  py-1 border-red-500 ">
+      {/* <p className="text-xl text-primary-foreground font-bold  py-1 border-red-500 ">
         الصحفي لصيانة السيارات
-      </p>
+      </p> */}
       <Link href={"/"}>
         <Home size={34} className="text-green-600" />
       </Link>
