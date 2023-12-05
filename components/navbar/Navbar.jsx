@@ -1,4 +1,4 @@
-import { Menu, BellRing, Home } from "lucide-react";
+import { Menu, BellRing, Home, Skull } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import BuregerMenu from "./BurgerMenu";
@@ -18,9 +18,17 @@ function Navbar() {
       {/* <p className="text-xl text-primary-foreground font-bold  py-1 border-red-500 ">
         الصحفي لصيانة السيارات
       </p> */}
-      <Link href={"/"}>
-        <Home size={34} className="text-white" />
-      </Link>
+      <div className="flex gap-2 items-center">
+        <Link href={"/"}>
+          <Home size={34} className="text-white" />
+        </Link>
+        <Link
+          href={"/dashboard"}
+          className="border-2 rounded-sm px-2 bg-blue-400 py-1 "
+        >
+          <Skull size={34} className="text-white" />
+        </Link>
+      </div>
     </header>
   );
 }
