@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
@@ -26,7 +27,10 @@ export default function RootLayout({ children }) {
         <div className="relative flex flex-col min-h-screen w-full">
           <Navbar />
 
-          <main className="flex-grow bg-zinc-800 w-full ">{children}</main>
+          <main className="flex-grow bg-zinc-800 w-full ">
+            {children}
+            <Analytics />
+          </main>
 
           <Footer />
         </div>

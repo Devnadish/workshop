@@ -19,7 +19,7 @@ function Navbar() {
         الصحفي لصيانة السيارات
       </p> */}
       <Link href={"/"}>
-        <Home size={34} className="text-green-600" />
+        <Home size={34} className="text-white" />
       </Link>
     </header>
   );
