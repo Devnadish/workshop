@@ -9,6 +9,7 @@ import {
   Image,
   MapPin,
   MessageCircle,
+  PlusCircle,
   ScrollText,
   ShoppingCart,
   Smile,
@@ -42,7 +43,7 @@ const Maintinance = () => {
           <div className="flex flex-col w-1/3">
             <p>جديد</p>
             <Link
-              href={"/register"}
+              href={"/dashboard/carcard/neworder"}
               className="bg-green-500 flex-col  gap-1  h-14 rounded-md flex items-center justify-center text-white/80 "
             >
               <FilePlus size={35} />
@@ -52,22 +53,30 @@ const Maintinance = () => {
           <div className="flex flex-col w-1/3">
             <p>تعديل</p>
             <Link
-              href={"/register"}
+              href={"/dashboard/carcard/updateorder"}
               className="bg-green-500  flex-col gap-1   h-14 rounded-md flex items-center justify-center text-white/80 "
             >
               <FileEdit size={35} />
             </Link>
           </div>
-
           <div className="flex flex-col w-1/3">
-            <p>اقفال</p>
+            <p>اضافة</p>
             <Link
-              href={"/register"}
-              className="bg-green-500  flex-col gap-1  h-14 rounded-md flex items-center justify-center text-white/80 "
+              href={"/dashboard/carcard/addservice"}
+              className="bg-green-500  flex-col gap-1   h-14 rounded-md flex items-center justify-center text-white/80 "
             >
-              <FileCheck size={35} />
+              <PlusCircle size={35} />
             </Link>
           </div>
+        </div>
+        <div className="flex flex-col w-full p-4">
+          <p>اقفال</p>
+          <Link
+            href={"/dashboard/carcard/closeorder"}
+            className="bg-purple-500  flex-col gap-1  h-14 rounded-md flex items-center justify-center text-white/80 "
+          >
+            <FileCheck size={35} />
+          </Link>
         </div>
       </div>
     </>
@@ -88,7 +97,7 @@ const Finince = () => {
             <div className="flex flex-col w-1/2">
               <p>قبض</p>
               <Link
-                href={"/register"}
+                href={"/dashboard/finince/reciet"}
                 className="bg-blue-500 flex-col  gap-1  h-14 rounded-md flex items-center justify-center text-white/80 "
               >
                 <Smile size={35} />
@@ -98,7 +107,7 @@ const Finince = () => {
             <div className="flex flex-col w-1/2">
               <p>صرف</p>
               <Link
-                href={"/register"}
+                href={"/dashboard/finince/payment"}
                 className="bg-red-500  flex-col gap-1   h-14 rounded-md flex items-center justify-center text-white/80 "
               >
                 <Frown size={35} />
@@ -107,14 +116,14 @@ const Finince = () => {
           </div>
           <div className="flex    w-full gap-4 items-center ">
             <Link
-              href={"/register"}
+              href={"/dashboard/finince/invoice"}
               className="bg-blue-500  gap-3 w-full  h-14 rounded-md flex items-center justify-center text-white/80 font-semibold text-xl"
             >
               <p>فاتورة</p>
               <ScrollText size={35} />
             </Link>
             <Link
-              href={"/register"}
+              href={"/dashboard/finince/purchase"}
               className="bg-red-500 w-full  gap-4  h-14 rounded-md flex items-center justify-center text-white/80  font-semibold text-xl"
             >
               <p>مشتريات</p>

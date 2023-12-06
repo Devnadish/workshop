@@ -1,0 +1,38 @@
+{
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+    "editor.codeActionsOnSave": {
+        "*": true,
+        "source.fixAll.eslint": false,
+        "ConsoleNinja.actionName": false,
+        "TailwindCSS.sortClassNames": false,
+        "TailwindCSS.formatOnSave": false
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        ".vercel": true,
+        "node_modules": false,
+        ".husky": false,
+        ".idea": true,
+        ".vscode": false,
+        ".gitignore": true,
+        ".prettierignore": true
+    },
+    "explorerExclude.backup": {},
+    "autoimport.doubleQuotes": true,
+    "autoimport.filesToScan": "**/*.{ts,tsx,js,jsx}",
+    "emmet.includeLanguages": {
+        "\"javascript\"": "\"javascriptreact\""
+    },
+    "emmet.preferences": {},
+    "javascript.updateImportsOnFileMove.enabled": "always",
+
+    "css.lint.unknownAtRules": "ignore"
+}

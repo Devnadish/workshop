@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
         <div className="relative flex flex-col min-h-screen w-full">
           <Navbar />
 
-          <main className="flex-grow bg-zinc-800 w-full ">
+          <main className="flex-grow bg-zinc-800 w-full text-white">
             {children}
             <Analytics />
           </main>
