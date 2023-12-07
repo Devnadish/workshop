@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String?
+  mobile     String   @unique
+  email     String?
+  password    String?
+  cars        Json[]
+  balance     Int @default(0)
+  createdDate DateTime @default(now())
+  updatedDate DateTime @updatedAt
+}
+
+model Iplog {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  ip       String @default("")
+  counter  Int    @default(0)
+  city     String @default("")
+  region   String @default("")
+  country  String @default("")
+  loc      String @default("")
+  org      String @default("")
+  timezone String @default("")
+   createdDate DateTime @default(now())
+  updatedDate DateTime @updatedAt
+}

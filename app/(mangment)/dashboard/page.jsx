@@ -1,6 +1,7 @@
 import {
   BadgeDollarSign,
   Car,
+  CarFront,
   CarFrontIcon,
   FileCheck,
   FileEdit,
@@ -9,20 +10,28 @@ import {
   Image,
   MapPin,
   MessageCircle,
+  PersonStanding,
   PlusCircle,
+  PlusCircleIcon,
+  Receipt,
   ScrollText,
   ShoppingCart,
   Smile,
   UserPlus,
+  UserRoundPlus,
+  Users,
+  UsersRound,
   Wrench,
 } from "lucide-react";
 import Link from "next/link";
 import { DashBoardMenu } from "@/constant/menu";
+import { PersonIcon } from "@radix-ui/react-icons";
 
 export default function Home() {
   return (
     // <main>
     <main className="flex  flex-wrap  gap-6 items-center justify-center p-4   w-full   ">
+      <Clients/>
       <Maintinance />
       <Finince />
     </main>
@@ -82,6 +91,10 @@ const Maintinance = () => {
     </>
   );
 };
+
+
+
+
 const Finince = () => {
   return (
     <>
@@ -135,6 +148,65 @@ const Finince = () => {
     </>
   );
 };
+
+const Clients = () => {
+  return (
+    <>
+      <div className="w-[70%] border border-blue-300 rounded-md flex  flex-col items-center text-white">
+        <div className="flex items-center justify-around w-full bg-blue-800">
+          <p className=" text-xl  font-bold flex items-center justify-center py-2 rounded-md">
+            العملاء
+          </p>
+          <UsersRound size={36} strokeWidth={1.75} />
+        </div>
+        <div className="w-full flex items-center gap-4 p-2">
+          <div className="flex flex-col w-1/3">
+            <p>جديد</p>
+            <Link
+              href={"/dashboard/clients/register"}
+              className="bg-blue-500   gap-3  h-14 rounded-md flex items-center justify-center text-white/80  text-xl font-semibold"
+            >
+              <UserRoundPlus size={36} strokeWidth={1.75} />
+              {/* <UserPlus size={35} /> */}
+            </Link>
+          </div>
+
+          <div className="flex flex-col w-1/3">
+            <p>عرض</p>
+            <Link
+              href={"/dashboard/clients/display"}
+              className="bg-blue-500  gap-3 text-xl font-semibold   h-14 rounded-md flex items-center justify-center text-white/80 "
+            >
+              <UsersRound size={36} strokeWidth={1.75} />
+            </Link>
+          </div>
+          <div className="flex flex-col w-1/3">
+            <p>اضافة سيارة</p>
+            <Link
+              href={"/dashboard/carcard/addservice"}
+              className="bg-blue-500   gap-3   h-14 rounded-md flex items-center justify-center text-white/80 "
+            >
+              <CarFront size={36} strokeWidth={1.75} />
+            </Link>
+          </div>
+        </div>
+        <div className="flex flex-col w-full p-4">
+          <Link
+            href={"/dashboard/carcard/closeorder"}
+            className="bg-blue-700   gap-4  font-semibold h-14 rounded-md flex items-center justify-center text-white/80 "
+            >
+            {/* <FileCheck size={35} /> */}
+            <p>كشف حساب </p>
+            <Receipt size={36} strokeWidth={1.75} />
+          </Link>
+        </div>
+      </div>
+    </>
+  );
+};
+
+
+
 
 const Invoce = () => {
   return (

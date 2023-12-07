@@ -17,7 +17,7 @@ const Register = () => {
   return (
     <>
       <Link
-        href={"/register"}
+        href={"/signup"}
         className="bg-orange-400  gap-4 w-10/12 h-16 rounded-md flex items-center justify-center text-white/80 min-w-sm"
       >
         تسجيل
