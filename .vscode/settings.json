@@ -8,11 +8,11 @@
 
 
     "editor.codeActionsOnSave": {
-        "*": true,
-        "source.fixAll.eslint": false,
-        "ConsoleNinja.actionName": false,
-        "TailwindCSS.sortClassNames": false,
-        "TailwindCSS.formatOnSave": false
+        "*": "explicit",
+        "source.fixAll.eslint": "never",
+        "ConsoleNinja.actionName": "never",
+        "TailwindCSS.sortClassNames": "never",
+        "TailwindCSS.formatOnSave": "never"
     },
     "files.exclude": {
         "**/.git": true,

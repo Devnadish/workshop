@@ -9,7 +9,6 @@ export async function addClient(client) {
     data: client
   });
   revalidatePath("/dashboard/clients/display");
-  // revalidatePath("/blog");
   return result;
 }
 
@@ -51,4 +50,33 @@ export async function checkClientExists(phone) {
   if (existingClient) {
      return existingClient.name;
   }
+}
+
+
+// Show all clients in the database where the user balance =0
+export async function getZeroBalance() {
+  const result = await db.client.findMany({where: {balance:0}});
+  return result;
+}
+
+export async function getClientsWithPositiveBalance() {
+  const result = await db.client.findMany({
+    where: {
+      balance: {
+        gt: 0,
+      },
+    },
+  });
+  return result;
+}
+
+export async function getClientsWithgetNegativeBalance() {
+  const result = await db.client.findMany({
+    where: {
+      balance: {
+        lt: 0,
+      },
+    },
+  });
+  return result;
 }
