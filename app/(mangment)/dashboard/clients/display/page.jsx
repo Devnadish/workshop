@@ -4,6 +4,8 @@ import { getTimeElapsed } from "@/lib/timeanddate";
 import { Phone } from "lucide-react";
 import React from "react";
 
+export const dynamic = "force-dynamic";
+
 
 const ClientList = async({ clients1, onEdit, onDelete }) => {
 const clients = await getAllClients();
