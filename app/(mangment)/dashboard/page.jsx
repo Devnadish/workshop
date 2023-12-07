@@ -175,7 +175,7 @@ const Clients = () => {
             <p>عرض</p>
             <Link
               href={"/dashboard/clients/display"}
-              prefetch={false}
+              // prefetch={false}
               className="bg-blue-500  gap-3 text-xl font-semibold   h-14 rounded-md flex items-center justify-center text-white/80 "
             >
               <UsersRound size={36} strokeWidth={1.75} />
