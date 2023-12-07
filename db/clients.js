@@ -9,6 +9,7 @@ export async function addClient(client) {
     data: client
   });
   revalidatePath("/dashboard/clients/display");
+  // revalidatePath("/blog");
   return result;
 }
 
