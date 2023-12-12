@@ -1,5 +1,4 @@
 import Filtering from "@/components/pagecomponent/clients/display/Filtering";
-import ShowClientCard from "@/components/pagecomponent/clients/display/ShowClientCard";
 import { getAllClients } from "@/db/clients";
 
 import React from "react";

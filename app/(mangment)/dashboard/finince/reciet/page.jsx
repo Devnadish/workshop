@@ -1,137 +1,230 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+import Submit from "@/components/shared/Submit";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus } from "lucide-react";
-import React, { useState } from "react";
-
+import { saveRecietVoucher } from "@/db/reciet";
+import { toast } from "react-hot-toast";
+import { validateForm } from "@/lib/validation/recipt";
+import { Button } from "@/components/ui/button";
+import ClientsWithOpenFixingOrder from "@/components/shared/ClientsWithOpenFixingOrder";
 const RecietVoucher = () => {
-  const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
-  const [recipient, setRecipient] = useState("");
-  const [sender, setSender] = useState("");
-  const [image, setImage] = useState(null);
+  const [result, setResult] = useState({});
+   const [selectedClientId, setSelectedClientId] = useState("");
+  const [selectedClientName, setSelectedClientName] = useState("");
+  const [selectedFixOrderId, setSelectedFixOrderId] = useState("");
+const handleNewDocument = () =>{ document.getElementById("RecietForm").reset();}
 
-  const handleAmountChange = (event) => {
-    setAmount(event.target.value);
+//   const handleSubmit =async  (data) => {
+//     // Handle form submission here
+//     const detail = data.get("detail");
+//     const fromID =  parseFloat(data.get("fromID"))
+//     const fromName = data.get("fromName");
+//     const amount = parseFloat(data.get("amount"));
+//     const fixingCode = parseInt(data.get("fixingCode"));
+//     const docDate = new Date(data.get("docDate")).toISOString().slice(0, 10);
+//     const RecietData = {
+//       detail,
+//       fromID: parseFloat(selectedClientId),
+//       fromName: selectedClientName,
+//       amount,
+//       fixingCode: parseFloat(selectedFixOrderId),
+//       docDate,
+//     };
+//       const validation = validateForm(RecietData);
+//  if (!validation.isValid) {
+//    toast.error(validation.errorMessage);
+//    return;
+//  }
+
+
+//     const Reciet = await saveRecietVoucher(RecietData);
+
+
+// setResult((prevResult) => ({
+//   ...prevResult,
+//   recietNo: Reciet.recietNo,
+//   client: Reciet.client,
+//   amt: Reciet.total,
+//   fixNo: Reciet.fixNo,
+//   msg: Reciet.msg,
+// }));
+
+//     // setIsSave(true);
+//     // setResult({
+//     //   recietNo: Reciet.recietNo,
+//     //   client: Reciet.client,
+//     //   amt: Reciet.total,
+//     //   fixNo: Reciet.fixNo,
+//     //   amt: Reciet.amt,
+//     //   msg: Reciet.msg,
+//     // });
+//     toast.custom((t) => <AlertStyle result={result} id={t.id} />, {
+//       position: "bottom-center",
+//       duration: Infinity, // To disable auto-close
+//     });
+
+//   };
+
+
+const handleSubmit = async (data) => {
+  // Handle form submission here
+  const detail = data.get("detail");
+  const fromID = parseFloat(data.get("fromID"));
+  const fromName = data.get("fromName");
+  const amount = parseFloat(data.get("amount"));
+  const fixingCode = parseInt(data.get("fixingCode"));
+  const docDate = new Date(data.get("docDate")).toISOString().slice(0, 10);
+  const RecietData = {
+    detail,
+    fromID: parseFloat(selectedClientId),
+    fromName: selectedClientName,
+    amount,
+    fixingCode: parseFloat(selectedFixOrderId),
+    docDate,
   };
 
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
-  };
+  const validation = validateForm(RecietData);
+  if (!validation.isValid) {
+    toast.error(validation.errorMessage);
+    return;
+  }
 
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value);
-  };
+  const Reciet = await saveRecietVoucher(RecietData);
+  console.log(Reciet);
 
-  const handleRecipientChange = (event) => {
-    setRecipient(event.target.value);
-  };
+  setResult({
+    recietNo: Reciet.recietNo,
+    client: Reciet.client,
+    amt: Reciet.total,
+    fixNo: Reciet.fixNo,
+    msg: Reciet.msg,
+  });
 
-  const handleSenderChange = (event) => {
-    setSender(event.target.value);
-  };
-
-  const handleImageChange = (event) => {
-    setImage(event.target.files[0]);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission here
-    console.log("Amount:", amount);
-    console.log("Date:", date);
-    console.log("Description:", description);
-    console.log("Recipient:", recipient);
-    console.log("Sender:", sender);
-    console.log("Image:", image);
-  };
+  toast.custom((t) => <AlertStyle result={Reciet} id={t.id} />, {
+    position: "bottom-center",
+    duration: Infinity, // To disable auto-close
+  });
+};
 
   return (
-    <div className="container flex justify-center items-center flex-col gap-4">
-      <p className="bg-green-500 text-xl py-2 px-6 flex items-center justify-center font-bold mt-4 rounded-lg">
-        سند قبض
-      </p>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto w-full">
-        <div className="flex justify-around items-center">
-          <div className="mb-4">
-            <Label htmlFor="amount" className="block mb-2">
-              المبلغ:
-            </Label>
-            <Input
-              type="number"
-              id="amount"
-              value={amount}
-              onChange={handleAmountChange}
-              className="border border-gray-300 rounded px-4 py-2 w-full"
-            />
-          </div>
-          <div className="mb-4">
-            <Label htmlFor="date" className="block mb-2">
-              التاريخ :
-            </Label>
-            <Input
-              type="date"
-              id="date"
-              value={date}
-              onChange={handleDateChange}
-              className="border border-gray-300 rounded px-4 py-2 w-full"
-            />
-          </div>
-        </div>
+    <form
+      action={handleSubmit}
+      id="RecietForm"
+      className="max-w-md mx-auto w-full flex flex-col items-center "
+    >
+      <div className="bg-blue-500 py-2 w-full flex items-center justify-center rounded-md my-4 shadow-lg font-semibold text-lg">
+        سند قبض{" "}
+      </div>
+      {/* header */}
+      <div className="flex justify-between items-center w-full">
         <div className="mb-4">
-          <Label htmlFor="description" className="block mb-2">
-            الوصف
-          </Label>
-          <Textarea
-            type="text"
-            id="description"
-            value={description}
-            onChange={handleDescriptionChange}
-            className="border border-gray-300 rounded px-4 py-2 w-full"
-            rows={5}
-          />
-        </div>
-        <div className="mb-4">
-          <Label htmlFor="recipient" className="block mb-2">
-            من طرف
-          </Label>
-
-          <div className="flex items-center gap-4 ">
-            <Input
-              type="text"
-              id="recipient"
-              value={recipient}
-              onChange={handleRecipientChange}
-              className="border border-gray-300 rounded px-4 py-2 w-full"
-            />
-            <Plus className="bg-white/10 h-8 w-8 rounded-md" />
-          </div>
-        </div>
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <Label htmlFor="amount" className="block mb-2 w-[200px]">
-            امر اصلاح رقم:
+          <Label htmlFor="amount" className="block mb-2">
+            المبلغ:
           </Label>
           <Input
             type="number"
-            id="amount"
-            value={amount}
-            onChange={handleAmountChange}
-            className="border border-gray-300 rounded px-4 py-2 "
+            name="amount"
+            placeholder="المبلغ المستلم"
+            className="border border-gray-300 rounded px-4 py-2 w-full"
           />
-          <Button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center
-            self-center justify-center"
-          >
-            حفظ السند
-          </Button>
         </div>
-      </form>
-    </div>
+
+        <div className="mb-4">
+          <Label htmlFor="date" className="block mb-2">
+            التاريخ :
+          </Label>
+          <Input
+            type="date"
+            name="docDate"
+            defaultValue={new Date().toISOString().slice(0, 10)}
+            placeholder="تاريخ الاستلام"
+            className="border border-gray-300 rounded px-4 py-2 w-full"
+          />
+        </div>
+      </div>
+
+      {/* client info */}
+      <ClientsWithOpenFixingOrder
+        selectedClientId={selectedClientId}
+        setSelectedClientId={setSelectedClientId}
+        selectedClientName={selectedClientName}
+        setSelectedClientName={setSelectedClientName}
+        selectedFixOrderId={selectedFixOrderId}
+        setSelectedFixOrderId={setSelectedFixOrderId}
+      />
+
+      {/* description */}
+      <div className="mb-4 w-full">
+        <Label htmlFor="description" className="block mb-2">
+          الوصف
+        </Label>
+        <Textarea
+          type="text"
+          name="detail"
+          placeholder="مرجعية المبلغ"
+          className="border border-gray-300 rounded px-4 py-2 w-full resize-none"
+          rows={3}
+        />
+      </div>
+
+      <div className="flex items-center justify-around w-full">
+        <Submit />
+        <Button onClick={handleNewDocument} type="button">
+          سند جديد
+        </Button>
+      </div>
+    </form>
   );
 };
-
 export default RecietVoucher;
+const AlertStyle=({result,id})=>{
+
+  const handleClose = () => {
+    toast.dismiss(id);
+  };
+  return (
+    <>
+      <div
+        className="border w-full rounded-md p-2 bg-gray-200  text-black  text-md font-semibold shadow-lg flex flex-col gap-3 text-right
+            "
+      >
+        <div className="flex items-center justify-between">
+          <p>
+            رقم السند :
+            <span className=" text-black rounded-md px-4 py-1  ">
+              {result.recietNo}
+            </span>
+          </p>
+          <p className="bg-blue-400 rounded-md py-1 px-3 border border-white text-white">
+            المبلغ المستلم :
+            <span >
+              {result.amt}
+            </span>
+          </p>
+        </div>
+
+        <p >
+          اسم العميل :
+          <span className="bg-white text-black rounded-md px-4 py-1  ">
+            {result.client}
+          </span>
+        </p>
+        <p>
+          رقم الاصلاح :
+          <span className="bg-green-600 text-white rounded-md px-4 py-1  ">
+            {result.fixNo}
+          </span>
+        </p>
+
+        <button
+          onClick={handleClose}
+          className="w-fit  border   rounded-lg p-2  flex items-center justify-center text-sm font-medium text-white self-end bg-red-600 shadow-lg"
+        >
+          Close
+        </button>
+      </div>
+      ;
+    </>
+  );}

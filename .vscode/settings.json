@@ -4,6 +4,7 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": false,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSaveTimeout": 500,
 
 
 

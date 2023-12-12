@@ -17,8 +17,7 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Perform sign-in logic here with name and mobile
-    console.log("Name:", name);
-    console.log("Mobile:", mobile);
+
   };
 
   return (

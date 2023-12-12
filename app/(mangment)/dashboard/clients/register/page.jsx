@@ -1,294 +1,93 @@
-"use client"
-
+"use client";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send } from "lucide-react";
-import { addClient, checkClientExists } from "@/db/clients";
-import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
+import { addClient } from "@/db/clients";
+import { validateForm } from "@/lib/validation/clients";
+import { toast } from 'react-hot-toast';
+import Submit from "@/components/shared/Submit";
+
+
 
 function RegisterPage() {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [CID, SETCID] = useState("");
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+  const handleNewClient = () => {
+    document.getElementById("newClientForm").reset();
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-
-    const { name, mobile, email, cartype, year, color, carSignno, bodyno } =
-      formData;
-
-    if (!name) {
-      toast({
-        variant: "destructive",
-        title: "لا يمكن حفظ عميل بدون اسم",
-        action: <ToastAction altText="Try again">اعد المحاولة</ToastAction>,
-      });
-      setIsLoading(false);
-      return false;
-    }
-
-    if (!mobile) {
-      toast({
-        variant: "destructive",
-        title: "لا يمكن حفظ عميل بدون رقم جوال",
-        action: <ToastAction altText="Try again">اعد المحاولة</ToastAction>,
-      });
-      setIsLoading(false);
-      return false;
-    }
+  const handleSubmit = async (data) => {
+    const name = data.get("name");
+    const mobile = data.get("mobile");
+    const email = data.get("email");
 
     const newClient = {
       name,
       mobile,
       email,
-      cars: [
-        {
-          cartype,
-          year,
-          color,
-          carSignno,
-          bodyno,
-        },
-      ],
     };
-
-    const check = await checkClientExists(mobile);
-    if (check) {
+    const validation = validateForm(newClient);
+    if (!validation.isValid) {
       toast({
-        variant: "blue",
-        title: "العميل موجود مسبقا",
-        description: `اسم العميل: ${check}`,
+        variant: "destructive",
+        title: validation.errorMessage,
+        // action: <ToastAction altText="Try again">اعد المحاولة</ToastAction>,
       });
-      setIsLoading(false);
-      return false;
+      return;
     }
 
-    const result = await addClient(newClient);
-    setIsLoading(false);
-    toast({
-      variant: "green",
-      title: "تم تأسيس كرت للعميل بنجاح",
-    });
+    try {
+      const result = await addClient(newClient);
+      SETCID(result.clientId);
+      toast.success(result.msg, { duration: 4000, position: "bottom-center" });
+      //  toast.custom(<div className="text-2xl border bg-red-400">{result.msg}</div>);
+    } catch (error) {
+      // Handle any errors that occur during API call or other operations
+      toast.error("حدث خطأ ما، يرجى المحاولة مرة أخرى", {
+        duration: 4000,
+        position: "bottom-center",
+      });
+    }
   };
 
   return (
-    <div className="text-white flex flex-col items-center justify-center">
-      <span className="border border-primary-foreground/30 rounded-md px-8 py-2 w-10/12 mt-3 flex items-center justify-center text-2xl bg-primary/50 shadow-lg text-primary-foreground/50">
-        تسجيل
+    <>
+      <span className="border border-primary-foreground/30 rounded-md px-8 py-1  mt-3 flex items-center justify-center text-2xl bg-primary/50 shadow-lg text-primary-foreground/50 w-full">
+        تاسيس عميل جديد
       </span>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 p-4 w-10/12">
+      <form
+        action={handleSubmit}
+        id="newClientForm"
+        className="flex flex-col gap-4 p-4 w-full text-white items-center justify-center"
+      >
+        <div className="border px-4 rounded-md py-1 bg-black/30 flex items-center gap-4">
+          <p>رقم العميل</p>
+          <p className="font-bold text-2xl">{CID}</p>
+        </div>
         <Input
           type="text"
           name="name"
-          placeholder="الاسم"
+          placeholder="اسم العميل"
           className="border-red-300"
-          onChange={handleChange}
         />
         <Input
           type="text"
           name="mobile"
           placeholder="رقم الجوال"
           className="border-red-300"
-          onChange={handleChange}
         />
-        <Input
-          type="email"
-          name="email"
-          placeholder="الايميل"
-          onChange={handleChange}
-        />
-        <Input
-          type="text"
-          name="cartype"
-          placeholder="نوع السيارة"
-          onChange={handleChange}
-        />
-        <Input
-          type="text"
-          name="year"
-          placeholder="موديلها"
-          onChange={handleChange}
-        />
-        <Input
-          type="text"
-          name="bodyno"
-          placeholder="رقم الشاصي"
-          onChange={handleChange}
-        />
-        <Input
-          type="text"
-          name="carSignno"
-          placeholder="رقم اللوحة"
-          onChange={handleChange}
-        />
-        <Button
-          type="submit"
-          className="flex items-center gap-4"
-          disabled={isLoading}
-        >
-          {isLoading ? (
-            <>
-              <div className="loader"></div>
-              <p>جارٍ الحفظ...</p>
-            </>
-          ) : (
-            <>
-              <p>حفظ</p>
-              <Send size={15} />
-            </>
-          )}
-        </Button>
+        <Input type="email" name="email" placeholder="الايميل" />
+
+        <div className="flex items-center justify-around w-full">
+          <Submit />
+          <Button onClick={handleNewClient} type="button">
+            جديد
+          </Button>
+        </div>
       </form>
-    </div>
+    </>
   );
 }
 
+
 export default RegisterPage;
-
-
-
-// import React, { useState } from "react";
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Send } from "lucide-react";
-// import { addClient, checkClientExists } from "@/db/clients";
-// import { useToast } from "@/components/ui/use-toast";
-// import { ToastAction } from "@/components/ui/toast";
-
-// function RegisterPage() {
-//   const { toast } = useToast();
-//   const [formData, setFormData] = useState({});
-//   const handleChange = (event) => {
-//     const { name, value } = event.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-
-//  const handleSubmit = async (event) => {
-//    //  event.preventDefault();
-//    //  const { name, mobile, email, cars, model, owner } = formData;
-
-//    const { name, mobile, email, cartype, year, color, carSignno, bodyno } =
-//      formData;
-//    if (!name) {
-//      toast({
-//        variant: "destructive",
-//        title:  "لاسمكن حفظ عميل بدون  اسم ",
-//        //  description: "There was a problem with your request.",
-//        action: <ToastAction altText="Try again">اعد المحاولة</ToastAction>,
-//      });
-//      return false;
-//    }
-//       if (!mobile) {
-//         toast({
-//           variant: "destructive",
-//           title: "لاسمكن حفظ عميل بدون رقم جوال  ..  ",
-
-//           action: <ToastAction altText="Try again">اعد المحاولة</ToastAction>,
-//         });
-//         return false;
-//       }
-
-//    const newClient = {
-//      name,
-//      mobile,
-//      email,
-//      cars: [
-//        {
-//          cartype,
-//          year,
-//          color,
-//          carSignno,
-//          bodyno,
-//        },
-//      ],
-//    };
-
-// const check =  await  checkClientExists(mobile);
-// if (check) {
-//   toast({
-//     variant: "blue",
-//     title: "العميل موجود مسبقا",
-//     description: `اسم العميل : ${check} `,
-//   });
-//      return false;
-//     }
-
-
-
-
-//    const result = await addClient(newClient);
-//      toast({
-//        variant: "green",
-//        title: "تم  تاسيس كرت للعميل بنجاح ",
-//      });
-//  };
-
-
-//   return (
-//     <div className="text-white flex flex-col items-center justify-center ">
-//       <span className="border border-primary-foreground/30  rounded-md px-8 py-2 w-10/12 mt-3 flex items-center justify-center text-2xl bg-primary/50 shadow-lg text-primary-foreground/50">
-//         تسجيل
-//       </span>
-//       <form action={handleSubmit} className="flex flex-col gap-4 p-4 w-10/12">
-//         <Input
-//           type="text"
-//           name="name"
-//           placeholder="الاسم"
-//           className="border-red-300"
-//           onChange={handleChange}
-//         />
-//         <Input
-//           type="text"
-//           name="mobile"
-//           placeholder="رقم الجوال"
-//           className="border-red-300"
-//           onChange={handleChange}
-//         />
-//         <Input
-//           type="email"
-//           name="email"
-//           placeholder="الايميل"
-//           onChange={handleChange}
-//         />
-//         <Input
-//           type="text"
-//           name="cartype"
-//           placeholder="نوع السيارة"
-//           onChange={handleChange}
-//         />
-//         <Input
-//           type="text"
-//           name="year"
-//           placeholder="موديلها"
-//           onChange={handleChange}
-//         />
-//         <Input
-//           type="text"
-//           name="bodyno"
-//           placeholder="رقم الشاصي"
-//           onChange={handleChange}
-//         />
-//         <Input
-//           type="text"
-//           name="carSignno"
-//           placeholder="رقم اللوحة"
-//           onChange={handleChange}
-//         />
-//         <Button type="submit" className="flex items-center gap-4">
-//           <p>حفظ</p>
-//           <Send size={15} />
-//         </Button>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default RegisterPage;

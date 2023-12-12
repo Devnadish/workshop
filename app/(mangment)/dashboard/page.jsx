@@ -2,7 +2,7 @@ import {
   BadgeDollarSign,
   Car,
   CarFront,
-  CarFrontIcon,
+  CarIcon,
   FileCheck,
   FileEdit,
   FilePlus,
@@ -52,7 +52,7 @@ const Maintinance = () => {
           <div className="flex flex-col w-1/3">
             <p>جديد</p>
             <Link
-              href={"/dashboard/carcard/neworder"}
+              href={"/dashboard/fixing/neworder"}
               className="bg-green-500 flex-col  gap-1  h-14 rounded-md flex items-center justify-center text-white/80 "
             >
               <FilePlus size={35} />
@@ -62,7 +62,7 @@ const Maintinance = () => {
           <div className="flex flex-col w-1/3">
             <p>تعديل</p>
             <Link
-              href={"/dashboard/carcard/updateorder"}
+              href={"/dashboard/fixing/updateorder"}
               className="bg-green-500  flex-col gap-1   h-14 rounded-md flex items-center justify-center text-white/80 "
             >
               <FileEdit size={35} />
@@ -71,7 +71,7 @@ const Maintinance = () => {
           <div className="flex flex-col w-1/3">
             <p>اضافة</p>
             <Link
-              href={"/dashboard/carcard/addservice"}
+              href={"/dashboard/fixing/addservice"}
               className="bg-green-500  flex-col gap-1   h-14 rounded-md flex items-center justify-center text-white/80 "
             >
               <PlusCircle size={35} />
@@ -81,7 +81,7 @@ const Maintinance = () => {
         <div className="flex flex-col w-full p-4">
           <p>اقفال</p>
           <Link
-            href={"/dashboard/carcard/closeorder"}
+            href={"/dashboard/fixing/closeorder"}
             className="bg-purple-500  flex-col gap-1  h-14 rounded-md flex items-center justify-center text-white/80 "
           >
             <FileCheck size={35} />
@@ -106,28 +106,37 @@ const Finince = () => {
           <BadgeDollarSign size={40} />
         </div>
         <div className="w-full flex flex-col items-center gap-4 p-2">
-          <div className="flex w-full gap-4 items-center ">
-            <div className="flex flex-col w-1/2">
-              <p>قبض</p>
+          <div className="flex w-full flex-col  gap-4 items-center ">
+            <div className="flex flex-col w-full">
               <Link
                 href={"/dashboard/finince/reciet"}
-                className="bg-blue-500 flex-col  gap-1  h-14 rounded-md flex items-center justify-center text-white/80 "
+                className="bg-blue-500 font-semibold  gap-1  h-14 rounded-md flex items-center justify-center text-white/80 "
               >
+                <p>سند قبض</p>
                 <Smile size={35} />
               </Link>
             </div>
 
-            <div className="flex flex-col w-1/2">
-              <p>صرف</p>
+            <div className="flex flex-col w-full">
               <Link
                 href={"/dashboard/finince/payment"}
-                className="bg-red-500  flex-col gap-1   h-14 rounded-md flex items-center justify-center text-white/80 "
+                className="bg-red-500   gap-4 font-semibold  h-14 rounded-md flex items-center justify-center text-white/80 "
               >
+                <p>سند صرف تشغيلي</p>
+                <CarIcon size={35} />
+              </Link>
+            </div>
+            <div className="flex flex-col w-full">
+              <Link
+                href={"/dashboard/finince/payment"}
+                className="bg-red-500   gap-4  font-semibold h-14 rounded-md flex items-center justify-center text-white/80 "
+              >
+                <p>سند صرف اداري</p>
                 <Frown size={35} />
               </Link>
             </div>
           </div>
-          <div className="flex    w-full gap-4 items-center ">
+          <div className="flex  flex-col  w-full gap-4 items-center ">
             <Link
               href={"/dashboard/finince/invoice"}
               className="bg-blue-500  gap-3 w-full  h-14 rounded-md flex items-center justify-center text-white/80 font-semibold text-xl"
@@ -184,7 +193,7 @@ const Clients = () => {
           <div className="flex flex-col w-1/3">
             <p>اضافة سيارة</p>
             <Link
-              href={"/dashboard/carcard/addservice"}
+              href={"/dashboard/clients/addcar"}
               className="bg-blue-500   gap-3   h-14 rounded-md flex items-center justify-center text-white/80 "
             >
               <CarFront size={36} strokeWidth={1.75} />
@@ -193,7 +202,7 @@ const Clients = () => {
         </div>
         <div className="flex flex-col w-full p-4">
           <Link
-            href={"/dashboard/carcard/closeorder"}
+            href={"/dashboard/fixing/closeorder"}
             className="bg-blue-700   gap-4  font-semibold h-14 rounded-md flex items-center justify-center text-white/80 "
           >
             {/* <FileCheck size={35} /> */}

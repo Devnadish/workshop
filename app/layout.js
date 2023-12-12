@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
-import { Toaster } from "@/components/ui/toaster";
+// import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -27,9 +28,19 @@ export default function RootLayout({ children }) {
         <div className="relative flex flex-col min-h-screen w-full">
           <Navbar />
 
-          <main className="flex-grow bg-zinc-800 w-full text-white">
+          <main className="container flex-grow bg-zinc-600 w-full text-white ">
             {children}
-            <Toaster />
+            <Toaster
+              position="bottom-center "
+              toastOptions={{
+                className: "",
+                style: {
+                  border: "1px solid #713200",
+                  padding: "16px",
+                  color: "#713200",
+                },
+              }}
+            />
             <Analytics />
           </main>
 

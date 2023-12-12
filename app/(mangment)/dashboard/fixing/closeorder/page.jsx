@@ -14,16 +14,6 @@ function NewOrder() {
   const [totalCost, setTotalCost] = useState("");
   const [receivedAmount, setReceivedAmount] = useState("");
   const [dueAmount, setDueAmount] = useState(totalCost - receivedAmount);
-  // console.log(
-  //   customerNumber,
-  //   customerName,
-  //   customerHomeNumber,
-  //   serviceDescription,
-  //   deliveryDate,
-  //   totalCost,
-  //   receivedAmount,
-  //   dueAmount
-  // );
 
   useEffect(() => {
     setDueAmount(totalCost - receivedAmount);
@@ -33,7 +23,7 @@ function NewOrder() {
     <div className="container flex items-center">
       <div className="flex flex-col items-center justify-center  w-full gap-3">
         <p className="bg-white/50 rounded-sm  text-center w-full py-2">
-          اضافة خدمة
+          اقفال الامر
         </p>
         <div className="flex flex-col gap-4 border  border-white/30  p-4 rounded-md w-full">
           <div className="flex items-center gap-4 w-full">
@@ -63,25 +53,33 @@ function NewOrder() {
             />
           </div>
         </div>
-        <Textarea
-          placeholder="الخدمة المطلوبة"
-          rows={7}
-          value={serviceDescription}
-          onChange={(event) => setServiceDescription(event.target.value)}
-        />
 
         <div className="flex  gap-4 border  border-white/30  p-4 rounded-md w-12/12">
           {/* <p className="bg-white/50 rounded-sm py-1 text-center">
             معلومات العميل
           </p> */}
           <Input
-            placeholder="السعر "
+            placeholder="التكلفة الاجمالية"
             type="number"
             value={totalCost}
             onChange={(event) => setTotalCost(event.target.value)}
           />
-        <Button className="bg-red-500 w-7/12 mb-4">اضافة</Button>
+          <Input
+            placeholder="المبلغ المستلم"
+            type="number"
+            value={receivedAmount}
+            onChange={(event) => setReceivedAmount(event.target.value)}
+          />
+
+          <Input
+            placeholder="المتبفيى"
+            value={dueAmount}
+            disabled
+            onChange={(event) => setDueAmount(event.target.value)}
+          />
         </div>
+        <Button className="bg-red-500 w-7/12 mb-4">اضافة</Button>
+        <p className="border-b-4">لا يمكن الاقفال بوجود متعلقات مالية للامر</p>
       </div>
     </div>
   );
