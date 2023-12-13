@@ -43,6 +43,7 @@ const FixPaymentVoucher = () => {
       fromName ,
       fixingCode ,
     };
+
 console.log(Paymentdata);
      const validation = fixValidateForm(Paymentdata);
      if (!validation.isValid) {

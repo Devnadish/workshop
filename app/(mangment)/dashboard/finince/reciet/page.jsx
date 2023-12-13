@@ -9,6 +9,9 @@ import { toast } from "react-hot-toast";
 import { validateForm } from "@/lib/validation/recipt";
 import { Button } from "@/components/ui/button";
 import ClientsWithOpenFixingOrder from "@/components/shared/ClientsWithOpenFixingOrder";
+import PageTitle from "@/components/shared/PageTitle";
+import { Car, CircleDollarSign } from "lucide-react";
+import INPUT from "@/components/shared/INPUT";
 const RecietVoucher = () => {
   const [result, setResult] = useState({});
    const [selectedClientId, setSelectedClientId] = useState("");
@@ -60,72 +63,86 @@ const handleSubmit = async (data) => {
 
   return (
     <>
-    <PageTitle title="سند قبض" />
-    <form
-      action={handleSubmit}
-      id="RecietForm"
-      className="max-w-md mx-auto w-full flex flex-col items-center "
-    >
+      <PageTitle title="سند قبض" />
 
-      {/* header */}
-      <div className="flex justify-between items-center w-full">
-        <div className="mb-4">
-          <Label htmlFor="amount" className="block mb-2">
-            المبلغ:
-          </Label>
-          <Input
-            type="number"
-            name="amount"
-            placeholder="المبلغ المستلم"
-            className="border border-gray-300 rounded px-4 py-2 w-full"
-          />
-        </div>
+      <form
+        action={handleSubmit}
+        id="RecietForm"
+        className="max-w-md mx-auto w-full flex flex-col items-center "
+      >
+        {/* header */}
+        <div className="flex justify-between items-center w-full gap-2">
+          {/* <div className="mb-4"> */}
+            {/* <Label htmlFor="amount" className="block mb-2">
+              المبلغ:
+            </Label> */}
+            <INPUT
+              placeholder={"المبلغ المستلم"}
+              name={"amount"}
+              type={"number"}
+              icon={<CircleDollarSign />}
+            />
 
-        <div className="mb-4">
-          <Label htmlFor="date" className="block mb-2">
-            التاريخ :
-          </Label>
-          <Input
-            type="date"
-            name="docDate"
-            defaultValue={new Date().toISOString().slice(0, 10)}
-            placeholder="تاريخ الاستلام"
-            className="border border-gray-300 rounded px-4 py-2 w-full"
-          />
-        </div>
-      </div>
+            {/* <Input
+              type="number"
+              name="amount"
+              placeholder="المبلغ المستلم"
+              className="border border-gray-300 rounded px-4 py-2 w-full"
+            /> */}
+          {/* </div> */}
 
-      {/* client info */}
-      <ClientsWithOpenFixingOrder
-        selectedClientId={selectedClientId}
-        setSelectedClientId={setSelectedClientId}
-        selectedClientName={selectedClientName}
-        setSelectedClientName={setSelectedClientName}
-        selectedFixOrderId={selectedFixOrderId}
-        setSelectedFixOrderId={setSelectedFixOrderId}
-      />
+          {/* <div className="flex items-center "> */}
+            <INPUT
+              defaultValue={new Date().toISOString().slice(0, 10)}
+              placeholder={"التاريخ"}
+              name={"docDate"}
+              type={"date"}
+              // icon={<CircleDollarSign />}
+            />
+            {/* <Label htmlFor="date" className="block mb-2">
+              التاريخ :
+            </Label>
+            <Input
+              type="date"
+              name="docDate"
+              defaultValue={new Date().toISOString().slice(0, 10)}
+              placeholder="تاريخ الاستلام"
+              className="border border-gray-300 rounded px-4 py-2 w-full"
+            /> */}
+          </div>
+        {/* </div> */}
 
-      {/* description */}
-      <div className="mb-4 w-full">
-        <Label htmlFor="description" className="block mb-2">
-          الوصف
-        </Label>
-        <Textarea
-          type="text"
-          name="detail"
-          placeholder="مرجعية المبلغ"
-          className="border border-gray-300 rounded px-4 py-2 w-full resize-none"
-          rows={3}
+        {/* client info */}
+        <ClientsWithOpenFixingOrder
+          selectedClientId={selectedClientId}
+          setSelectedClientId={setSelectedClientId}
+          selectedClientName={selectedClientName}
+          setSelectedClientName={setSelectedClientName}
+          selectedFixOrderId={selectedFixOrderId}
+          setSelectedFixOrderId={setSelectedFixOrderId}
         />
-      </div>
 
-      <div className="flex items-center justify-around w-full">
-        <Submit />
-        <Button onClick={handleNewDocument} type="button">
-          سند جديد
-        </Button>
-      </div>
-    </form>
+        {/* description */}
+        <div className="mb-4 w-full">
+          <Label htmlFor="description" className="block mb-2">
+            الوصف
+          </Label>
+          <Textarea
+            type="text"
+            name="detail"
+            placeholder="مرجعية المبلغ"
+            className="border border-gray-300 rounded px-4 py-2 w-full resize-none"
+            rows={3}
+          />
+        </div>
+
+        <div className="flex items-center justify-around w-full">
+          <Submit />
+          <Button onClick={handleNewDocument} type="button">
+            سند جديد
+          </Button>
+        </div>
+      </form>
     </>
   );
 };
@@ -149,14 +166,11 @@ const AlertStyle=({result,id})=>{
             </span>
           </p>
           <p className="bg-blue-400 rounded-md py-1 px-3 border border-white text-white">
-            المبلغ المستلم :
-            <span >
-              {result.amt}
-            </span>
+            المبلغ المستلم :<span>{result.amt}</span>
           </p>
         </div>
 
-        <p >
+        <p>
           اسم العميل :
           <span className="bg-white text-black rounded-md px-4 py-1  ">
             {result.client}
@@ -168,7 +182,6 @@ const AlertStyle=({result,id})=>{
             {result.fixNo}
           </span>
         </p>
-
         <button
           onClick={handleClose}
           className="w-fit  border   rounded-lg p-2  flex items-center justify-center text-sm font-medium text-white self-end bg-red-600 shadow-lg"
@@ -179,3 +192,7 @@ const AlertStyle=({result,id})=>{
       ;
     </>
   );}
+
+
+//   import React from 'eact';
+// import { Input, Icon } from '@shadron/ui';

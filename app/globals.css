@@ -82,3 +82,8 @@
 .thumbs .swiper-slide-thumb-active {
   opacity: 1;
 }
+
+.input-placeholder::placeholder {
+  color: red;
+  font-size: .8rem;
+}
