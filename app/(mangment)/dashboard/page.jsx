@@ -119,7 +119,7 @@ const Finince = () => {
 
             <div className="flex flex-col w-full">
               <Link
-                href={"/dashboard/finince/payment"}
+                href={"/dashboard/finince/fixpayment"}
                 className="bg-red-500   gap-4 font-semibold  h-14 rounded-md flex items-center justify-center text-white/80 "
               >
                 <p>سند صرف تشغيلي</p>
@@ -128,7 +128,7 @@ const Finince = () => {
             </div>
             <div className="flex flex-col w-full">
               <Link
-                href={"/dashboard/finince/payment"}
+                href={"/dashboard/finince/mangmentpayment"}
                 className="bg-red-500   gap-4  font-semibold h-14 rounded-md flex items-center justify-center text-white/80 "
               >
                 <p>سند صرف اداري</p>

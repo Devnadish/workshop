@@ -16,56 +16,6 @@ const RecietVoucher = () => {
   const [selectedFixOrderId, setSelectedFixOrderId] = useState("");
 const handleNewDocument = () =>{ document.getElementById("RecietForm").reset();}
 
-//   const handleSubmit =async  (data) => {
-//     // Handle form submission here
-//     const detail = data.get("detail");
-//     const fromID =  parseFloat(data.get("fromID"))
-//     const fromName = data.get("fromName");
-//     const amount = parseFloat(data.get("amount"));
-//     const fixingCode = parseInt(data.get("fixingCode"));
-//     const docDate = new Date(data.get("docDate")).toISOString().slice(0, 10);
-//     const RecietData = {
-//       detail,
-//       fromID: parseFloat(selectedClientId),
-//       fromName: selectedClientName,
-//       amount,
-//       fixingCode: parseFloat(selectedFixOrderId),
-//       docDate,
-//     };
-//       const validation = validateForm(RecietData);
-//  if (!validation.isValid) {
-//    toast.error(validation.errorMessage);
-//    return;
-//  }
-
-
-//     const Reciet = await saveRecietVoucher(RecietData);
-
-
-// setResult((prevResult) => ({
-//   ...prevResult,
-//   recietNo: Reciet.recietNo,
-//   client: Reciet.client,
-//   amt: Reciet.total,
-//   fixNo: Reciet.fixNo,
-//   msg: Reciet.msg,
-// }));
-
-//     // setIsSave(true);
-//     // setResult({
-//     //   recietNo: Reciet.recietNo,
-//     //   client: Reciet.client,
-//     //   amt: Reciet.total,
-//     //   fixNo: Reciet.fixNo,
-//     //   amt: Reciet.amt,
-//     //   msg: Reciet.msg,
-//     // });
-//     toast.custom((t) => <AlertStyle result={result} id={t.id} />, {
-//       position: "bottom-center",
-//       duration: Infinity, // To disable auto-close
-//     });
-
-//   };
 
 
 const handleSubmit = async (data) => {
@@ -109,14 +59,14 @@ const handleSubmit = async (data) => {
 };
 
   return (
+    <>
+    <PageTitle title="سند قبض" />
     <form
       action={handleSubmit}
       id="RecietForm"
       className="max-w-md mx-auto w-full flex flex-col items-center "
     >
-      <div className="bg-blue-500 py-2 w-full flex items-center justify-center rounded-md my-4 shadow-lg font-semibold text-lg">
-        سند قبض{" "}
-      </div>
+
       {/* header */}
       <div className="flex justify-between items-center w-full">
         <div className="mb-4">
@@ -176,6 +126,7 @@ const handleSubmit = async (data) => {
         </Button>
       </div>
     </form>
+    </>
   );
 };
 export default RecietVoucher;

@@ -1,3 +1,5 @@
 login in with devnadish@gmail.com
 useDBname:devnadish
 useDBpassword:Leno_1972123
+
+npx prisma format && npx prisma generate && npx prisma db push && clear && npm run dev --turbo

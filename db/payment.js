@@ -2,11 +2,18 @@
 import db from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-
-export const savePaymentVoucher = async () => {
-   const NewDocId=AddPaymentCounter();
-  // Use the updatedPayment variable to access the updated payment value
-  return NewDocId;
+export const savePaymentVoucher = async (formData) => {
+  try {
+    const newDocId = await AddPaymentCounter();
+    const docDate = new Date(formData.docDate).toISOString();
+    const data = { ...formData, paymentId: newDocId, docDate };
+    const newVoucher = await db.PaymentVoucher.create({ data });
+    console.log(newVoucher);
+    return newVoucher;
+  } catch (error) {
+    console.error("Error saving payment voucher:", error);
+    throw error;
+  }
 };
 
 
@@ -59,3 +66,38 @@ export const AddFixingOrderCounter = async () => {
   // Use the updatedPayment variable to access the updated payment value
   return updatedPayment;
 };
+
+export async function getAllExpencies() {
+  const Getexp = await db.Expence.findMany({});
+  console.log(Getexp);
+
+  // Extract the expName property from each expense object
+  const expNames = Getexp.map((exp) => exp.expName);
+
+  return expNames;
+}
+
+export async function addCategory(categoryName) {
+  console.log(categoryName);
+  // Check if the category already exists
+  const existingCategory = await db.Expence.findMany({
+    where: {
+      expName: categoryName,
+    },
+  });
+
+  // If the category exists, return a message
+  if (existingCategory.length !== 0) {
+    return "Category already exists";
+  }
+  console.log(categoryName);
+
+  // If the category doesn't exist, create a new category
+  const newCategory = await db.Expence.create({
+    data: {
+      expName: categoryName,
+    },
+  });
+  return "Category added successfully";
+  console.log("first");
+}
