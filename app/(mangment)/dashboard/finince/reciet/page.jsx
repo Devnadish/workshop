@@ -10,7 +10,7 @@ import { validateForm } from "@/lib/validation/recipt";
 import { Button } from "@/components/ui/button";
 import ClientsWithOpenFixingOrder from "@/components/shared/ClientsWithOpenFixingOrder";
 import PageTitle from "@/components/shared/PageTitle";
-import { Car, CircleDollarSign } from "lucide-react";
+import { Calendar, Car, CircleDollarSign } from "lucide-react";
 import INPUT from "@/components/shared/INPUT";
 const RecietVoucher = () => {
   const [result, setResult] = useState({});
@@ -64,52 +64,32 @@ const handleSubmit = async (data) => {
   return (
     <>
       <PageTitle title="سند قبض" />
-
+      <p className="border w-fit bg-black mb-4 rounded-md px-1 py-1">
+        رقم السند {result.recietNo}
+      </p>
       <form
         action={handleSubmit}
         id="RecietForm"
-        className="max-w-md mx-auto w-full flex flex-col items-center "
+        className="max-w-md mx-auto w-full flex flex-col items-center gap-4 "
       >
         {/* header */}
         <div className="flex justify-between items-center w-full gap-2">
-          {/* <div className="mb-4"> */}
-            {/* <Label htmlFor="amount" className="block mb-2">
-              المبلغ:
-            </Label> */}
-            <INPUT
-              placeholder={"المبلغ المستلم"}
-              name={"amount"}
-              type={"number"}
-              icon={<CircleDollarSign />}
-            />
-
-            {/* <Input
-              type="number"
-              name="amount"
-              placeholder="المبلغ المستلم"
-              className="border border-gray-300 rounded px-4 py-2 w-full"
-            /> */}
-          {/* </div> */}
-
-          {/* <div className="flex items-center "> */}
-            <INPUT
-              defaultValue={new Date().toISOString().slice(0, 10)}
-              placeholder={"التاريخ"}
-              name={"docDate"}
-              type={"date"}
-              // icon={<CircleDollarSign />}
-            />
-            {/* <Label htmlFor="date" className="block mb-2">
-              التاريخ :
-            </Label>
-            <Input
-              type="date"
-              name="docDate"
-              defaultValue={new Date().toISOString().slice(0, 10)}
-              placeholder="تاريخ الاستلام"
-              className="border border-gray-300 rounded px-4 py-2 w-full"
-            /> */}
-          </div>
+          <INPUT
+            placeholder={"المبلغ المستلم"}
+            name={"amount"}
+            type={"number"}
+            icon={<CircleDollarSign />}
+            cN="flex-1"
+          />
+          <INPUT
+            defaultValue={new Date().toISOString().slice(0, 10)}
+            placeholder={"التاريخ"}
+            name={"docDate"}
+            type={"date"}
+            icon={<Calendar size={15} strokeWidth={1.5} />}
+            cN="flex-1"
+          />
+        </div>
         {/* </div> */}
 
         {/* client info */}
@@ -123,7 +103,7 @@ const handleSubmit = async (data) => {
         />
 
         {/* description */}
-        <div className="mb-4 w-full">
+        <div className=" w-full">
           <Label htmlFor="description" className="block mb-2">
             الوصف
           </Label>
@@ -150,7 +130,7 @@ export default RecietVoucher;
 const AlertStyle=({result,id})=>{
 
   const handleClose = () => {
-    toast.dismiss(id);
+    toast.remove()
   };
   return (
     <>

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getClientFixOrders, groupByClientId } from "@/db/clients";
+import { LucidePersonStanding, PersonStanding, User, Wrench } from "lucide-react";
 
 // Define an array of client objects with their IDs and names
 const clients = [
@@ -64,19 +65,17 @@ setSelectedFixOrderId}) {
   }, []);
 
   return (
-    <div className="mb-4 border border-white/40 p-3 rounded-md bg-black/20 flex flex-col gap-4 items-center justify-center w-full">
+    <div className="border border-white/40 p-3 rounded-md bg-black/20 flex flex-col gap-4 items-center justify-center w-full">
       <div className="flex gap-4 w-full items-center justify-center">
-        <div className="flex flex-col items-start justify-start flex-1">
-          <Label htmlFor="fromID" className="text-white text-lg">
-            رقم العميل
-          </Label>
+        <div className="flex  items-center justify-end flex-1 gap-1   border rounded-sm">
+          <User strokeWidth={1.5} />
           <select
             name="fromID"
             value={selectedClientId}
             onChange={handleClientChange}
-            className="border border-gray-300 rounded px-4 py-2 text-black focus:outline-none focus:border-blue-500"
+            className="border border-gray-300 rounded h-8 text-sm w-[100px]  px-4  text-black focus:outline-none focus:border-blue-500"
           >
-            <option value="">اختر رقم العميل</option>
+            <option value=""> </option>
             {fixOrdersData.map((client) => (
               <option key={client.clientId} value={client.clientId}>
                 {client.clientId}
@@ -84,18 +83,18 @@ setSelectedFixOrderId}) {
             ))}
           </select>
         </div>
-        <div className="flex flex-col items-start justify-start flex-1">
-          <Label htmlFor="fixingID" className="text-white text-lg">
-            رقم امر الاصلاح
-          </Label>
+
+        <div className="flex  items-center justify-end flex-1 gap-1   border rounded-sm">
+          <Wrench strokeWidth={1.5} />
+
           <select
             name="fixingID"
             value={selectedFixOrderId}
             onChange={handleFixOrderChange}
-            className="border border-gray-300 rounded px-4 py-2 text-black focus:outline-none focus:border-blue-500"
+            className="border border-gray-300 h-8 w-[100px] rounded px-4  text-black focus:outline-none focus:border-blue-500"
             disabled={!selectedClientId}
           >
-            <option value="">اختر رقم امر الاصلاح</option>
+            <option value=""></option>
             {fixOrdersData
               .find((client) => client.clientId === parseInt(selectedClientId))
               ?.fixOrderIds.map((fixOrderId) => (
