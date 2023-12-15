@@ -2,19 +2,17 @@
 import db from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-
 export async function addClient(client) {
   try {
     const check = await checkClientExists(client.mobile);
 
-  if (check) {
-    return {
-      msg:`العميل موجود مسبقا باسم   ${check.cName} ورقم ${check.cId}`,client:check.client,
-      check
+    if (check) {
+      return {
+        msg: `العميل موجود مسبقا باسم   ${check.cName} ورقم ${check.cId}`,
+        client: check.client,
+        check,
+      };
     }
-  }
-
-
 
     const ClientCounter = await AddClientCounter();
     const data = { ...client, clientIDs: ClientCounter };
@@ -32,27 +30,18 @@ export async function addClient(client) {
       return {
         msg: "رقم اللوحة  مسجلة باسم عميل اخر.",
       };
-
     }
     console.error(error);
     // Handle error appropriately
   }
 }
 
-
-
-
-
-
-
-
-
 // Delete a client from the database
 export async function deleteClient(id) {
   const result = await db.client.delete({
     where: {
-      id: id
-    }
+      id: id,
+    },
   });
   return result;
 }
@@ -61,20 +50,22 @@ export async function deleteClient(id) {
 export async function updateClient(id, client) {
   const result = await db.client.update({
     where: {
-      id: id
+      id: id,
     },
-    data: client
+    data: client,
   });
   return result;
 }
 
 // Show all clients in the database
-// export async function getAllClients() {
+// export async function fetchClients() {
 //   const result = await db.client.findMany();
 //   return result;
 // }
-
-
+export async function fetchClientNames() {
+  const names = await db.client.findMany({ select: { name: true, clientIDs :true} });
+  return names;
+}
 export async function getAllClients() {
   try {
     const clients = await db.client.findMany();
@@ -85,7 +76,7 @@ export async function getAllClients() {
             CId: client.id,
           },
         });
-            revalidatePath("/dashboard/clients/display");
+        revalidatePath("/dashboard/clients/display");
         return { ...client, carsData };
       })
     );
@@ -96,9 +87,6 @@ export async function getAllClients() {
   }
 }
 
-
-
-
 export async function checkClientExists(phone) {
   const existingClient = await db.client.findUnique({
     where: {
@@ -107,7 +95,7 @@ export async function checkClientExists(phone) {
   });
 
   if (existingClient) {
-     return {cName:existingClient.name,cId:existingClient.clientIDs}
+    return { cName: existingClient.name, cId: existingClient.clientIDs };
   }
 }
 
@@ -120,7 +108,7 @@ export async function gerClientByIdForFixing(Cid) {
       },
     });
     if (!existingClient) {
-      return { msg: "العميل غير موجود",stuts:"NotExisit" };
+      return { msg: "العميل غير موجود", stuts: "NotExisit" };
     }
     const existingCars = await db.Car.findMany({
       where: {
@@ -128,27 +116,12 @@ export async function gerClientByIdForFixing(Cid) {
       },
     });
 
-
-
-
-
-    return {client:existingClient,cars: existingCars}
+    return { client: existingClient, cars: existingCars };
   } catch (error) {
     console.error(error);
     return { msg: "حدث خطأ أثناء استرجاع المعلومات" };
   }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 export async function checkClientByIDExists(Cid) {
   const clientId = parseInt(Cid); // Convert string to integer
@@ -156,24 +129,25 @@ export async function checkClientByIDExists(Cid) {
     where: {
       clientIDs: clientId,
     },
-  })
-
-
+  });
+const getCars = await db.car.findMany({
+  where: {
+    clientId: clientId,
+  },
+});
+console.log(getCars)
 
   if (existingClient[0]) {
     return {
       name: existingClient[0].name,
       id: existingClient[0].id,
-      cars: existingClient[0].cars,
+      cars: getCars,
     };
   }
 }
-;
-
-
 // Show all clients in the database where the user balance =0
 export async function getZeroBalance() {
-  const result = await db.client.findMany({where: {balance:0}});
+  const result = await db.client.findMany({ where: { balance: 0 } });
   return result;
 }
 
@@ -199,7 +173,6 @@ export async function getClientsWithgetNegativeBalance() {
   return result;
 }
 
-
 export const AddClientCounter = async () => {
   let clientCounter;
   // Check if a record exists in the counters table
@@ -223,22 +196,19 @@ export const AddClientCounter = async () => {
   return clientCounter;
 };
 
-
-
-
 export async function AddNewCar(Car) {
-  console.log(Car);
+  console.log(Car)
   try {
     // Check if the CarNo already exists for another client
     const existingCar = await db.Car.findFirst({
       where: {
         CarNo: Car.CarNo,
-        clientId: { not: Car.clientId }, // Exclude the current client
+        // clientId: { not: Car.clientId }, // Exclude the current client
       },
     });
 
     if (existingCar) {
-      return "رقم اللوحة محجوز لعميل اخر";
+      return "رقم اللوحة  يخص   لعميل اخر";
     }
 
     const carDb = await db.Car.create({ data: Car });
@@ -248,14 +218,6 @@ export async function AddNewCar(Car) {
     return "An error occurred while adding the car";
   }
 }
-
-
-
-
-
-
-
-
 
 export async function groupByClientId() {
   try {

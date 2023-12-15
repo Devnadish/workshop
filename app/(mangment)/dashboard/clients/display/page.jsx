@@ -9,10 +9,10 @@ const ClientList = async({ clients1, onEdit, onDelete }) => {
 const clients = await getAllClients();
 
   return (
-    <div className="container  min-w-full">
       <Filtering clientsData={clients} />
-      {/* <ShowClientCard clients={clients} /> */}
-    </div>
+    // <div className="w-full flex flex-col items-center justify-center bg-black">
+    //   <ShowClientCard clients={clients} />
+    // </div>
   );
 };
 

@@ -90,3 +90,5 @@
 input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
 }
+
+/* Add this CSS to your ClientSelectComponent.css file */

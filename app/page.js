@@ -74,11 +74,11 @@ const Comment = () => {
 const SuperVision = () => {
   return (
     <>
-      <div className="flex flex-col gap-1 items-center justify-center bg-yellow-300 text-2xl px-4 py-1 rounded-md  border-4 border-dashed border-blue-400 shadow-lg lg:flex-row w-[80%]">
+      <div className="flex flex-col  gap-1 items-center justify-center bg-yellow-300 text-xl px-4 py-1 rounded-md  border-4 border-dashed border-blue-400 shadow-lg  w-full">
         <p className="text-xl text-foreground font-bold   ">
           الصحفي لصيانة السيارات
         </p>
-        <p className="text-lg">تحت اشراف المهندس</p>
+        <p className="text-md">تحت اشراف المهندس</p>
         <p className="text-xl font-bold">معاذ الشريف</p>
         <p>جوال : 0509723508</p>
       </div>

@@ -36,9 +36,12 @@ export default function RootLayout({ children }) {
               toastOptions={{
                 className: "",
                 style: {
-                  border: "1px solid #713200",
-                  padding: "16px",
+                  border: "1px solid green",
+                  borderRight: "15px solid green",
+                  padding: "2rem",
                   color: "#713200",
+                  fontSize: "1rem",
+                  fontWeight: "bold",
                 },
               }}
             />

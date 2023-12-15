@@ -1,16 +1,28 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { addClient } from "@/db/clients";
 import { validateForm } from "@/lib/validation/clients";
 import { toast } from 'react-hot-toast';
 import Submit from "@/components/shared/Submit";
+import PageTitle from "@/components/shared/PageTitle";
+import { Mail, Phone, User } from "lucide-react";
+import INPUT from "@/components/shared/INPUT";
+import Image from "next/image";
+import { Input } from "@/components/ui/input";
 
 
 
 function RegisterPage() {
   const [CID, SETCID] = useState("");
+   const [image, setImage] = useState(null);
+     const fileInputRef = useRef(null);
+
+     const handleImageChange = (event) => {
+       // Handle image selection and update the 'image' state
+       const selectedImage = event.target.files[0];
+       setImage(selectedImage);
+     };
 
   const handleNewClient = () => {
     document.getElementById("newClientForm").reset();
@@ -20,19 +32,15 @@ function RegisterPage() {
     const name = data.get("name");
     const mobile = data.get("mobile");
     const email = data.get("email");
-
     const newClient = {
       name,
       mobile,
       email,
     };
     const validation = validateForm(newClient);
+    console.log(validation);
     if (!validation.isValid) {
-      toast({
-        variant: "destructive",
-        title: validation.errorMessage,
-        // action: <ToastAction altText="Try again">اعد المحاولة</ToastAction>,
-      });
+toast.error(validation.errorMessage)
       return;
     }
 
@@ -40,7 +48,6 @@ function RegisterPage() {
       const result = await addClient(newClient);
       SETCID(result.clientId);
       toast.success(result.msg, { duration: 4000, position: "bottom-center" });
-      //  toast.custom(<div className="text-2xl border bg-red-400">{result.msg}</div>);
     } catch (error) {
       // Handle any errors that occur during API call or other operations
       toast.error("حدث خطأ ما، يرجى المحاولة مرة أخرى", {
@@ -52,9 +59,7 @@ function RegisterPage() {
 
   return (
     <>
-      <span className="border border-primary-foreground/30 rounded-md px-8 py-1  mt-3 flex items-center justify-center text-2xl bg-primary/50 shadow-lg text-primary-foreground/50 w-full">
-        تاسيس عميل جديد
-      </span>
+      <PageTitle title={"تاسيس عميل جديد"} icon={<User />} />
       <form
         action={handleSubmit}
         id="newClientForm"
@@ -64,19 +69,44 @@ function RegisterPage() {
           <p>رقم العميل</p>
           <p className="font-bold text-2xl">{CID}</p>
         </div>
-        <Input
+        <INPUT
           type="text"
           name="name"
           placeholder="اسم العميل"
-          className="border-red-300"
+          icon={<User />}
         />
-        <Input
+        <INPUT
           type="text"
           name="mobile"
           placeholder="رقم الجوال"
-          className="border-red-300"
+          icon={<Phone />}
+          maxlength="10"
         />
-        <Input type="email" name="email" placeholder="الايميل" />
+        <INPUT
+          type="email"
+          name="email"
+          placeholder="الايميل"
+          icon={<Mail />}
+        />
+        <div className="flex flex-col gap-3">
+          <label htmlFor="imageUpload">
+            {image ? (
+              <img src={URL.createObjectURL(image)} alt="Uploaded Image" />
+            ) : (
+              <img src="/assets/noavatar.png" alt="Placeholder Image" />
+            )}
+          </label>
+          <input
+            type="file"
+            id="imageUpload"
+            ref={fileInputRef}
+            style={{ display: "none" }}
+            onChange={handleImageChange}
+          />
+          <Button onClick={() => fileInputRef.current.click()} type="button">
+            صورة العميل
+          </Button>
+        </div>
 
         <div className="flex items-center justify-around w-full">
           <Submit />

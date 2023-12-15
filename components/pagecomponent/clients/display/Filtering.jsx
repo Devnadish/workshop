@@ -37,31 +37,16 @@ function Filtering({ clientsData }) {
     setOpen(false);
   };
   return (
-    <>
-      <div className=" w-full mt-2 ">
+    <div className=" w-full  flex flex-col items-center justify-center gap-4 ">
+      <div className=" w-full mt-2 flex flex-col items-center justify-center gap-4 ">
         <Popover open={open} onOpenChange={setOpen}>
-          <div className="bg-purple-500 py-1 px-3 flex gap-4  items-center mb-2 shadow-lg rounded-md justify-between">
+          <div className="bg-purple-500 py-1 px-3 flex gap-4 w-full  items-center mb-2 shadow-lg rounded-md justify-between self-start">
+            <p className="text-md font-bold">العملاء </p>
             <PopoverTrigger>
               <div className="border-l pl-3">
                 <SlidersHorizontal />
               </div>
             </PopoverTrigger>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-4 bg-blue-400 px-2 rounded-md">
-                <p>مستحق </p>
-                {/* <p>مستحق الدفع</p> */}
-                <p>800</p>
-              </div>
-              <div className="flex items-center gap-4  bg-red-600 px-2 rounded-md">
-                <p> سداد</p>
-                {/* <p> مطالب بالسداد</p> */}
-                <p>800</p>
-              </div>
-              <div className="flex items-center gap-4  bg-green-600 px-2 rounded-md">
-                <p>الرصيد</p>
-                <p>800</p>
-              </div>
-            </div>
           </div>
           <PopoverContent>
             <div className="flex  px-6 pt-4 flex-col pb-2  items-center justify-center gap-4 w-full">
@@ -70,7 +55,6 @@ function Filtering({ clientsData }) {
                 className="bg-gray-300/40  hover:bg-blue-200 text-blue-500 py-2 px-4 rounded-md flex items-center gap-3 w-full"
               >
                 العملاء المطلوب منهم الدفع
-                {/* <Edit className="text-blue-500" /> */}
               </Button>
               <Button
                 onClick={() => handleNegativeBalance()}
@@ -82,7 +66,7 @@ function Filtering({ clientsData }) {
                 onClick={() => handleZeroBalance()}
                 className="bg-gray-300/20 text-green-600  hover:bg-green-200  py-2 px-4 rounded-md ml-2 flex items-center gap-3 w-full"
               >
-                العملاء  الذي ليس لديهم رصيد
+                العملاء الذي ليس لديهم رصيد
                 <Equal className="text-green-600" />
               </Button>
             </div>
@@ -90,7 +74,7 @@ function Filtering({ clientsData }) {
         </Popover>
       </div>
       <ShowClientCard clients={clients} />
-    </>
+    </div>
   );
 }
 
