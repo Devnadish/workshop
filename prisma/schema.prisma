@@ -17,6 +17,8 @@ model Client {
   mobile      String   @unique
   email       String?
   password    String?
+  payment     Float    @default(0)
+  recipts     Float    @default(0)
   fixCard     String[]
   balance     Int      @default(0)
   createdDate DateTime @default(now())

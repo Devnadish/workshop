@@ -1,14 +1,17 @@
 "use client";
 import ClientsWithOpenFixingOrder from "@/components/shared/ClientsWithOpenFixingOrder";
+import DocementNO from "@/components/shared/DocementNO";
 import Expensis from "@/components/shared/Expensis";
+import INPUT from "@/components/shared/INPUT";
 import PageTitle from "@/components/shared/PageTitle";
 import Submit from "@/components/shared/Submit";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { savePaymentVoucher } from "@/db/payment";
+import { savePaymentVoucher, updateClientPaymetBalance } from "@/db/payment";
 import { fixValidateForm, validateForm } from "@/lib/validation/payment";
 import { Label } from "@radix-ui/react-label";
+import { CircleDollarSign, FileDigit } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -44,7 +47,6 @@ const FixPaymentVoucher = () => {
       fixingCode ,
     };
 
-console.log(Paymentdata);
      const validation = fixValidateForm(Paymentdata);
      if (!validation.isValid) {
        toast.error(validation.errorMessage);
@@ -53,7 +55,8 @@ console.log(Paymentdata);
 
     try {
       const VoucerNo = await savePaymentVoucher(Paymentdata);
-      console.log(VoucerNo);
+const pay= updateClientPaymetBalance(fromID, amount)
+
       setPymentNo(VoucerNo.paymentId);
       const msg = `تم صرف مبلغ  ${VoucerNo.amount} بموجب سند صرف رقم  ${VoucerNo.paymentId}`;
        toast.success(msg, { duration: 5000 });
@@ -70,12 +73,23 @@ console.log(Paymentdata);
         className="  w-full  flex flex-col gap-4 items-center justify-center"
         action={handleSubmit}
       >
-        <div className="flex w-full flex-col items-center justify-between gap-4">
-          <p className="flex w-fit items-center gap-2 border px-5 py-1 text-xs rounded-md bg-black/40">
-            رقم المستند
-            <span>{PymentNo}</span>
-          </p>
+        <div className="mb-4 flex items-center justify-between  gap-4">
+          <DocementNO DocID={PymentNo} />
+            <INPUT
+              placeholder={"المبلغ"}
+              name={"amount"}
+              type={"number"}
+              icon={<CircleDollarSign />}
+              cN="flex-1"
+              h="h-[50px]"
+              w="w-[200px]"
+              textsize="text-[1.5rem]"
+              bgColor="bg-red-300"
+            />
 
+        </div>
+
+        <div className="flex w-full flex-col items-center justify-between gap-4">
           <ClientsWithOpenFixingOrder
             selectedClientId={selectedClientId}
             setSelectedClientId={setSelectedClientId}
@@ -88,15 +102,6 @@ console.log(Paymentdata);
 
         <div className="flex w-full items-center justify-between gap-4">
           <div className="flex items-center justify-between w-full gap-4">
-            <div className="flex flex-col justify-start gap-2">
-              <Label htmlFor="date">المبلغ</Label>
-              <Input
-                label="المبلغ"
-                id="amount"
-                name="amount"
-                placeholder="المبلغ"
-              />
-            </div>
             <div className="flex flex-col justify-start gap-2">
               <Label htmlFor="date">التاريخ :</Label>
               <Input

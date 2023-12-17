@@ -3,10 +3,15 @@ import db from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { AddRecietCounter } from "./reciet";
 
+
 export async function newFixingOrder(fixingData) {
+console.log(fixingData.receive, typeof fixingData.receive);
+let addReciptVoucher;
   try {
     // check if the maintenance exisit>>>>>>>>
     const checkOpenOrder = await CheckOpenFixingOrder(fixingData.selectedCar);
+     console.log({checkOpenOrder});
+
     if (checkOpenOrder) {
       return {
         msg: "لا يمكن فتح كرت صيانة لسيارة مفتوح لها كرت مسبقا يجب اغلاق الكرت السابق..",
@@ -20,20 +25,43 @@ export async function newFixingOrder(fixingData) {
     const order = await db.fixingOrder.create({ data });
     const addToCarsInClient = await addFixCardValue(  order.clientId,  order.selectedCar );
     const addToOpenOrder = await createOpenFixingOrder(data);
-    const addReciptVoucher = await createReciptVocher(data);
-console.log(addReciptVoucher);
+
+    if(fixingData.receive===0 ){
+       addReciptVoucher = "لم يتم استلام دفعة من العميل";
+    }else{ addReciptVoucher = await createReciptVocher(data);}
+
     return {
-      msg: `تم انشاء الكرت بنجاح وتم انشاء سند قبض بقيمة  ${data.total} ريال سعودي`,
+      msg:
+        fixingData.receive > 0
+          ? `تم انشاء الكرت بنجاح وتم انشاء سند قبض  رقم  ${addReciptVoucher.voucher}  بقيمة  ${fixingData.receive} ريال سعودي`
+          : `تم انشاء الكرت بنجاح لم يتم استلام دفعة من العميل`,
+
       cardNo: fixCounter,
       client: fixingData.clientName,
       total: fixingData.total,
-      voucher: addReciptVoucher.voucher,
-      notifcation: [ addToCarsInClient, addToOpenOrder, addReciptVoucher ],
+      voucher:
+        fixingData.receive !== 0
+          ? addReciptVoucher.voucher
+          : "لم يتم استلام دفعه من العميل ",
     };
   } catch (error) {
     console.error("Error creating fixing order:", error);
-    return { err: error.message };
     throw new Error("Failed to create fixing order: " + error.message);
+    return { err: error.message };
+
+
+  }
+}
+async function CheckOpenFixingOrder(selectedCar) {
+  // Check if the openFixingOrder already exists
+  console.log({selectedCar});
+  const existingOrder = await db.openFixingOrder.findUnique({
+    where: { selectedCar },
+  });
+
+  // If the order already exists, return true
+  if (existingOrder) {
+    return true;
   }
 }
 
@@ -122,18 +150,7 @@ async function createOpenFixingOrder(cardData) {
     return "Order Added To onProggress Data ..";
   }
 }
-async function CheckOpenFixingOrder(selectedCar) {
-  // Check if the openFixingOrder already exists
 
-  const existingOrder = await prisma.openFixingOrder.findUnique({
-    where: { selectedCar },
-  });
-
-  // If the order already exists, return true
-  if (existingOrder) {
-    return true;
-  }
-}
 
 
 

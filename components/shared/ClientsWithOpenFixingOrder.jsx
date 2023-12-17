@@ -107,9 +107,9 @@ setSelectedFixOrderId}) {
       </div>
       <div className="flex gap-4 w-full items-center justify-center">
         <div className="flex flex-col items-start justify-start flex-1">
-          <label htmlFor="fromName" className="text-white text-lg">
+          {/* <label htmlFor="fromName" className="text-white text-lg">
             اسم العميل
-          </label>
+          </label> */}
           <Input
             type="text"
             name="fromName"

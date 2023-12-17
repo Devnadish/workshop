@@ -1,5 +1,5 @@
 import Image from 'next/image';
-function Avatar({ src, width = '35', height = '35' }) {
+function Avatar({ src, width = '30', height = '30' }) {
     if (src === '') {
         src = '/assets/noavatar.png';
     }

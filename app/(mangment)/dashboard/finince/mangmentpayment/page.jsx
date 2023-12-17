@@ -1,4 +1,5 @@
 "use client";
+import DocementNO from "@/components/shared/DocementNO";
 import Expensis from "@/components/shared/Expensis";
 import PageTitle from "@/components/shared/PageTitle";
 import Submit from "@/components/shared/Submit";
@@ -46,12 +47,14 @@ const PaymentVoucherForm = () => {
   return (
     <>
       <PageTitle title="سند صرف اداري" />
-      <form id="paymentForm" className="  w-full  flex flex-col gap-4 items-center justify-center" action={handleSubmit}>
+      <form
+        id="paymentForm"
+        className="  w-full  flex flex-col gap-4 items-center justify-center"
+        action={handleSubmit}
+      >
         <div className="flex w-full items-center justify-between gap-4">
-          <p className="flex w-fit items-center gap-2 border px-5 py-1 text-xs rounded-md bg-black/40">
-            رقم المستند
-            <span>{PymentNo}</span>
-          </p>
+          <DocementNO DocID={PymentNo} />
+
           <Expensis setExpname={setExpname} />
         </div>
 
@@ -89,9 +92,15 @@ const PaymentVoucherForm = () => {
 
         <div className="flex items-center justify-around">
           <Submit />
-          <Button type="button" onClick={()=>{document.getElementById("paymentForm").reset();}}>جديد</Button>
+          <Button
+            type="button"
+            onClick={() => {
+              document.getElementById("paymentForm").reset();
+            }}
+          >
+            جديد
+          </Button>
         </div>
-
       </form>
     </>
   );

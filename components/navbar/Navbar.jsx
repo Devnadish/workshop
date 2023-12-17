@@ -2,6 +2,7 @@ import { Menu, BellRing, Home, Skull } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import BuregerMenu from "./BurgerMenu";
+import { PiEngineDuotone } from "react-icons/pi";
 
 function Navbar() {
   return (
@@ -24,9 +25,9 @@ function Navbar() {
         </Link>
         <Link
           href={"/dashboard"}
-          className="border-2 rounded-sm px-2 bg-blue-400 py-1 "
+          className="  rounded-full px-2 bg-yellow-800 py-1 shadow-xl "
         >
-          <Skull size={34} className="text-white" />
+          <PiEngineDuotone size={34} className="text-yellow-400" />
         </Link>
       </div>
     </header>

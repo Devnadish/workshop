@@ -57,26 +57,26 @@ export async function updateClient(id, client) {
   return result;
 }
 
-// Show all clients in the database
-// export async function fetchClients() {
-//   const result = await db.client.findMany();
-//   return result;
-// }
+
 export async function fetchClientNames() {
   const names = await db.client.findMany({ select: { name: true, clientIDs :true} });
   return names;
 }
 export async function getAllClients() {
   try {
-    const clients = await db.client.findMany();
+    const clients = await db.client.findMany({
+      select: { id:true,name: true, clientIDs: true },
+    });
     const clientsWithCars = await Promise.all(
       clients.map(async (client) => {
         const carsData = await db.Car.findMany({
           where: {
             CId: client.id,
           },
+          select: { id: true,CarNo:true, carName: true},
         });
         revalidatePath("/dashboard/clients/display");
+
         return { ...client, carsData };
       })
     );
@@ -135,7 +135,6 @@ const getCars = await db.car.findMany({
     clientId: clientId,
   },
 });
-console.log(getCars)
 
   if (existingClient[0]) {
     return {
@@ -197,7 +196,6 @@ export const AddClientCounter = async () => {
 };
 
 export async function AddNewCar(Car) {
-  console.log(Car)
   try {
     // Check if the CarNo already exists for another client
     const existingCar = await db.Car.findFirst({

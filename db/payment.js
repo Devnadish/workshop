@@ -8,7 +8,6 @@ export const savePaymentVoucher = async (formData) => {
     const docDate = new Date(formData.docDate).toISOString();
     const data = { ...formData, paymentId: newDocId, docDate };
     const newVoucher = await db.PaymentVoucher.create({ data });
-    console.log(newVoucher);
     return newVoucher;
   } catch (error) {
     console.error("Error saving payment voucher:", error);
@@ -69,7 +68,6 @@ export const AddFixingOrderCounter = async () => {
 
 export async function getAllExpencies() {
   const Getexp = await db.Expence.findMany({});
-  console.log(Getexp);
 
   // Extract the expName property from each expense object
   const expNames = Getexp.map((exp) => exp.expName);
@@ -78,7 +76,6 @@ export async function getAllExpencies() {
 }
 
 export async function addCategory(categoryName) {
-  console.log(categoryName);
   // Check if the category already exists
   const existingCategory = await db.Expence.findMany({
     where: {
@@ -90,7 +87,6 @@ export async function addCategory(categoryName) {
   if (existingCategory.length !== 0) {
     return "Category already exists";
   }
-  console.log(categoryName);
 
   // If the category doesn't exist, create a new category
   const newCategory = await db.Expence.create({
@@ -99,5 +95,28 @@ export async function addCategory(categoryName) {
     },
   });
   return "Category added successfully";
-  console.log("first");
+}
+
+
+
+export async function updateClientPaymetBalance(Cid, amount) {
+  const existingRecord = await db.client.findUnique({
+    where: { clientIDs: Cid },
+  });
+
+  if (!existingRecord.payment) {
+    // If no receipts exist, set the receipt count to the provided amount
+    await db.client.update({
+      where: { clientIDs: Cid },
+      data: { payment: amount },
+    });
+
+  } else {
+    // If receipts exist, add the provided amount to the existing receipt count
+    const updatedAmount = existingRecord.payment + amount;
+    await db.client.update({
+      where: { clientIDs: Cid },
+      data: { payment: updatedAmount },
+    });
+  }
 }

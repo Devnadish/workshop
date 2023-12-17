@@ -4,7 +4,7 @@ import Submit from "@/components/shared/Submit";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { saveRecietVoucher } from "@/db/reciet";
+import { saveRecietVoucher, updateClientReceiptBalance } from "@/db/reciet";
 import { toast } from "react-hot-toast";
 import { validateForm } from "@/lib/validation/recipt";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import ClientsWithOpenFixingOrder from "@/components/shared/ClientsWithOpenFixin
 import PageTitle from "@/components/shared/PageTitle";
 import { Calendar, Car, CircleDollarSign } from "lucide-react";
 import INPUT from "@/components/shared/INPUT";
+import DocementNO from "@/components/shared/DocementNO";
 const RecietVoucher = () => {
   const [result, setResult] = useState({});
    const [selectedClientId, setSelectedClientId] = useState("");
@@ -45,7 +46,7 @@ const handleSubmit = async (data) => {
   }
 
   const Reciet = await saveRecietVoucher(RecietData);
-  console.log(Reciet);
+  const UpdateClientBalance = await updateClientReceiptBalance(fromID, amount);
 
   setResult({
     recietNo: Reciet.recietNo,
@@ -64,23 +65,29 @@ const handleSubmit = async (data) => {
   return (
     <>
       <PageTitle title="سند قبض" />
-      <p className="border w-fit bg-black mb-4 rounded-md px-1 py-1">
-        رقم السند {result.recietNo}
-      </p>
+
       <form
         action={handleSubmit}
         id="RecietForm"
-        className="max-w-md mx-auto w-full flex flex-col items-center gap-4 "
+        className="max-w-md mx-auto w-full flex flex-col items-center gap-2 "
       >
+        <div className="mb-4 flex items-center justify-between   gap-4">
+          <DocementNO DocID={result.recietNo} />
+            <INPUT
+              placeholder={" المستلم"}
+              name={"amount"}
+              type={"number"}
+              icon={<CircleDollarSign />}
+              cN="flex-1"
+              h="h-[50px]"
+              w="w-[200px]"
+              textsize="text-[1.5rem]"
+              bgColor="bg-red-300"
+            />
+
+        </div>
         {/* header */}
         <div className="flex justify-between items-center w-full gap-2">
-          <INPUT
-            placeholder={"المبلغ المستلم"}
-            name={"amount"}
-            type={"number"}
-            icon={<CircleDollarSign />}
-            cN="flex-1"
-          />
           <INPUT
             defaultValue={new Date().toISOString().slice(0, 10)}
             placeholder={"التاريخ"}
@@ -103,8 +110,11 @@ const handleSubmit = async (data) => {
         />
 
         {/* description */}
-        <div className=" w-full">
-          <Label htmlFor="description" className="block mb-2">
+        <div className="relative   w-full mt-2 ">
+          <Label
+            htmlFor="description"
+            className="absolute -top-5 left-2  bg-yellow-300 text-black text-md px-3 rounded-md font-normal py-1"
+          >
             الوصف
           </Label>
           <Textarea

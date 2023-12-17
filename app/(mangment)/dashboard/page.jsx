@@ -191,12 +191,12 @@ const Clients = () => {
             </Link>
           </div>
           <div className="flex flex-col w-1/3">
-            <p>اضافة سيارة</p>
+            <p>اضافة </p>
             <Link
               href={"/dashboard/clients/addcar"}
               className="bg-blue-500   gap-3   h-14 rounded-md flex items-center justify-center text-white/80 "
             >
-              <CarFront size={36} strokeWidth={1.75} />
+              <Car size={36} strokeWidth={1.75} />
             </Link>
           </div>
         </div>

@@ -21,12 +21,15 @@ module.exports = {
         DEFAULT: "1rem",
         md: "1.5rem",
         lg: "2rem",
-
       },
       screens: {
-        sm: "100%",
-        md: "100%",
-        lg: "672px",
+        // sm: "100%",
+        // md: "100%",
+        // lg: "672px",
+        sm: "375px", // Define the default mobile size as 375px
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
       },
     },
     extend: {

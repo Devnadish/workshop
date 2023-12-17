@@ -28,7 +28,6 @@ export default ClientSelectComponent;
 
 
 // const ClientSelectComponent = ({ options, value, onChange }) => {
-//   console.log(options);
 //   return (
 //     <Select
 //       className="block w-full text-black" // Apply custom styling class

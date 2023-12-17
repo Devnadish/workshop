@@ -37,7 +37,6 @@ function Expensis({ setExpname }) {
 
   const NewItem = ({ id }) => {
     const handcategory = async (data) => {
-      console.log(data);
       const cat = data.get("category");
       const add = await addCategory(cat);
       const expData = await getAllExpencies();

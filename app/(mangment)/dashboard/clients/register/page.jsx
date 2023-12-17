@@ -10,11 +10,12 @@ import { Mail, Phone, User } from "lucide-react";
 import INPUT from "@/components/shared/INPUT";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
+import DocementNO from "@/components/shared/DocementNO";
 
 
 
 function RegisterPage() {
-  const [CID, SETCID] = useState("");
+  const [CID, SETCID] = useState("#");
    const [image, setImage] = useState(null);
      const fileInputRef = useRef(null);
 
@@ -38,7 +39,6 @@ function RegisterPage() {
       email,
     };
     const validation = validateForm(newClient);
-    console.log(validation);
     if (!validation.isValid) {
 toast.error(validation.errorMessage)
       return;
@@ -65,10 +65,8 @@ toast.error(validation.errorMessage)
         id="newClientForm"
         className="flex flex-col gap-4 p-4 w-full text-white items-center justify-center"
       >
-        <div className="border px-4 rounded-md py-1 bg-black/30 flex items-center gap-4">
-          <p>رقم العميل</p>
-          <p className="font-bold text-2xl">{CID}</p>
-        </div>
+        <DocementNO DocID={CID} />
+
         <INPUT
           type="text"
           name="name"
@@ -80,7 +78,7 @@ toast.error(validation.errorMessage)
           name="mobile"
           placeholder="رقم الجوال"
           icon={<Phone />}
-          maxlength="10"
+          maxLength="10"
         />
         <INPUT
           type="email"
@@ -88,12 +86,22 @@ toast.error(validation.errorMessage)
           placeholder="الايميل"
           icon={<Mail />}
         />
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 border w-40 ">
           <label htmlFor="imageUpload">
             {image ? (
-              <img src={URL.createObjectURL(image)} alt="Uploaded Image" />
+              <Image
+                src={URL.createObjectURL(image)}
+                alt="Uploaded Image"
+                width={160}
+                height={160}
+              />
             ) : (
-              <img src="/assets/noavatar.png" alt="Placeholder Image" />
+              <Image
+                src="/assets/noavatar.png"
+                alt="Placeholder Image"
+                width={160}
+                height={160}
+              />
             )}
           </label>
           <input

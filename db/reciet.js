@@ -2,9 +2,7 @@
 import db from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-
 export async function saveRecietVoucher(reciptData) {
-  console.log(reciptData);
   try {
     const RecietCounter = await AddRecietCounter();
     const docDate = new Date(reciptData.docDate).toISOString(); // Convert to ISO-8601 format
@@ -23,13 +21,28 @@ export async function saveRecietVoucher(reciptData) {
 }
 
 
+export async function updateClientReceiptBalance(Cid, amount) {
+  const existingRecord = await db.client.findUnique({
+    where: { clientIDs: Cid },
+  });
 
+  if (!existingRecord.recipts) {
+    // If no receipts exist, set the receipt count to the provided amount
+    await db.client.update({
+      where: { clientIDs: Cid },
+      data: { recipts: amount },
+    });
 
-
-
-
-
-
+  } else {
+    // If receipts exist, add the provided amount to the existing receipt count
+    const updatedAmount = existingRecord.recipts + amount;
+    await db.client.update({
+      where: { clientIDs: Cid },
+      data: { recipts: updatedAmount },
+    });
+  }
+  return {msg:"تم تعديل رصيد العميل بنجاح"}
+}
 
 
 
@@ -38,6 +51,7 @@ export const AddRecietCounter = async () => {
 
   // Check if a record exists in the counters table
   const existingRecord = await db.counters.findFirst();
+
 
   if (existingRecord) {
     // If a record exists, update the Reciet field by incrementing its value by 1
@@ -57,3 +71,4 @@ export const AddRecietCounter = async () => {
   // Use the updatedReciet variable to access the updated Reciet value
   return updatedReciet;
 };
+export const NewReciptFromFixingCard = async () => {};

@@ -15,21 +15,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" dir="rtl">
-      <body className="flex flex-col items-center  justify-center w-full max-w-6xl  m-auto">
-        {/* <div className="relative grid  grid-rows-[auto_minmax(0,1fr)]  place-items-center w-full  max-w-6xl">
-          <Navbar />
-          <div className="overflow-auto w-full ">
-            <main id="child" className="bg-zinc-800  min-h-[75vh] ">
-              {children}
-            </main>
-          </div>
-        </div> */}
+      <body className="flex flex-col items-center  justify-center w-full max-w-6xl  m-auto bg-gray-500">
 
         <div className="relative flex flex-col min-h-screen w-full">
           <Navbar />
-
           {/* <main className="container flex-grow bg-zinc-600 w-full text-white "> */}
-          <main className="container flex-grow bg-zinc-600 max-w-[375px] min-w-[375px]  w-full text-white ">
+          <main className="flex  flex-grow bg-zinc-600   w-full text-white ">
             {children}
             <Toaster
               position="bottom-center "
