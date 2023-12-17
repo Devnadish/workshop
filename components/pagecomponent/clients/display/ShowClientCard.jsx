@@ -12,9 +12,9 @@ function ShowClientCard({ clients }) {
 
 
   return (
-    <ScrollArea className="h-[65vh] w-full rounded-md   flex items-center justify-center p-2 gap-2   ">
-      <div className=" flex flex-col  items-center justify-center max-w-full min-w-full  gap-4">
-        {clients.map((client) => (
+    <ScrollArea className=" h-[65vh] w-full rounded-md   flex items-center justify-center p-2 gap-2   ">
+      <div className=" container flex flex-col  items-center justify-center max-w-full min-w-full  gap-4">
+        {clients?.map((client) => (
           <div
             className="border shadow-lg rounded-lg  flex gap-3  flex-col items-center justify-center  overflow-hidden bg-white/90 text-black min-w-full  "
             key={client.id}
@@ -25,7 +25,6 @@ function ShowClientCard({ clients }) {
               date={getTimeElapsed(client.updatedDate)}
               phone={client.mobile}
               cars={client.carsData}
-
             />
             <CardBalance
               balance={client.balance}

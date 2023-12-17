@@ -66,16 +66,16 @@ setSelectedFixOrderId}) {
 
   return (
     <div className="border border-white/40 p-3 rounded-md bg-black/20 flex flex-col gap-4 items-center justify-center w-full">
-      <div className="flex gap-4 w-full items-center justify-center">
-        <div className="flex  items-center justify-end flex-1 gap-1   border rounded-sm">
+      <div className="flex gap-4 w-full items-center justify-center flex-col ">
+        <div className="flex  items-center justify-end  gap-1   border rounded-sm w-full">
           <User strokeWidth={1.5} />
           <select
             name="fromID"
             value={selectedClientId}
             onChange={handleClientChange}
-            className="border border-gray-300 rounded h-8 text-sm w-[100px]  px-4  text-black focus:outline-none focus:border-blue-500"
+            className="border border-gray-300 rounded h-8 text-sm w-full  px-4  text-black focus:outline-none focus:border-blue-500"
           >
-            <option value=""> </option>
+            <option value=""> اختار العميل</option>
             {fixOrdersData.map((client) => (
               <option key={client.clientId} value={client.clientId}>
                 {client.clientId}
@@ -84,17 +84,17 @@ setSelectedFixOrderId}) {
           </select>
         </div>
 
-        <div className="flex  items-center justify-end flex-1 gap-1   border rounded-sm">
+        <div className="flex  items-center justify-end flex-1 gap-1   border rounded-sm w-full">
           <Wrench strokeWidth={1.5} />
 
           <select
             name="fixingID"
             value={selectedFixOrderId}
             onChange={handleFixOrderChange}
-            className="border border-gray-300 h-8 w-[100px] rounded px-4  text-black focus:outline-none focus:border-blue-500"
+            className="border border-gray-300 h-8 w-full rounded px-4  text-black focus:outline-none focus:border-blue-500"
             disabled={!selectedClientId}
           >
-            <option value=""></option>
+            <option value="">كرت الاصلاح</option>
             {fixOrdersData
               .find((client) => client.clientId === parseInt(selectedClientId))
               ?.fixOrderIds.map((fixOrderId) => (

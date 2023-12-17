@@ -22,6 +22,7 @@ module.exports = {
         md: "1.5rem",
         lg: "2rem",
       },
+
       screens: {
         // sm: "100%",
         // md: "100%",

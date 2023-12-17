@@ -63,7 +63,7 @@ const handleSubmit = async (data) => {
 };
 
   return (
-    <>
+    <div className="container flex flex-col w-full">
       <PageTitle title="سند قبض" />
 
       <form
@@ -110,7 +110,7 @@ const handleSubmit = async (data) => {
         />
 
         {/* description */}
-        <div className="relative   w-full mt-2 ">
+        <div className="relative   w-full mt-8 ">
           <Label
             htmlFor="description"
             className="absolute -top-5 left-2  bg-yellow-300 text-black text-md px-3 rounded-md font-normal py-1"
@@ -133,7 +133,7 @@ const handleSubmit = async (data) => {
           </Button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 export default RecietVoucher;

@@ -65,7 +65,7 @@ export async function fetchClientNames() {
 export async function getAllClients() {
   try {
     const clients = await db.client.findMany({
-      select: { id:true,name: true, clientIDs: true },
+      select: { id: true, name: true, clientIDs: true, payment: true, recipts:true },
     });
     const clientsWithCars = await Promise.all(
       clients.map(async (client) => {
@@ -73,7 +73,7 @@ export async function getAllClients() {
           where: {
             CId: client.id,
           },
-          select: { id: true,CarNo:true, carName: true},
+          select: { id: true, CarNo: true, carName: true},
         });
         revalidatePath("/dashboard/clients/display");
 

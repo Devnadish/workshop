@@ -23,22 +23,24 @@ function BuregerMenu({ navigation, lang }) {
       </Button>
       <Sheet open={open} onOpenChange={setOpen} onClose={handleClose}>
         <SheetContent className="p-8">
-          {menuItem.map((menu) => {
-            return (
-              <Link
-                className="flex items-center gap-2 p-4 border-b hover:bg-green-500 hover:text-primary-foreground"
-                key={menu.id}
-                href={menu.href}
-                onClick={handleClose}
-              >
-                {menu.icon}
-                {menu.title}
-              </Link>
-            );
-          })}
-          <div className="flex flex-col gap-4 items-center justify-center bg-yellow-300 text-2xl p-4 rounded-md mt-4 border-4 border-dashed border-blue-400 shadow-lg">
+          <div className="mt-8">
+            {menuItem.map((menu) => {
+              return (
+                <Link
+                  className="flex items-center gap-2 p-4 border-b hover:bg-green-500 hover:text-primary-foreground"
+                  key={menu.id}
+                  href={menu.href}
+                  onClick={handleClose}
+                >
+                  {menu.icon}
+                  {menu.title}
+                </Link>
+              );
+            })}
+          </div>
+          <div className="flex flex-col gap-4 items-center justify-center bg-yellow-300 text-xl p-4 rounded-md mt-4 border-4 border-dashed border-blue-400 shadow-lg">
             <p>تحت اشراف المهندس</p>
-            <p className="text-4xl font-bold">معاذ الشريف</p>
+            <p className="text-2xl font-bold">معاذ الشريف</p>
             <p>جوال : 0509723508</p>
           </div>
         </SheetContent>

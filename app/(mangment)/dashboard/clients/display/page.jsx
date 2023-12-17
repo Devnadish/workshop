@@ -7,6 +7,7 @@ export const dynamic = "force-dynamic";
 
 const ClientList = async({ clients1, onEdit, onDelete }) => {
 const clients = await getAllClients();
+console.log(clients);
 
   return (
       <Filtering clientsData={clients} />

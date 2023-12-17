@@ -1,14 +1,11 @@
 import {
   BadgeDollarSign,
   Car,
-  CarFront,
   CarIcon,
   FileCheck,
   FileEdit,
   FilePlus,
   Frown,
-  Image,
-  MapPin,
   MessageCircle,
   PersonStanding,
   PlusCircle,
@@ -30,7 +27,7 @@ import { PersonIcon } from "@radix-ui/react-icons";
 export default function Home() {
   return (
     // <main>
-    <main className="flex  flex-wrap  gap-6 items-center justify-center p-4   w-full   ">
+    <main className=" flex  flex-wrap  gap-6 items-center justify-center p-4   w-full   ">
       <Clients/>
       <Maintinance />
       <Finince />
@@ -41,7 +38,7 @@ export default function Home() {
 const Maintinance = () => {
   return (
     <>
-      <div className="w-[70%] border flex  flex-col items-center text-white">
+      <div className="w-full border flex  flex-col items-center text-white">
         <div className="flex items-center justify-around w-full bg-green-600">
           <p className=" text-xl  font-bold flex items-center justify-center">
             كرت صيانة
@@ -98,7 +95,7 @@ const Maintinance = () => {
 const Finince = () => {
   return (
     <>
-      <div className="w-[70%] border flex  flex-col items-center text-white">
+      <div className="w-full border flex  flex-col items-center text-white">
         <div className="flex items-center justify-around w-full bg-blue-500">
           <p className=" text-xl  font-bold flex items-center justify-center">
             الحركة المالية
@@ -161,7 +158,7 @@ const Finince = () => {
 const Clients = () => {
   return (
     <>
-      <div className="w-[70%] border border-blue-300 rounded-md flex  flex-col items-center text-white">
+      <div className="w-full border border-blue-300 rounded-md flex  flex-col items-center text-white">
         <div className="flex items-center justify-around w-full bg-blue-800">
           <p className=" text-xl  font-bold flex items-center justify-center py-2 rounded-md">
             العملاء

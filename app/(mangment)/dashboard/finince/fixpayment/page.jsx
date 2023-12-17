@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { savePaymentVoucher, updateClientPaymetBalance } from "@/db/payment";
 import { fixValidateForm, validateForm } from "@/lib/validation/payment";
 import { Label } from "@radix-ui/react-label";
-import { CircleDollarSign, FileDigit } from "lucide-react";
+import { CircleDollarSign, FileDigit, Wrench } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -66,8 +66,8 @@ const pay= updateClientPaymetBalance(fromID, amount)
   };
 
   return (
-    <>
-      <PageTitle title="سند صرف تشغيلي" />
+    <div className="container flex flex-col w-full items-center justify-center">
+      <PageTitle title="سند صرف تشغيلي" icon={<Wrench />} />
       <form
         id="paymentForm"
         className="  w-full  flex flex-col gap-4 items-center justify-center"
@@ -75,18 +75,17 @@ const pay= updateClientPaymetBalance(fromID, amount)
       >
         <div className="mb-4 flex items-center justify-between  gap-4">
           <DocementNO DocID={PymentNo} />
-            <INPUT
-              placeholder={"المبلغ"}
-              name={"amount"}
-              type={"number"}
-              icon={<CircleDollarSign />}
-              cN="flex-1"
-              h="h-[50px]"
-              w="w-[200px]"
-              textsize="text-[1.5rem]"
-              bgColor="bg-red-300"
-            />
-
+          <INPUT
+            placeholder={"المبلغ"}
+            name={"amount"}
+            type={"number"}
+            icon={<CircleDollarSign />}
+            cN="flex-1"
+            h="h-[50px]"
+            w="w-[200px]"
+            textsize="text-[1.5rem]"
+            bgColor="bg-red-300"
+          />
         </div>
 
         <div className="flex w-full flex-col items-center justify-between gap-4">
@@ -123,7 +122,7 @@ const pay= updateClientPaymetBalance(fromID, amount)
           className="border border-gray-300 rounded px-4 py-2 w-full"
         />
 
-        <div className="flex items-center justify-around">
+        <div className="flex items-center justify-around w-full">
           <Submit />
           <Button
             type="button"
@@ -135,7 +134,7 @@ const pay= updateClientPaymetBalance(fromID, amount)
           </Button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

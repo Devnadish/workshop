@@ -58,7 +58,7 @@ toast.error(validation.errorMessage)
   };
 
   return (
-    <>
+    <div className="flex flex-col w-full">
       <PageTitle title={"تاسيس عميل جديد"} icon={<User />} />
       <form
         action={handleSubmit}
@@ -123,7 +123,7 @@ toast.error(validation.errorMessage)
           </Button>
         </div>
       </form>
-    </>
+    </div>
   );
 }
 

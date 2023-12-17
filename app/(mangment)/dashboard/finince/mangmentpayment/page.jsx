@@ -45,7 +45,7 @@ const PaymentVoucherForm = () => {
   };
 
   return (
-    <>
+    <div className="container flex flex-col w-full items-center justify-center">
       <PageTitle title="سند صرف اداري" />
       <form
         id="paymentForm"
@@ -90,7 +90,7 @@ const PaymentVoucherForm = () => {
           className="border border-gray-300 rounded px-4 py-2 w-full"
         />
 
-        <div className="flex items-center justify-around">
+        <div className="flex items-center justify-around w-full">
           <Submit />
           <Button
             type="button"
@@ -102,7 +102,7 @@ const PaymentVoucherForm = () => {
           </Button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 
