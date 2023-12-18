@@ -112,7 +112,7 @@ const Intro = () => {
     <>
       <div className="container flex items-center justify-center flex-col bg-white shadow-xl rounded-lg  mt-10 p-4 text-black ">
         <div className="flex items-center justify-between w-full">
-          <p className="text-2xl font-extrabold">سيارتك مركز اهتمامنا</p>
+          <p className="text-xl font-extrabold">سيارتك مركز اهتمامنا</p>
           <Image
             src="/gallary/vector.jpg"
             width={80}
