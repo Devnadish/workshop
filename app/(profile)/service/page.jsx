@@ -10,9 +10,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function ServicePage() {
   return (
-    <div className="flex items-center justify-center mt-3 gap-4">
-      <Tabs defaultValue="mk" className="w-[400px] flex items-center flex-col ">
-        <TabsList className="gap-4 flex flex-row bg-red-500 h-full py-2 px-2 text-white ">
+    <div className=" flex items-center justify-center mt-3 gap-4 w-full p-4 ">
+      <Tabs defaultValue="mk" className="w-full flex items-center flex-col ">
+        <TabsList className="gap-4 flex flex-row bg-red-500 h-full py-2 px-2 text-white w-full ">
           <TabsTrigger value="general">عام</TabsTrigger>
           <TabsTrigger value="ac">تكييف</TabsTrigger>
           <TabsTrigger value="elc">كهرباء</TabsTrigger>

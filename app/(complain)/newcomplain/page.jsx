@@ -5,7 +5,7 @@ import React from "react";
 
 function page() {
   return (
-    <div className="text-white flex flex-col items-center justify-center gap-4 mt-4 ">
+    <div className="text-white flex flex-col items-center justify-center gap-4 mt-4 w-full ">
       <div className="flex items-center gap-2">
         <p className="bg-primary px-10 py-2 rounded-md ">
           نحن نهتم بشكواك أو ملاحظاتك.

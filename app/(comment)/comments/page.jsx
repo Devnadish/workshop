@@ -9,7 +9,7 @@ import Link from "next/link";
 
 function CommentsPage() {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-full">
       <div className="flex items-center  w-[70%] text-bg-primary gap-4">
         <Link
           href={"/newcomment"}

@@ -10,7 +10,7 @@ function Appoentment() {
   const [date, setDate] = useState(new Date());
 
   return (
-    <div className="flex items-center justify-center mt-2 flex-col text-white gap-4">
+    <div className=" flex items-center justify-center flex-col text-white gap-4 w-full ">
       <p className="bg-yellow-500 text-white flex items-center gap-8  font-bold px-8 py-1 rounded-md ">
         حجز الموعد مكسب لوقتك
       </p>
