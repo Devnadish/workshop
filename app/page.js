@@ -1,14 +1,21 @@
-import { Image, MapPin, MessageCircle, UserPlus, Wrench } from "lucide-react";
+import { Image as ImageIcon, MapPin, MessageCircle, UserPlus, Wrench } from "lucide-react";
 import Link from "next/link";
-
+import Image from "next/image";
 export default function Home() {
   return (
     // <main>
-    <main className="flex  flex-col  gap-6 items-center justify-center px-4 py-3   w-full   ">
-      <Register />
+    <main className="flex  flex-col  gap-6 items-center justify-start px-4 py-3   w-full   ">
+      <div className="relative container w-full flex flex-col items-center justify-center">
+
+      <Hero/>
       <About />
-      <Comment />
-      <SuperVision />
+      </div>
+      <Intro/>
+      <Services/>
+
+      {/* <Register /> */}
+      {/* <Comment /> */}
+      {/* <SuperVision /> */}
     </main>
   );
 }
@@ -28,29 +35,21 @@ const Register = () => {
 };
 
 const About = () => {
+  let stylX="w-1/3 flex-col gap-2  bg-orange-400/80 rounded  h-28  flex items-center justify-center text-white/80 text-bold"
   return (
     <>
-      <div className="w-10/12 h-16 rounded-md flex gap-4 items-center justify-between text-white/80 ">
-        <Link
-          href={"/service"}
-          className="w-1/3 flex-col gap-2  bg-orange-400 h-20 rounded-md flex items-center justify-center text-white/80 text-bold"
-        >
-          خدماتنا
-          <Wrench size={34} />
+      <div className="absolute -bottom-7 w-10/12 h-16 rounded-md flex gap-4 items-center justify-between text-white/80 ">
+        <Link href={"/service"} className={stylX}>
+          {/* خدماتنا */}
+          <Wrench size={50} />
         </Link>
-        <Link
-          href={"/location"}
-          className="w-1/3 bg-orange-400  gap-2  flex-col h-20 rounded-md flex items-center justify-center text-white/80"
-        >
-          موقعنا
-          <MapPin size={34} />
+        <Link href={"/location"} className={stylX}>
+          {/* موقعنا */}
+          <MapPin size={50} />
         </Link>
-        <Link
-          href={"/gallary"}
-          className="w-1/3 bg-orange-400 gap-2 h-20 flex-col rounded-md flex items-center justify-center text-white/80"
-        >
-          لحظاتنا
-          <Image size={34} alt="khalid nadish" />
+        <Link href={"/gallary"} className={stylX}>
+          {/* لحظاتنا */}
+          <ImageIcon size={50} alt="khalid nadish" />
         </Link>
       </div>
     </>
@@ -81,6 +80,57 @@ const SuperVision = () => {
         <p className="text-md">تحت اشراف المهندس</p>
         <p className="text-xl font-bold">معاذ الشريف</p>
         <p>جوال : 0509723508</p>
+      </div>
+    </>
+  );
+};
+
+
+const Hero=()=>{return (
+  <>
+    <Image
+      src="/gallary/2.jpg"
+      width={357}
+      height={200}
+      alt="ورشة الصحفي لصيانة السيارات"
+      priority
+      className=" border  border-orange-400 rounded"
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    />
+  </>
+);}
+
+
+const Intro=()=>{return (
+  <>
+    <div className="container  bg-white shadow-xl rounded-lg  mt-10 p-4 text-black ">
+      <h1 className="font-semibold ">
+        بغض النظر عن المشكلة، فإن فريقنا . يأخذ الوقت الكافي للاستماع إليك حقًا،
+        عميلنا العزيز. نحن نقدم عمليات فحص رقمية بأحدث الاجهزه حتى تتمكن من فهم
+        المشكلات التي نراها تمامًا وتشعر بالثقة في جميع قرارات إصلاح/خدمة
+        السيارات الخاصة بك. نحن نعلم قيمة العمل الجاد، لأننا لن نرتاح حتى تؤدي
+        سيارتك الأداء الأمثل. حدد موعدًا اليوم لإصلاح أو صيانة السيارات. نحن
+        موجودون في مكان مناسب في جده شارع فلسطين تقاطع الصحافة وساعات العمل
+        لدينا هي من السبت إلى الجمعة: 9:00 صباحًا إلى 11:00 مساءً، الجمعة : لعد
+        صلاة العصر.
+      </h1>
+    </div>
+  </>
+);}
+
+const Services = () => {
+  return (
+    <>
+      <div className="mb-16">
+        <Image
+          src="/gallary/serveis.jpg"
+          width={357}
+          height={200}
+          alt="ورشة الصحفي لصيانة السيارات"
+          // priority
+          className=" border  border-orange-400 rounded"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </div>
     </>
   );

@@ -1,11 +1,12 @@
 "use client"
 import React from "react";
-import { Car, LogIn, PhoneCallIcon } from "lucide-react";
+import { Angry, Car, Lightbulb, LogIn, PhoneCallIcon, Smile } from "lucide-react";
+import { PiEngineLight } from "react-icons/pi";
 import Link from "next/link";
 import { Button } from "../ui/button";
 function Footer() {
   return (
-    <footer className="sticky max-w-6xl  bottom-0 left-0 flex  items-center w-full  justify-between px-4 bg-orange-500 h-16 z-50  ">
+    <footer className="sticky bottom-5   flex items-center justify-between px-4 bg-orange-500/50 h-16 z-50 w-[80%] self-center mx-auto rounded-2xl">
       {/* <Image
         src="/vercel.svg"
         alt="Vercel Logo"
@@ -14,25 +15,41 @@ function Footer() {
         height={24}
         priority
       /> */}
+      {/* <Wrench strokeWidth={1.5} /> */}
+
       <Link
         href={"/report"}
-        className="flex items-center gap-4 text-primary-foreground border rounded-md px-4 bg-primary shadow-md"
+        className="w-12 h-12 rounded-full flex items-center justify-center bg-black shadow-lg text-yellow-300"
       >
-        <Car size={34} />
-        <p>تقريري</p>
+        <PiEngineLight size={35} />
+        {/* <p>تقريري</p> */}
       </Link>
-      <Button
-        onClick={() => (window.location.href = "tel:1234567890")}
-        className="border w-12 h-12 rounded-full flex items-center justify-center bg-yellow-300 shadow-lg text-black"
-      >
-        <PhoneCallIcon size={45}/>
-      </Button>
+      <div className="flex items-end gap-1">
+        <Button
+          onClick={() => (window.location.href = "tel:1234567890")}
+          className="p-0  w-8 h-8 rounded-full flex items-center justify-center bg-blue-400 shadow-lg text-white"
+        >
+          <Lightbulb size={20} />
+        </Button>
+        <Button
+          onClick={() => (window.location.href = "tel:1234567890")}
+          className="border p-0  w-12 h-12 rounded-full flex items-center justify-center bg-green-400 shadow-lg text-black"
+        >
+          <PhoneCallIcon size={25} />
+        </Button>
+        <Button
+          onClick={() => (window.location.href = "tel:1234567890")}
+          className=" p-0  w-8 h-8 rounded-full flex items-center justify-center bg-red-600 shadow-lg text-white"
+        >
+          <Angry size={25} strokeWidth={1} />
+        </Button>
+      </div>
       <Link
         href={"/login"}
-        className="flex items-center gap-4  border rounded-md px-4 bg-destructive  text-primary-foreground  shadow-md py-2 "
+        className="border w-12 h-12 rounded-full flex items-center justify-center bg-yellow-300 shadow-lg text-black"
       >
-        <p>دخول</p>
-        <LogIn size={25} className="text-white" />
+        {/* <p>دخول</p> */}
+        <LogIn size={25} className="text-black" strokeWidth={1} />
       </Link>
     </footer>
   );
