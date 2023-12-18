@@ -6,7 +6,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from '@/components/ui/button';
 import CallClient from '@/components/shared/CallClient';
 import Avatar from '@/components/shared/Avatar';
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 import { toast } from "react-hot-toast";
 function ShowClientCard({ clients }) {
 

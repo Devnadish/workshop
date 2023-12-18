@@ -93,7 +93,7 @@ useEffect(() => {
   if (selectedOption) {
     getClientInfo();
   }
-}, [selectedOption]);
+}, [selectedOption, getClientInfo]);
   return (
     <div className="flex items-center justify-center flex-col w-full ">
       <PageTitle title={"اضافة سيارة"} icon={<Car />} />

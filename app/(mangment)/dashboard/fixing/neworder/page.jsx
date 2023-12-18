@@ -1,19 +1,23 @@
-import NewFixOrder from '@/components/pagecomponent/fixing/NewFixOrder';
-import React from 'react'
+import NewFixOrder from "@/components/pagecomponent/fixing/NewFixOrder";
+import React from "react";
 
-import { fetchClientNames, getAllClients } from "@/db/clients";
+import { getAllClients } from "@/db/clients";
 
 async function NewFix() {
-  const client = await getAllClients();
-  const clientsWithCars = client.filter(
-    (client) => client.carsData.length > 0
-  );
+  try {
+    const client = await getAllClients();
+    let clientsWithCars = [];
 
-  return (
-    <div>
+    clientsWithCars = client.filter((client) => client.carsData.length > 0);
+
+    return (
+      // <div>
       <NewFixOrder clientsWithCars={clientsWithCars} />
-    </div>
-  );
+      // </div>
+    );
+  } catch (error) {
+    // Handle error
+  }
 }
 
 export default NewFix;

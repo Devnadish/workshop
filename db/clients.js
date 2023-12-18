@@ -75,7 +75,7 @@ export async function getAllClients() {
           },
           select: { id: true, CarNo: true, carName: true},
         });
-        revalidatePath("/dashboard/clients/display");
+        // revalidatePath("/dashboard/clients/display");
 
         return { ...client, carsData };
       })
