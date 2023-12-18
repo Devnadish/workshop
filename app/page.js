@@ -1,4 +1,10 @@
-import { Image as ImageIcon, MapPin, MessageCircle, UserPlus, Wrench } from "lucide-react";
+import {
+  Image as ImageIcon,
+  MapPin,
+  MessageCircle,
+  UserPlus,
+  Wrench,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 export default function Home() {
@@ -6,12 +12,11 @@ export default function Home() {
     // <main>
     <main className="flex  flex-col  gap-6 items-center justify-start px-4 py-3   w-full   ">
       <div className="relative container w-full flex flex-col items-center justify-center">
-
-      <Hero/>
-      <About />
+        <Hero />
+        <About />
       </div>
-      <Intro/>
-      <Services/>
+      <Intro />
+      <Services />
 
       {/* <Register /> */}
       {/* <Comment /> */}
@@ -33,23 +38,24 @@ const Register = () => {
     </>
   );
 };
-
 const About = () => {
-  let stylX="w-1/3 flex-col gap-2  bg-orange-400/80 rounded  h-28  flex items-center justify-center text-white/80 text-bold"
+let stylX =
+  "w-16 flex-col gap-2  bg-orange-400 rounded-full  h-16  flex items-center justify-center text-slate-800 text-bold";
+
   return (
     <>
       <div className="absolute -bottom-7 w-10/12 h-16 rounded-md flex gap-4 items-center justify-between text-white/80 ">
         <Link href={"/service"} className={stylX}>
           {/* خدماتنا */}
-          <Wrench size={50} />
+          <Wrench size={30} />
         </Link>
         <Link href={"/location"} className={stylX}>
           {/* موقعنا */}
-          <MapPin size={50} />
+          <MapPin size={30} />
         </Link>
         <Link href={"/gallary"} className={stylX}>
           {/* لحظاتنا */}
-          <ImageIcon size={50} alt="khalid nadish" />
+          <ImageIcon size={30} alt="khalid nadish" />
         </Link>
       </div>
     </>
@@ -85,38 +91,52 @@ const SuperVision = () => {
   );
 };
 
+const Hero = () => {
+  return (
+    <>
+      <Image
+        src="/gallary/2.jpg"
+        width={357}
+        height={200}
+        alt="ورشة الصحفي لصيانة السيارات"
+        priority
+        className=" border  border-orange-400 rounded"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      />
+    </>
+  );
+};
 
-const Hero=()=>{return (
-  <>
-    <Image
-      src="/gallary/2.jpg"
-      width={357}
-      height={200}
-      alt="ورشة الصحفي لصيانة السيارات"
-      priority
-      className=" border  border-orange-400 rounded"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-    />
-  </>
-);}
+const Intro = () => {
+  return (
+    <>
+      <div className="container flex items-center justify-center flex-col bg-white shadow-xl rounded-lg  mt-10 p-4 text-black ">
+        <div className="flex items-center justify-between w-full">
+          <p className="text-2xl font-extrabold">سيارتك مركز اهتمامنا</p>
+          <Image
+            src="/gallary/vector.jpg"
+            width={80}
+            height={100}
+            alt="ورشة الصحفي لصيانة السيارات"
+            // priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
 
-
-const Intro=()=>{return (
-  <>
-    <div className="container  bg-white shadow-xl rounded-lg  mt-10 p-4 text-black ">
-      <h1 className="font-semibold ">
-        بغض النظر عن المشكلة، فإن فريقنا . يأخذ الوقت الكافي للاستماع إليك حقًا،
-        عميلنا العزيز. نحن نقدم عمليات فحص رقمية بأحدث الاجهزه حتى تتمكن من فهم
-        المشكلات التي نراها تمامًا وتشعر بالثقة في جميع قرارات إصلاح/خدمة
-        السيارات الخاصة بك. نحن نعلم قيمة العمل الجاد، لأننا لن نرتاح حتى تؤدي
-        سيارتك الأداء الأمثل. حدد موعدًا اليوم لإصلاح أو صيانة السيارات. نحن
-        موجودون في مكان مناسب في جده شارع فلسطين تقاطع الصحافة وساعات العمل
-        لدينا هي من السبت إلى الجمعة: 9:00 صباحًا إلى 11:00 مساءً، الجمعة : لعد
-        صلاة العصر.
-      </h1>
-    </div>
-  </>
-);}
+        <h1 className="font-extrabold">
+          بغض النظر عن المشكلة، فإن فريقنا . يأخذ الوقت الكافي للاستماع إليك
+          حقًا، عميلنا العزيز. نحن نقدم عمليات فحص رقمية بأحدث الاجهزه حتى تتمكن
+          من فهم المشكلات التي نراها تمامًا وتشعر بالثقة في جميع قرارات
+          إصلاح/خدمة السيارات الخاصة بك. نحن نعلم قيمة العمل الجاد، لأننا لن
+          نرتاح حتى تؤدي سيارتك الأداء الأمثل. حدد موعدًا اليوم لإصلاح أو صيانة
+          السيارات. نحن موجودون في مكان مناسب في جده شارع فلسطين تقاطع الصحافة
+          وساعات العمل لدينا هي من السبت إلى الجمعة: 9:00 صباحًا إلى 11:00
+          مساءً، الجمعة : لعد صلاة العصر.
+        </h1>
+      </div>
+    </>
+  );
+};
 
 const Services = () => {
   return (

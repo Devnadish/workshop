@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
         <div className="relative flex flex-col min-h-screen w-full">
           <Navbar />
           {/* <main className="container flex-grow bg-zinc-600 w-full text-white "> */}
-          <main className="flex  flex-grow bg-slate-100   w-full text-white ">
+          <main className="flex  flex-grow bg-slate-800   w-full text-white ">
             {children}
             <Toaster
               position="bottom-center "
