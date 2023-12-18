@@ -7,21 +7,26 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { carLogo } from "@/constant/carlogo";
 export default function Home() {
   return (
     // <main>
+      <ScrollArea  className="h-[80vh] w-full mt-4  rounded-md  ">
     <main className="flex  flex-col  gap-6 items-center justify-start px-4 py-3   w-full   ">
-      <div className="relative container w-full flex flex-col items-center justify-center">
-        <Hero />
-        <About />
-      </div>
-      <Intro />
-      <Services />
+        <div className="relative container w-full flex flex-col items-center justify-center">
+          <Hero />
+          <About />
+        </div>
+        <Intro />
+        <Services />
+        <Logos />
 
       {/* <Register /> */}
       {/* <Comment /> */}
       {/* <SuperVision /> */}
     </main>
+      </ScrollArea>
   );
 }
 
@@ -141,7 +146,6 @@ const Intro = () => {
 const Services = () => {
   return (
     <>
-      <div className="mb-16">
         <Image
           src="/gallary/serveis.jpg"
           width={357}
@@ -151,6 +155,29 @@ const Services = () => {
           className=" border  border-orange-400 rounded"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
+    </>
+  );
+};
+const Logos = () => {
+
+  return (
+    <>
+        {/* <p className="text-white text-2xl font-extrabold">خبرتنا</p> */}
+      <div className="flex items-center justify-center gap-2 flex-wrap w-full">
+        {carLogo.map((imgy,index) => {
+          return (
+              <Image
+              key={index}
+                src={`/carlogo/${imgy.name}.webp`}
+                width={116}
+                height={116}
+                alt={imgy.alt}
+                priority
+                className=" border-4  border-white rounded"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+          );
+        })}
       </div>
     </>
   );
