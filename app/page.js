@@ -9,24 +9,27 @@ import Link from "next/link";
 import Image from "next/image";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { carLogo } from "@/constant/carlogo";
+import Testmonial from "@/components/shared/Testmonial";
+
 export default function Home() {
   return (
     // <main>
-      <ScrollArea  className="h-[80vh] w-full mt-4  rounded-md  ">
-    <main className="flex  flex-col  gap-6 items-center justify-start px-4 py-3   w-full   ">
+    <ScrollArea className="h-[80vh] w-full mt-4  rounded-md  ">
+      <main className="flex  flex-col  gap-6 items-center justify-start px-4 py-3   w-full   ">
         <div className="relative container w-full flex flex-col items-center justify-center">
           <Hero />
           <About />
         </div>
+        {/* <AddComment/> */}
         <Intro />
+        <Testmonial />
         <Services />
         <Logos />
-
-      {/* <Register /> */}
-      {/* <Comment /> */}
-      {/* <SuperVision /> */}
-    </main>
-      </ScrollArea>
+        {/* <Register /> */}
+        {/* <Comment /> */}
+        {/* <SuperVision /> */}
+      </main>
+    </ScrollArea>
   );
 }
 
@@ -62,6 +65,17 @@ let stylX =
           {/* لحظاتنا */}
           <ImageIcon size={30} alt="khalid nadish" />
         </Link>
+
+        <Image
+          src="/images/mTranpernt.png"
+          width={0}
+          height={0}
+          style={{ width: "64px", height: "64px" }}
+          alt="ورشة الصحفي لصيانة السيارات"
+          priority
+          className="flex-col  bg-orange-400 rounded-full  "
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </div>
     </>
   );
