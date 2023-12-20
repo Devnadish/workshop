@@ -70,7 +70,7 @@ let stylX =
           {/* لحظاتنا */}
           <ImageIcon size={30} alt="khalid nadish" />
         </Link>
-
+ <Link href={"/team"} className={stylX}>
         <Image
           src="/images/mTranpernt.png"
           width={0}
@@ -81,7 +81,9 @@ let stylX =
           className="flex-col  bg-orange-400 rounded-full  "
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
+        </Link>
       </div>
+
     </>
   );
 };
