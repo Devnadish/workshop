@@ -7,29 +7,34 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { carLogo } from "@/constant/carlogo";
-import Testmonial from "@/components/shared/Testmonial";
+import Testmonial from "@/components/pagecomponent/fornt/home/Testmonial";
+import { getAllComments } from "@/db/clients";
 
-export default function Home() {
+
+export default async function Home() {
+  const getCommnts = await getAllComments()
   return (
-    // <main>
-    <ScrollArea className="h-[80vh] w-full mt-4  rounded-md  ">
-      <main className="flex  flex-col  gap-6 items-center justify-start px-4 py-3   w-full   ">
-        <div className="relative container w-full flex flex-col items-center justify-center">
-          <Hero />
-          <About />
-        </div>
-        {/* <AddComment/> */}
-        <Intro />
-        <Testmonial />
+    <main className="flex  flex-col  gap-6 items-center justify-start px-4 py-3   w-full   ">
+      <div className="relative container w-full flex flex-col items-center justify-center">
+        <Hero />
+        <About />
+      </div>
+      {/* <AddComment/> */}
+      <Intro />
+      <Testmonial comments={getCommnts} />
+      <div
+        className="flex flex-col gap-4 items-center justify-center md:flex-row
+        "
+      >
         <Services />
         <Logos />
-        {/* <Register /> */}
-        {/* <Comment /> */}
-        {/* <SuperVision /> */}
-      </main>
-    </ScrollArea>
+      </div>
+      {/* <Register /> */}
+      {/* <Comment /> */}
+      {/* <SuperVision /> */}
+    </main>
+    // </ScrollArea>
   );
 }
 
@@ -115,12 +120,19 @@ const Hero = () => {
     <>
       <Image
         src="/gallary/2.jpg"
-        width={357}
-        height={200}
+        width={0}
+        height={0}
+        style={{ width: "100%", height: "auto" }}
         alt="ورشة الصحفي لصيانة السيارات"
         priority
-        className=" border  border-orange-400 rounded"
+        className=" bg-orange-400 rounded-md "
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        // width={357}
+        // height={200}
+        // alt="ورشة الصحفي لصيانة السيارات"
+        // priority
+        // className=" border  border-orange-400 rounded"
+        // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
       />
     </>
   );

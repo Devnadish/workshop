@@ -1,4 +1,4 @@
-import NewFixOrder from "@/components/pagecomponent/fixing/NewFixOrder";
+import NewFixOrder from "@/components/pagecomponent/back/fixing/NewFixOrder";
 import React from "react";
 
 import { getAllClients } from "@/db/clients";

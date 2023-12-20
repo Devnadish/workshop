@@ -256,3 +256,29 @@ export async function groupByClientId() {
     await db.$disconnect();
   }
 }
+
+export async function addTextComment(data) {
+  try {
+    // Check if the CarNo already exists for another client
+
+    const comment = await db.comment.create({ data });
+    revalidatePath("/")
+    return {msg:  "نشكر اهتمامك ... تم ارسال التعليق ستم عرضه خلال 48 ساعه للمراجعة"}
+  } catch (error) {
+    console.error(error);
+    return "An error occurred while adding the car";
+  }
+}
+export async function getAllComments() {
+  try {
+    const comments = await db.comment.findMany({
+      orderBy: {
+        updatedAt: "desc", // Sort in descending order by updatedAt
+      },
+    });
+    return comments;
+  } catch (error) {
+    console.error(error);
+    return "An error occurred while retrieving the comments";
+  }
+}
