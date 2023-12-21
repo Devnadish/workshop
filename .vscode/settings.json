@@ -6,15 +6,18 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSaveTimeout": 500,
 
+"tailwindCSS.includeLanguages": {
+  "javascript": "javascriptreact"
+},
+"tailwindCSS.validate": false,
+"[javascriptreact]": {
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tailwindcss": "never"
+  }
+},
 
 
-    "editor.codeActionsOnSave": {
-        "*": "explicit",
-        "source.fixAll.eslint": "never",
-        "ConsoleNinja.actionName": "never",
-        "TailwindCSS.sortClassNames": "never",
-        "TailwindCSS.formatOnSave": "never"
-    },
+
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,

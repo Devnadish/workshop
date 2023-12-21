@@ -17,6 +17,7 @@ import { FaCalendarCheck } from "react-icons/fa";
 import { BsCashStack } from "react-icons/bs";
 import { FaCashRegister } from "react-icons/fa6";
 import { FaBalanceScale } from "react-icons/fa";
+import ClearButton from "@/components/shared/ClearButton";
 
 function NewFixOrder({ clientsWithCars }) {
   const [totalCost, setTotalCost] = useState(0);
@@ -52,9 +53,7 @@ function NewFixOrder({ clientsWithCars }) {
 
   // ---------------------------------------------------------------
   const NewDoc = () => {
-    document.getElementById("fixingForm").reset();
-
-    setDueAmount(0);
+      setDueAmount(0);
   };
 
   const handlesubmit = async (data) => {
@@ -123,6 +122,7 @@ function NewFixOrder({ clientsWithCars }) {
           placeholder="الخدمة المطلوبة"
           rows={5}
           name="serviceDescription"
+          id="serviceDetail"
         />
         <div className="flex items-center flex-col gap-2">
           <INPUT placeholder="المهندس" name="engName" icon={<BiHardHat />} />
@@ -163,9 +163,8 @@ function NewFixOrder({ clientsWithCars }) {
 
         <div className="flex items-center  justify-between w-full">
           <Submit />
-          <Button onClick={() => NewDoc()} type="button">
-            جديد
-          </Button>
+          <ClearButton formId={"fixingForm"} FoucFiled={"serviceDetail"} />
+
         </div>
       </form>
     </div>

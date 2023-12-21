@@ -1,4 +1,5 @@
 "use client";
+import ClearButton from "@/components/shared/ClearButton";
 import ClientsWithOpenFixingOrder from "@/components/shared/ClientsWithOpenFixingOrder";
 import DocementNO from "@/components/shared/DocementNO";
 import Expensis from "@/components/shared/Expensis";
@@ -85,6 +86,7 @@ const pay= updateClientPaymetBalance(fromID, amount)
             w="w-[200px]"
             textsize="text-[1.5rem]"
             bgColor="bg-red-300"
+            id="amountId"
           />
         </div>
 
@@ -124,14 +126,8 @@ const pay= updateClientPaymetBalance(fromID, amount)
 
         <div className="flex items-center justify-around w-full">
           <Submit />
-          <Button
-            type="button"
-            onClick={() => {
-              document.getElementById("paymentForm").reset();
-            }}
-          >
-            جديد
-          </Button>
+          <ClearButton formId={"paymentForm"} FoucFiled={"amountId"} />
+
         </div>
       </form>
     </div>

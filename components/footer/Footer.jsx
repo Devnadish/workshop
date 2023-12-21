@@ -25,24 +25,24 @@ function Footer() {
         {/* <p>تقريري</p> */}
       </Link>
       <div className="flex items-end gap-1">
-        <Button
-          onClick={() => (window.location.href = "tel:1234567890")}
+        <Link
+        href={"/newcomment"}
           className="p-0  w-8 h-8 rounded-full flex items-center justify-center bg-blue-400 shadow-lg text-white"
         >
           <Lightbulb size={20} />
-        </Button>
+        </Link>
         <Button
-          onClick={() => (window.location.href = "tel:1234567890")}
+          onClick={() => (window.location.href = "tel:0509723508")}
           className="border p-0  w-12 h-12 rounded-full flex items-center justify-center bg-green-400 shadow-lg text-black"
         >
           <PhoneCallIcon size={25} />
         </Button>
-        <Button
-          onClick={() => (window.location.href = "tel:1234567890")}
+        <Link
+        href={"/complain"}
           className=" p-0  w-8 h-8 rounded-full flex items-center justify-center bg-red-600 shadow-lg text-white"
         >
           <Angry size={25} strokeWidth={1} />
-        </Button>
+        </Link>
       </div>
       <Link
         href={"/login"}

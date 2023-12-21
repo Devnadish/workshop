@@ -1,10 +1,9 @@
 "use client";
 
+import ClearButton from "@/components/shared/ClearButton";
 import Submit from "@/components/shared/Submit";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { addTextComment } from "@/db/clients";
+import { addTextComment } from "@/db/comments";
 import { Send } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -14,10 +13,6 @@ const AddComment = () => {
     const formData={  comment  ,  user:"khalid"     ,  username:"khalid" ,  avatar:"" }
     const done = await addTextComment(formData);
     toast.success(done.msg,{duration:3000})
-  };
-  const handleclear = () => {
-    document.getElementById("commentForm").reset();
-    document.getElementById("textdata").focus();
   };
   return (
     <>
@@ -37,9 +32,7 @@ const AddComment = () => {
           <Submit type="submit">
             <Send />
           </Submit>
-          <Button type="button" onClick={() => handleclear()}>
-            مسح
-          </Button>
+          <ClearButton formId={"commentForm"} FoucFiled={"textdata"} />
         </div>
       </form>
     </>

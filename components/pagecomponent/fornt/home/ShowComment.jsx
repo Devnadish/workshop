@@ -1,12 +1,25 @@
 "use client";
+import {useState} from "react"
 import Avatar from "@/components/shared/Avatar";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { comments } from "@/constant/testmonail";
 import { getTimeElapsed } from "@/lib/timeanddate";
+import { RefreshCcwIcon } from "lucide-react";
+import { getAllComments } from "@/db/comments";
 
-const ShowComment = ({ comments }) => {
+const ShowComment = ({ initialComments }) => {
+  const [comments, setComments] = useState(initialComments);
+const handleRefreshComments = async () => {
+  const newComments = await getAllComments(); // API call
+  setComments(newComments);
+}
   return (
     <>
+      <div className="flex items-center justify-end  w-full  text-black border-b">
+        <Button onClick={handleRefreshComments}>
+          <RefreshCcwIcon />
+        </Button>
+      </div>
       <ScrollArea className="h-[280px] w-full  rounded-md mt-4 p-4">
         <div className="flex flex-wrap items-center gap-4 justify-center ">
           {comments.map((el) => {

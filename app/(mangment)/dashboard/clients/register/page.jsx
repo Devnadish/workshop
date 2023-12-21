@@ -11,6 +11,7 @@ import INPUT from "@/components/shared/INPUT";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import DocementNO from "@/components/shared/DocementNO";
+import ClearButton from "@/components/shared/ClearButton";
 
 
 
@@ -25,9 +26,7 @@ function RegisterPage() {
        setImage(selectedImage);
      };
 
-  const handleNewClient = () => {
-    document.getElementById("newClientForm").reset();
-  };
+
 
   const handleSubmit = async (data) => {
     const name = data.get("name");
@@ -72,6 +71,7 @@ toast.error(validation.errorMessage)
           name="name"
           placeholder="اسم العميل"
           icon={<User />}
+          id="clientnameId"
         />
         <INPUT
           type="text"
@@ -118,10 +118,8 @@ toast.error(validation.errorMessage)
 
         <div className="flex items-center justify-around w-full">
           <Submit />
-          <Button onClick={handleNewClient} type="button">
-            جديد
-          </Button>
-        </div>
+         <ClearButton formId={"newClientForm"} FoucFiled={"clientnameId"} />
+          </div>
       </form>
     </div>
   );

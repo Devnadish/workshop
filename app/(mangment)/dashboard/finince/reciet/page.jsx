@@ -13,12 +13,13 @@ import PageTitle from "@/components/shared/PageTitle";
 import { Calendar, Car, CircleDollarSign } from "lucide-react";
 import INPUT from "@/components/shared/INPUT";
 import DocementNO from "@/components/shared/DocementNO";
+import ClearButton from "@/components/shared/ClearButton";
 const RecietVoucher = () => {
   const [result, setResult] = useState({});
    const [selectedClientId, setSelectedClientId] = useState("");
   const [selectedClientName, setSelectedClientName] = useState("");
   const [selectedFixOrderId, setSelectedFixOrderId] = useState("");
-const handleNewDocument = () =>{ document.getElementById("RecietForm").reset();}
+
 
 
 
@@ -46,7 +47,7 @@ const handleSubmit = async (data) => {
   }
 
   const Reciet = await saveRecietVoucher(RecietData);
-  const UpdateClientBalance = await updateClientReceiptBalance(fromID, amount);
+
 
   setResult({
     recietNo: Reciet.recietNo,
@@ -73,18 +74,18 @@ const handleSubmit = async (data) => {
       >
         <div className="mb-4 flex items-center justify-between   gap-4">
           <DocementNO DocID={result.recietNo} />
-            <INPUT
-              placeholder={" المستلم"}
-              name={"amount"}
-              type={"number"}
-              icon={<CircleDollarSign />}
-              cN="flex-1"
-              h="h-[50px]"
-              w="w-[200px]"
-              textsize="text-[1.5rem]"
-              bgColor="bg-red-300"
-            />
-
+          <INPUT
+            placeholder={" المستلم"}
+            name={"amount"}
+            type={"number"}
+            icon={<CircleDollarSign />}
+            cN="flex-1"
+            h="h-[50px]"
+            w="w-[200px]"
+            textsize="text-[1.5rem]"
+            bgColor="bg-red-300"
+            id="amount"
+          />
         </div>
         {/* header */}
         <div className="flex justify-between items-center w-full gap-2">
@@ -128,9 +129,8 @@ const handleSubmit = async (data) => {
 
         <div className="flex items-center justify-around w-full">
           <Submit />
-          <Button onClick={handleNewDocument} type="button">
-            سند جديد
-          </Button>
+          <ClearButton formId={"RecietForm"} FoucFiled={"amount"} />
+
         </div>
       </form>
     </div>

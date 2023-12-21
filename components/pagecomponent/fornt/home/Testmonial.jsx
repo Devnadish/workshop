@@ -47,7 +47,7 @@ const Testmonial = ({ comments }) => {
             title={title}
             description={desctiption}
           >
-            <ShowComment comments={comments}/>
+            <ShowComment initialComments={comments} />
           </ModalSlider>
         </Suspense>
       )}

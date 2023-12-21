@@ -28,7 +28,8 @@ export default function Home() {
   return (
     // <main>
     <main className=" flex  flex-wrap  gap-6 items-center justify-center p-4   w-full   ">
-      <Clients/>
+      <ClientAction/>
+      <Clients />
       <Maintinance />
       <Finince />
     </main>
@@ -240,6 +241,22 @@ const Purchace = () => {
         <p className="text-xl font-bold">معاذ الشريف</p>
         <p>جوال : 0509723508</p>
       </div>
+    </>
+  );
+};
+
+const ClientAction = () => {
+  return (
+    <>
+      <Link className="bg-sky-500" href={"/dashboard/clients/comment"}>
+        النعليقات 50
+      </Link>
+      <Link className="bg-sky-500" href={"/dashboard/clients/suggestion"}>
+        الاقتراحات 3
+      </Link>
+      <Link className="bg-sky-500" href={"/dashboard/clients/complain"}>
+        الشكاوي 8
+      </Link>
     </>
   );
 };

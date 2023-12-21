@@ -195,27 +195,7 @@ export const AddClientCounter = async () => {
   return clientCounter;
 };
 
-export async function AddNewCar(Car) {
-  try {
-    // Check if the CarNo already exists for another client
-    const existingCar = await db.Car.findFirst({
-      where: {
-        CarNo: Car.CarNo,
-        // clientId: { not: Car.clientId }, // Exclude the current client
-      },
-    });
 
-    if (existingCar) {
-      return "رقم اللوحة  يخص   لعميل اخر";
-    }
-
-    const carDb = await db.Car.create({ data: Car });
-    return "تمت اضافة السيارة  للعميل بنجاح";
-  } catch (error) {
-    console.error(error);
-    return "An error occurred while adding the car";
-  }
-}
 
 export async function groupByClientId() {
   try {
@@ -254,31 +234,5 @@ export async function groupByClientId() {
     throw error;
   } finally {
     await db.$disconnect();
-  }
-}
-
-export async function addTextComment(data) {
-  try {
-    // Check if the CarNo already exists for another client
-
-    const comment = await db.comment.create({ data });
-    revalidatePath("/")
-    return {msg:  "نشكر اهتمامك ... تم ارسال التعليق ستم عرضه خلال 48 ساعه للمراجعة"}
-  } catch (error) {
-    console.error(error);
-    return "An error occurred while adding the car";
-  }
-}
-export async function getAllComments() {
-  try {
-    const comments = await db.comment.findMany({
-      orderBy: {
-        updatedAt: "desc", // Sort in descending order by updatedAt
-      },
-    });
-    return comments;
-  } catch (error) {
-    console.error(error);
-    return "An error occurred while retrieving the comments";
   }
 }

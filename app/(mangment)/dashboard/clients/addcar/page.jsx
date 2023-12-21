@@ -1,8 +1,8 @@
 "use client"
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Car } from "lucide-react";
 import {
-  AddNewCar,
+
   checkClientByIDExists,
   fetchClientNames,
 } from "@/db/clients";
@@ -18,6 +18,8 @@ import ClientSelectComponent from "@/components/shared/ClientSelectComponent";
 import PageTitle from "@/components/shared/PageTitle";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import ClearButton from "@/components/shared/ClearButton";
+import { AddNewCar } from "@/db/cars";
 function AddCar() {
   const [client, setClient] = useState("");
   const [ClientCars, setClientCars] = useState([]);
@@ -30,25 +32,23 @@ function AddCar() {
 
 
    const handleSelectChange = (e) => {
-    //  setSelectedOption(e.target.value);
        setSelectedOption((prevState) => e.target.value);
-    //  selectedOption && getClientInfo();
    };
 
-  const getClientInfo = async () => {
-    // setCLIENTSloading(false);
-    const check = await checkClientByIDExists(selectedOption);
-    if (check) {
-      setClient(check.name);
-      setClientId(check.id)
-      setClientCars(check.cars);
+const getClientInfo = useCallback(async () => {
+  const check = await checkClientByIDExists(selectedOption);
 
-    } else {
-      toast.error("العميل غير موجود");
-      setClient("");
-      setClientId("")
-    }
+  if (check) {
+    setClient(check.name);
+    setClientId(check.id);
+    setClientCars(check.cars);
+  } else {
+    toast.error("العميل غير موجود");
+    setClient("");
+    setClientId("");
   }
+}, [selectedOption]);
+
 
 
 
@@ -89,11 +89,17 @@ useEffect(() => {
   fetchClientData();
 }, []);
 
+// useEffect(() => {
+//   if (selectedOption) {
+//     getClientInfo();
+//   }
+// }, [selectedOption, getClientInfo]);
+
+
 useEffect(() => {
-  if (selectedOption) {
-    getClientInfo();
-  }
-}, [selectedOption, getClientInfo]);
+  getClientInfo();
+}, [getClientInfo]);
+
   return (
     <div className="flex items-center justify-center flex-col w-full ">
       <PageTitle title={"اضافة سيارة"} icon={<Car />} />
@@ -104,7 +110,7 @@ useEffect(() => {
           onChange={handleSelectChange}
         />
       ) : (
-        <p>جاري التحميل  ... </p>
+        <p>جاري التحميل ... </p>
       )}
 
       {selectedOption && (
@@ -118,6 +124,7 @@ useEffect(() => {
             name="carName"
             placeholder="نوع السيارة"
             icon={<Car />}
+            id="carNameId"
           />
           <INPUT
             type="text"
@@ -146,12 +153,7 @@ useEffect(() => {
           />
           <div className="flex items-center justify-around">
             <Submit />
-            <Button
-              type="button"
-              onClick={() => document.getElementById("Newcar").reset()}
-            >
-              جديد
-            </Button>
+            <ClearButton formId={"Newcar"} FoucFiled={"carNameId"} />
           </div>
         </form>
       )}

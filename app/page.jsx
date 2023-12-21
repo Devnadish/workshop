@@ -9,11 +9,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { carLogo } from "@/constant/carlogo";
 import Testmonial from "@/components/pagecomponent/fornt/home/Testmonial";
-import { getAllComments } from "@/db/clients";
+import { getAllComments } from "@/db/comments";
 
 
 export default async function Home() {
-  const getCommnts = await getAllComments()
+  const getCommnts = await getAllComments();
   return (
     <main className="flex  flex-col  gap-6 items-center justify-start px-4 py-3   w-full   ">
       <div className="relative container w-full flex flex-col items-center justify-center">
