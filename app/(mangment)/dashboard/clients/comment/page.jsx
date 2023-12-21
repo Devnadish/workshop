@@ -1,7 +1,9 @@
 import CommentAction from '@/components/pagecomponent/back/clients/comments/CommentAction';
 import Avatar from '@/components/shared/Avatar';
+import PageTitle from '@/components/shared/PageTitle';
 import {  getAllCommentsForAdmin } from '@/db/comments';
 import { getTimeElapsed } from '@/lib/timeanddate';
+import {  MessagesSquare } from "lucide-react";
 import React from 'react'
 
 async function Comments() {
@@ -9,11 +11,13 @@ async function Comments() {
   const handleToggle=()=>{}
 
  return (
-   <div className='flex items-center justify-center w-full'>
-
+   <div className='flex items-center flex-col justify-center w-full'>
+   <PageTitle title={"تعليقات العملاء"}
+   icon={<MessagesSquare   className="text-yellow-300 w-12 h-12"/>}/>
      <CommentsData getComment={getComment} handleToggle={handleToggle} />
    </div>
  );}
+
 
 export default Comments;
 

@@ -26,7 +26,7 @@ function Footer() {
       </Link>
       <div className="flex items-end gap-1">
         <Link
-        href={"/newcomment"}
+          href={"/newcomment"}
           className="p-0  w-8 h-8 rounded-full flex items-center justify-center bg-blue-400 shadow-lg text-white"
         >
           <Lightbulb size={20} />
@@ -38,7 +38,7 @@ function Footer() {
           <PhoneCallIcon size={25} />
         </Button>
         <Link
-        href={"/complain"}
+          href={"/newcomplain"}
           className=" p-0  w-8 h-8 rounded-full flex items-center justify-center bg-red-600 shadow-lg text-white"
         >
           <Angry size={25} strokeWidth={1} />

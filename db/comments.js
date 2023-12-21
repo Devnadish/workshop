@@ -1,6 +1,9 @@
 "use server";
 import db from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+
+
+
 export async function addTextComment(data) {
   try {
     // Check if the CarNo already exists for another client
@@ -19,7 +22,7 @@ export async function addTextComment(data) {
 export async function getAllComments() {
   try {
     const comments = await db.comment.findMany({
-      where:{isVisible:true},
+      where: { isVisible: true },
       orderBy: {
         updatedAt: "desc", // Sort in descending order by updatedAt
       },
@@ -32,7 +35,6 @@ export async function getAllComments() {
 }
 
 export async function getAllCommentsForAdmin() {
-
   try {
     const comments = await db.comment.findMany({
       orderBy: {
@@ -66,8 +68,8 @@ export async function toggleVisible(id, isVisible) {
         isVisible,
       },
     });
- revalidatePath("/");
- revalidatePath("/dashboard/clients/comment");
+    revalidatePath("/");
+    revalidatePath("/dashboard/clients/comment");
     return true;
   } catch (error) {
     console.error(error);
