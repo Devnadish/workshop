@@ -1,4 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+
+
+
+const fonts = {
+  amiri: ["var(--font-amiri)"],
+  tajawal: [ "var(--font-tajawal)", "sans-serif"],
+};
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -88,6 +96,7 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      fontFamily: fonts
     },
   },
   plugins: [require("tailwindcss-animate")],

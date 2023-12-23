@@ -145,7 +145,9 @@ const Intro = () => {
     <>
       <div className="container flex items-center justify-center flex-col bg-white shadow-xl rounded-lg  mt-10 p-4 text-black ">
         <div className="flex items-center justify-between w-full">
-          <p className="text-xl font-extrabold">سيارتك مركز اهتمامنا</p>
+          <p className="text-xl font-extrabold  font-tajawal">
+            سيارتك مركز اهتمامنا
+          </p>
           <Image
             src="/gallary/vector.jpg"
             width={80}
@@ -156,7 +158,7 @@ const Intro = () => {
           />
         </div>
 
-        <h1 className="font-extrabold">
+        <h1 className=" font-amiri">
           بغض النظر عن المشكلة، فإن فريقنا . يأخذ الوقت الكافي للاستماع إليك
           حقًا، عميلنا العزيز. نحن نقدم عمليات فحص رقمية بأحدث الاجهزه حتى تتمكن
           من فهم المشكلات التي نراها تمامًا وتشعر بالثقة في جميع قرارات
