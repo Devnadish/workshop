@@ -122,3 +122,64 @@ export async function updateClientPaymetBalance(Cid, amount) {
     });
   }
 }
+
+
+export async function getOpenCards() {
+  const Getdata = await db.openFixingOrder.findMany({});
+  return Getdata;
+}
+
+export async function getFixingOrder(id) {
+  // get the fixing order data form open card table
+  const Getdata = await db.openFixingOrder.findMany({
+    where: { id: id },
+  });
+  // get the finince summry amout from fixcard table
+  const GetFixOrderdata = await db.fixingOrder.findMany({
+    where: { fixingId: Getdata[0].fixOrederId },
+  });
+  // get the finince total spend on this car  amout from payment table
+  const totalSpent = await db.paymentVoucher.groupBy({
+    by: ["fixingCode"],
+    where: {
+      fixingCode: { equals: Getdata[0].fixOrederId },
+    },
+    _sum: {
+      amount: true,
+    },
+    select: {
+      _sum: true,
+    },
+  });
+
+
+  const totalRecipt = await db.RecietVoucher.groupBy({
+    by: ["fixingCode"],
+    where: {
+      fixingCode: { equals: Getdata[0].fixOrederId },
+    },
+    _sum: {
+      amount: true,
+    },
+    select: {
+      _sum: true,
+    },
+  });
+
+console.log(totalSpent[0]?._sum.amount);
+
+
+
+
+
+
+
+  return {
+    clientId: Getdata[0]?.clientId,
+    clientName: Getdata[0].clientName,
+    fixingCode: Getdata[0]?.fixOrederId,
+    fixOrdertotal: GetFixOrderdata[0]?.total,
+    totalRecipt: totalRecipt[0]?._sum.amount,
+    totalSpent: totalSpent[0]?._sum.amount,
+  };
+}

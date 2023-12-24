@@ -84,7 +84,9 @@
 }
 
 .input-placeholder::placeholder {
-  font-size: .7rem;
+   /* height: 40px;
+  line-height: 40px; */
+  font-size: 1.5rem;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {

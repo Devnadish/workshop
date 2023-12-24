@@ -66,7 +66,7 @@ export default async function Home() {
   //  const analytics = useAnalytics();
   return (
     // <main>
-    <main className=" flex  flex-wrap   gap-6 items-start justify-center p-4   w-full   ">
+    <main className=" flex  flex-wrap   gap-4 items-center justify-center p-4   w-full   ">
       <InfoBox title="ملخص النقدية" tileIcon={<Receipt />}>
         <FininceInfo
           totalIncome={cardTotal}
