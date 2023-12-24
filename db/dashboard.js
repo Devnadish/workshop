@@ -1,138 +1,223 @@
 "use server";
 import db from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
 
-// import nodeCache from "node-cache"; // Assuming you've installed the cache library
-
-// const cache = new nodeCache();
-
-export async function calculateSeparateSums() {
+export async function SumsOfFixingCard(isClosed) {
   try {
-    const cachedSums = cache.get("fixingOrderSums");
-    if (cachedSums) {
-      return cachedSums;
-    }
-
-    const sums = await db.fixingOrder.aggregate({
-      _group: {
-        _id: { isClosed: "$isClosed" },
-        totalSum: { _sum: "$total" },
-        receiveSum: { _sum: "$receive" },
-        discountSum: { _sum: "$discount" },
+    const filteredOrders = await db.fixingOrder.findMany({
+      where: {
+        isClosed: isClosed,
       },
     });
 
-    // cache.set("fixingOrderSums", sums, 60 * 60); // Cache for 1 hour
-    return sums;
+    const totalSum = filteredOrders.reduce(
+      (sum, order) => sum + order.total,
+      0
+    );
+    const receiveSum = filteredOrders.reduce(
+      (sum, order) => sum + order.receive,
+      0
+    );
+    const remaining = totalSum - receiveSum;
+    const recordCount = filteredOrders.length;
+    return { totalSum, receiveSum, remaining, recordCount };
   } catch (error) {
-    console.error("Error calculating separate sums:", error);
-    throw error; // Re-throw for further handling if needed
-  }
-}
-
-export async function calculateOverallSums() {
-  try {
-    const sums = await db.$queryRaw`
-      SELECT
-        SUM(paymentAmount) AS totalPaymentSum,
-        SUM(receiptAmount) AS totalReceiptSum
-      FROM (
-        SELECT amount AS paymentAmount FROM PaymentVoucher
-        UNION ALL
-        SELECT amount AS receiptAmount FROM RecietVoucher
-      ) AS combined_amounts;
-    `;
-
-    return sums;
-  } catch (error) {
-    console.error("Error calculating overall sums:", error);
+    console.error(error);
     throw error;
   }
 }
-// export async function calculateClientSums() {
-//   const paymentVouchersByClientId = await db.paymentVoucher.groupBy({
-//     by: ["fromName"], // Group by the integer "fromId" field (client identifier)
-//     _sum: {
-//       amount: true,
-//     },
-//   });
-
-//   // Handle empty or invalid "fromId" values in application logic, if necessary
-
-//   return paymentVouchersByClientId;
-// }
-
-// export async function calculateClientSums() {
-//   const paymentVouchersByClientId = await db.paymentVoucher.groupBy({
-//     by: ["fromID", "fromName"],
-//     where: {
-//       fromID: { gt: 0 },
-//       paymentType: { equals: "fixing" }, // Filter by paymentType
-//     },
-//     _sum: {
-//       amount: true,
-//     },
-//     select: {
-//       fromID: true,
-//       fromName: true,
-//       _sum: true,
-//     },
-//   });
-
-//   return paymentVouchersByClientId;
-// }
 
 export async function calculateClientSums() {
-  const paymentVouchersByClientId = await db.paymentVoucher.groupBy({
-    by: ["fromID", "fromName"],
-    where: {
-      fromID: { gt: 0 },
-      paymentType: { equals: "fixing" },
-    },
-    _sum: {
-      amount: true,
-    },
-    select: {
-      fromID: true,
-      fromName: true,
-      _sum: true,
-    },
-  });
+  try {
+    const paymentVouchersByClientId = await db.paymentVoucher.groupBy({
+      by: ["fromID", "fromName"],
+      where: {
+        fromID: { gt: 0 },
+        paymentType: { equals: "fixing" },
+      },
+      _sum: {
+        amount: true,
+      },
+      select: {
+        fromID: true,
+        fromName: true,
+        _sum: true,
+      },
+    });
 
-  // Extract "amount" from "_sum" and restructure results
-  const formattedResults = paymentVouchersByClientId.map((result) => ({
-    fromID: result.fromID,
-    fromName: result.fromName,
-    amount: result._sum.amount, // Extract "amount"
-  }));
+    // Extract "amount" from "_sum" and restructure results
+    const formattedResults = paymentVouchersByClientId.map((result) => ({
+      fromID: result.fromID,
+      fromName: result.fromName,
+      amount: result._sum.amount, // Extract "amount"
+    }));
 
-  return formattedResults;
+    return formattedResults;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
 
 
 export async function calculateClientRecipts() {
-  const paymentVouchersByClientId = await db.RecietVoucher.groupBy({
-    by: ["fromID", "fromName"],
-    where: {
-      fromID: { gt: 0 },
+  try {
+    const paymentVouchersByClientId = await db.RecietVoucher.groupBy({
+      by: ["fromID", "fromName"],
+      where: {
+        fromID: { gt: 0 },
+      },
+      _sum: {
+        amount: true,
+      },
+      select: {
+        fromID: true,
+        fromName: true,
+        _sum: true,
+      },
+    });
 
-    },
+    const formattedResults = paymentVouchersByClientId.map((result) => ({
+      fromID: result.fromID,
+      fromName: result.fromName,
+      amount: result._sum.amount, // Extract "amount"
+    }));
+
+    return formattedResults;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+
+export async function recietVoucher() {
+  try {
+    const totalAmount = await db.recietVoucher.aggregate({
+      _sum: {
+        amount: true,
+      },
+    });
+    return totalAmount._sum.amount;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+
+export async function mangmentExpenses() {
+   try {
+     const totalAmount = await db.PaymentVoucher.aggregate({
+       where: { paymentType: "mangment" },
+       _sum: {
+         amount: true,
+       },
+     });
+     return totalAmount._sum.amount;
+   } catch (error) {
+     console.error(error);
+     throw error;
+   }
+}
+
+export async function fixingExpenses() {
+  const totalAmount = await db.PaymentVoucher.aggregate({
+    where: { paymentType: "fixing" },
     _sum: {
       amount: true,
     },
-    select: {
-      fromID: true,
-      fromName: true,
-      _sum: true,
-    },
   });
+  return totalAmount._sum.amount;
+}
 
-  // Extract "amount" from "_sum" and restructure results
-  const formattedResults = paymentVouchersByClientId.map((result) => ({
-    fromID: result.fromID,
-    fromName: result.fromName,
-    amount: result._sum.amount, // Extract "amount"
-  }));
+export async function mangmentExpensesDetails() {
 
-  return formattedResults;
+try {
+    const paymentVouchersByClientId = await db.paymentVoucher.groupBy({
+      by: ["collector"],
+      where: {
+        paymentType: { equals: "mangment" },
+      },
+      _sum: {
+        amount: true,
+      },
+      select: {
+        collector: true,
+        _sum: true,
+      },
+
+    });
+
+    // Extract "amount" from "_sum" and restructure results
+    const formattedResults = paymentVouchersByClientId.map((result) => ({
+      collector: result.collector,
+      amount: result._sum.amount, // Extract "amount"
+    }));
+
+    return formattedResults;
+} catch (error) {
+   console.error(error);
+   throw error;
+
+}
+}
+
+export async function getRecordCounts() {
+try {
+    const visibleCommentsCount = await db.comment.count({
+      where: { isVisible: true },
+    });
+    const pendingCommentsCount = await db.comment.count({
+      where: { isVisible: false },
+    });
+    const visibleSuggestionsCount = await db.suggestion.count({
+      where: { isVisible: true },
+    });
+    const pendingSuggestionsCount = await db.suggestion.count({
+      where: { isVisible: false },
+    });
+    const visibleComplainsCount = await db.complain.count({
+      where: { isVisible: true },
+    });
+    const pendingComplainsCount = await db.complain.count({
+      where: { isVisible: false },
+    });
+
+    return {
+      visibleComments: visibleCommentsCount,
+      pendingComments: pendingCommentsCount,
+      visibleSuggestions: visibleSuggestionsCount,
+      pendingSuggestions: pendingSuggestionsCount,
+      visibleComplains: visibleComplainsCount,
+      pendingComplains: pendingComplainsCount,
+    };
+} catch (error) {
+   console.error(error);
+   throw error;
+
+}
+}
+
+export async function generalInfo() {
+ try {
+   const ClientRecord = await db.Client.count({});
+   const CartRecord = await db.Car.count({});
+   const fixingOrdertRecord = await db.fixingOrder.count({});
+   const openFixingOrdertRecord = await db.openFixingOrder.count({});
+   const PaymentVouchertRecord = await db.PaymentVoucher.count({});
+   const RecietVouchertRecord = await db.RecietVoucher.count({});
+
+   return {
+     ClientRecord,
+     CartRecord,
+     fixingOrdertRecord,
+     openFixingOrdertRecord,
+     PaymentVouchertRecord,
+     RecietVouchertRecord,
+   };
+ } catch (error) {
+   console.error(error);
+   throw error;
+
+ }
 }

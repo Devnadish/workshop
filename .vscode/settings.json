@@ -42,5 +42,11 @@
     "emmet.preferences": {},
     "javascript.updateImportsOnFileMove.enabled": "always",
 
-    "css.lint.unknownAtRules": "ignore"
+    "css.lint.unknownAtRules": "ignore",
+    "cSpell.words": [
+      "الاقتراحات",
+      "العام",
+      "المستلم",
+      "المعلقة"
+    ]
 }

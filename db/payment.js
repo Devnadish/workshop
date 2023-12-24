@@ -8,7 +8,9 @@ export const savePaymentVoucher = async (formData) => {
     const docDate = new Date(formData.docDate).toISOString();
     const data = { ...formData, paymentId: newDocId, docDate };
     const newVoucher = await db.PaymentVoucher.create({ data });
+    revalidatePath("/dashboard");
     return newVoucher;
+
   } catch (error) {
     console.error("Error saving payment voucher:", error);
     throw error;

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import {useState} from "react";
 import ExpandMenu from "./ExpandMenu";
 import { BsTools } from "react-icons/bs";
-
+import { FaCashRegister } from "react-icons/fa6";
 
 
 const FinicalMenu = ({ toggleSidebar }) => {
@@ -16,7 +16,7 @@ const FinicalMenu = ({ toggleSidebar }) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         menuTitle={"  الحركة المالية"}
-        menuIcon={<ShoppingCart size={30} className="text-yellow-300" />}
+        menuIcon={<FaCashRegister size={30} className="text-yellow-300" />}
       >
         <div className="w-full  flex  flex-col items-center text-white">
           <div className="w-full flex flex-col items-center gap-4 p-2">

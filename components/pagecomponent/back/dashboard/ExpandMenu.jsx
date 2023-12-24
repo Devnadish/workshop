@@ -4,6 +4,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { FaCashRegister } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import {
   ChevronsDown,
@@ -16,18 +17,18 @@ function ExpandMenu({ isOpen,setIsOpen,menuTitle,menuIcon,children }) {
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
-        className="w-[90%] space-y-2"
+        className="w-[100%] "
       >
         <CollapsibleTrigger asChild>
-          <div className="flex items-center  self-start bg-sky-950">
+          <div className="flex items-end   bg-sky-950">
             <Button
               variant="ghost"
-              size="sm"
-              className="flex items-center gap-2 w-full justify-between"
+              // size="sm"
+              className="flex items-center  gap-2 w-full justify-between text-white "
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center gap-4 h-full">
                 {menuIcon}
-                <p className="text-lg font-tajawal font-bold">{menuTitle}</p>
+                <p className="flex items-center justify-center py-1 text-xl  font-bold ">{menuTitle}</p>
               </div>
               {isOpen ? <ChevronsUp /> : <ChevronsDown />}
             </Button>
