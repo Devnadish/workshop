@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import Submit from "@/components/shared/Submit";
 import { newFixingOrder } from "@/db/fixing";
@@ -18,6 +17,9 @@ import { BsCashStack } from "react-icons/bs";
 import { FaCashRegister } from "react-icons/fa6";
 import { FaBalanceScale } from "react-icons/fa";
 import ClearButton from "@/components/shared/ClearButton";
+import { CarIcon, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { getCarInfo } from "@/db/cars";
 
 function NewFixOrder({ clientsWithCars }) {
   const [totalCost, setTotalCost] = useState(0);
@@ -43,7 +45,6 @@ function NewFixOrder({ clientsWithCars }) {
       } else {
         toast.success(AddFixing.msg);
         toast.success(UpdateClientBalance.msg);
-        // toast.success(UpdateClientBalance.msg);
         return "done";
       }
     } catch (error) {
@@ -59,8 +60,6 @@ function NewFixOrder({ clientsWithCars }) {
   const handlesubmit = async (data) => {
     const detail = data.get("serviceDescription");
     const delivery = data.get("deliveryDate");
-    // const total = data.get("totalCost");
-    // const receive = parseInt(data.get("receivedAmount"));
     const engName = data.get("engName");
     const orderData = {
       detail,
@@ -84,13 +83,34 @@ function NewFixOrder({ clientsWithCars }) {
 
   };
 
+const handleGetCar = async () => {
+  const carData = await getCarInfo(Carid);
+  if (carData.exisit) {
+    toast.error(carData.msg);
+    return;
+  }
+   console.log(carData.Carexisit);
+    if (carData.Carexisit === "not Exisit") {
+      toast.error(carData.msg);
+      return;
+    }
+    console.log(carData);
+
+    setClientName(carData[0].clientName);
+    setClientID(carData[0].clientId);
+
+};
+
+
+
+
   useEffect(() => {
     setDueAmount(totalCost - receivedAmount);
   }, [totalCost, receivedAmount]);
 
   return (
-    <div className="container flex items-center flex-col gap-4">
-      <div className="flex flex-col items-center justify-center  w-full gap-3 bg-white/20 mt-4 p-2 ">
+    <div className="container flex items-center flex-col gap-4 max-w-4xl">
+      <div className="flex flex-col items-center justify-center  w-full gap-3  mt-4 p-2 ">
         <PageTitle
           title=" كرت اصلاح جديد"
           icon={
@@ -101,16 +121,26 @@ function NewFixOrder({ clientsWithCars }) {
           }
           bgColor="bg-white/30"
         />
-        <DocementNO DocID={FixCardNO} />
-        <ClientWithCar
-          custmer={clientsWithCars}
-          ClientID={ClientID}
-          setClientID={setClientID}
-          ClientName={ClientName}
-          setClientName={setClientName}
-          Carid={Carid}
-          setCarid={setCarid}
-        />
+        <div className="flex  items-center flex-col justify-start    self-start  ">
+          <div className="flex  items-center justify-center gap-3">
+            <INPUT
+              placeholder="رقم لوحة  السيارة"
+              name="car"
+              icon={<CarIcon />}
+              h="h-12"
+              value={Carid}
+              onChange={(e) => setCarid(e.target.value)}
+            />
+
+            <Button
+              onClick={() => handleGetCar()}
+              className="text-white bg-orange-600 h-14 w-14  rounded-full"
+            >
+              <Search />
+            </Button>
+          </div>
+          <p className="self-start">{ClientName}</p>
+        </div>
       </div>
 
       <form
@@ -123,8 +153,9 @@ function NewFixOrder({ clientsWithCars }) {
           rows={5}
           name="serviceDescription"
           id="serviceDetail"
+          className="border border-gray-300 rounded px-4 py-2 w-full resize-none"
         />
-        <div className="flex items-center flex-col gap-2">
+        <div className="flex items-center flex-col md:flex-row gap-2 w-full">
           <INPUT placeholder="المهندس" name="engName" icon={<BiHardHat />} />
           <INPUT
             placeholder="موعد التسليم"
@@ -133,7 +164,7 @@ function NewFixOrder({ clientsWithCars }) {
           />
         </div>
 
-        <div className="flex  gap-4 border flex-col border-white/30  p-4 rounded-md w-12/12">
+        <div className="flex  gap-4 border flex-col md:flex-row  border-white/30  p-4 rounded-md w-full">
           <INPUT
             placeholder="التكلفة الاجمالية"
             type="number"
@@ -141,6 +172,7 @@ function NewFixOrder({ clientsWithCars }) {
             onChange={(event) => setTotalCost(event.target.value)}
             bgColor="bg-red-300"
             icon={<FaCashRegister />}
+            h="h-16"
           />
           <INPUT
             placeholder="المبلغ المستلم"
@@ -150,6 +182,7 @@ function NewFixOrder({ clientsWithCars }) {
             onChange={(event) => setReceivedAmount(event.target.value)}
             bgColor="bg-blue-300"
             icon={<BsCashStack />}
+            h="h-16"
           />
 
           <INPUT
@@ -158,13 +191,13 @@ function NewFixOrder({ clientsWithCars }) {
             disabled
             onChange={(event) => setDueAmount(event.target.value)}
             icon={<FaBalanceScale />}
+            h="h-16"
           />
         </div>
 
-        <div className="flex items-center  justify-between w-full">
+        <div className="flex items-center gap-4 justify-end  w-full ">
           <Submit />
           <ClearButton formId={"fixingForm"} FoucFiled={"serviceDetail"} />
-
         </div>
       </form>
     </div>

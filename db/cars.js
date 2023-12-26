@@ -1,13 +1,13 @@
 "use server";
 import db from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+
 export async function AddNewCar(Car) {
   try {
     // Check if the CarNo already exists for another client
     const existingCar = await db.Car.findFirst({
       where: {
         CarNo: Car.CarNo,
-        // clientId: { not: Car.clientId }, // Exclude the current client
       },
     });
 
@@ -15,8 +15,44 @@ export async function AddNewCar(Car) {
       return "رقم اللوحة  يخص   لعميل اخر";
     }
 
-    const carDb = await db.Car.create({ data: Car });
+    const clientName = await db.Client.findFirst({
+      where: { clientIDs: Car.clientId },
+    });
+    console.log(clientName.name);
+    const carDb = await db.Car.create({
+      data: { ...Car, clientName: clientName.name },
+    });
     return "تمت اضافة السيارة  للعميل بنجاح";
+  } catch (error) {
+    console.error(error);
+    return "An error occurred while adding the car";
+  }
+}
+
+
+export async function getCarInfo(Carid) {
+  try {
+    // Check if the Car already exists in OpenCards
+    const isThereCard = await db.openFixingOrder.findMany({
+      where: {
+        selectedCar: Carid,
+      },
+    });
+    if (isThereCard.length > 0) {
+      return { msg: "السيارة موجود لها كرت مفتوح ", exisit: true };
+    }
+    // Check if the CarNo already exists for another client
+    const existingCar = await db.Car.findMany({
+      where: {
+        CarNo: Carid,
+      },
+    });
+    console.log(existingCar);
+    if (existingCar.length === 0) {
+      return { msg: "السيارة غير موجودة ", Carexisit: "not Exisit" };
+    }
+
+    return existingCar;
   } catch (error) {
     console.error(error);
     return "An error occurred while adding the car";

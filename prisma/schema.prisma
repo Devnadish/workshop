@@ -27,14 +27,12 @@ model Client {
 
 model Car {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  CId         String
   clientId    Int
-  clientName  String
+  clientName  String?
   carName     String?
   CarNo       String   @unique
   BodyNo      String?
   Model       String?
-  color       String?
   createdDate DateTime @default(now())
   updatedDate DateTime @updatedAt
 }

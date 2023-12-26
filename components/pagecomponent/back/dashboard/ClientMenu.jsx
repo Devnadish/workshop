@@ -21,7 +21,7 @@ const ClientMenu = ({ toggleSidebar }) => {
         <div className="w-full  flex  flex-col items-center text-white">
           <div className="w-full flex flex-col items-center gap-2 p-2">
             <Link
-              href={"/dashboard/clients/register"}
+              href={"/dashboard/clients/new"}
               className={menuStyle}
               onClick={() => toggleSidebar()}
               prefetch={true}
@@ -51,9 +51,10 @@ const ClientMenu = ({ toggleSidebar }) => {
             </Link>
 
             <Link
-              href={"/dashboard/fixing/closeorder"}
+              href={"/dashboard/clients/statment/"}
               className={menuStyle}
               prefetch={true}
+              onClick={() => toggleSidebar()}
             >
               {/* <FileCheck size={35} /> */}
               <p>كشف حساب </p>

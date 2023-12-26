@@ -36,32 +36,13 @@ export async function addClient(client) {
   }
 }
 
-// Delete a client from the database
-export async function deleteClient(id) {
-  const result = await db.client.delete({
-    where: {
-      id: id,
-    },
-  });
-  return result;
-}
-
-// Update a client in the database
-export async function updateClient(id, client) {
-  const result = await db.client.update({
-    where: {
-      id: id,
-    },
-    data: client,
-  });
-  return result;
-}
 
 
 export async function fetchClientNames() {
   const names = await db.client.findMany({ select: { name: true, clientIDs :true} });
   return names;
 }
+
 export async function getAllClients() {
   try {
     const clients = await db.client.findMany({
@@ -71,9 +52,9 @@ export async function getAllClients() {
       clients.map(async (client) => {
         const carsData = await db.Car.findMany({
           where: {
-            CId: client.id,
+            clientId: client.clientIDs,
           },
-          select: { id: true, CarNo: true, carName: true},
+          select: { id: true, CarNo: true, carName: true },
         });
         // revalidatePath("/dashboard/clients/display");
 
@@ -125,11 +106,13 @@ export async function gerClientByIdForFixing(Cid) {
 
 export async function checkClientByIDExists(Cid) {
   const clientId = parseInt(Cid); // Convert string to integer
+  console.log(clientId);
   const existingClient = await db.client.findMany({
     where: {
       clientIDs: clientId,
     },
   });
+
 const getCars = await db.car.findMany({
   where: {
     clientId: clientId,
@@ -235,4 +218,60 @@ export async function groupByClientId() {
   } finally {
     await db.$disconnect();
   }
+}
+
+
+
+export async function displayClients() {
+  try {
+    const clients = await db.client.findMany({ });
+    return clients;
+  } catch (error) {
+    console.error(error);
+    return "An error occurred while retrieving clients and their cars";
+  }
+}
+
+
+export async function deleteClient(id) {
+
+// check if clent has fix card
+
+  // const clientFixOrders = await db.openFixingOrder.findMany({
+  //   where: {
+  //     clientId: id,
+  //   },
+  // });
+
+
+  const deletedItem = await db.Client.delete({
+    where: {
+      id: id,
+    },
+  });
+  revalidatePath("/dashboard/clients/new");
+  return deletedItem;
+
+}
+
+
+export async function getClientTransactions(clientId) {
+  const paymentTransactions = await db.PaymentVoucher.findMany({
+    where: { fromID: clientId },
+  });
+  const receiptTransactions = await db.RecietVoucher.findMany({
+    where: { fromID: clientId },
+  });
+  return { paymentTransactions, receiptTransactions };
+}
+
+
+export async function getGroupClientWithTransactions() {
+
+
+     const groupedClients = await db.PaymentVoucher.groupBy({
+       by: ["fromID", "fromName"],
+     });
+
+  return  groupedClients ;
 }

@@ -22,6 +22,7 @@ export async function saveRecietVoucher(reciptData) {
 
 
 export async function updateClientReceiptBalance(Cid, amount) {
+  console.log(Cid, amount);
   const existingRecord = await db.client.findUnique({
     where: { clientIDs: Cid },
   });

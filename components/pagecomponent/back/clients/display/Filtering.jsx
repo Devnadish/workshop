@@ -36,9 +36,11 @@ function Filtering({ clientsData }) {
     setClients(result);
     setOpen(false);
   };
+
+
   return (
-    <div className=" w-full  flex flex-col items-center justify-center gap-4 ">
-      <div className=" w-full mt-2 flex flex-col items-center justify-center gap-4 ">
+    <div className="  flex flex-col items-center justify-center gap-4 md:flex-row flex-wrap">
+      <div className="w-1/2  mt-2 flex flex-col items-center justify-center gap-4 ">
         <Popover open={open} onOpenChange={setOpen}>
           <div className="bg-purple-500 py-1 px-3 flex gap-4 w-full  items-center mb-2 shadow-lg rounded-md justify-between self-start">
             <p className="text-md font-bold">العملاء </p>

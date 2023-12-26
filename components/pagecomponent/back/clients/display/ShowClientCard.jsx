@@ -6,39 +6,38 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from '@/components/ui/button';
 import CallClient from '@/components/shared/CallClient';
 import Avatar from '@/components/shared/Avatar';
-// export const dynamic = "force-dynamic";
 import { toast } from "react-hot-toast";
 function ShowClientCard({ clients }) {
 
 
   return (
-    <ScrollArea className=" h-[65vh] w-full rounded-md   flex items-center justify-center p-2 gap-2   ">
-      <div className=" container flex flex-col  items-center justify-center max-w-full min-w-full  gap-4">
-        {clients?.map((client) => (
-          <div
-            className="border shadow-lg rounded-lg  flex gap-3  flex-col items-center justify-center  overflow-hidden bg-white/90 text-black min-w-full  "
-            key={client.id}
-          >
-            <CardHeader
-              name={client.name}
-              id={client.clientIDs}
-              date={getTimeElapsed(client.updatedDate)}
-              phone={client.mobile}
-              cars={client.carsData}
-            />
-            <CardBalance
-              balance={client.balance}
-              recipt={client.recipts}
-              payment={client.payment}
-            />
+    // <ScrollArea className=" h-[65vh] w-full rounded-md   flex items-center justify-center p-2 gap-2   ">
+    <div className="  flex flex-col md:flex-row  flex-wrap  items-center justify-center    gap-4" >
+      {clients?.map((client) => (
+        <div
+          className="border min-w-[320px]  max-w-[320px] shadow-lg rounded-lg  flex gap-3  flex-col items-center justify-center  overflow-hidden bg-white/90 text-black   "
+          key={client.id}
+        >
+          <CardHeader
+            name={client.name}
+            id={client.clientIDs}
+            date={getTimeElapsed(client.updatedDate)}
+            phone={client.mobile}
+            cars={client.carsData}
+          />
+          <CardBalance
+            balance={client.balance}
+            recipt={client.recipts}
+            payment={client.payment}
+          />
 
-            {/* <ShowCars cars={client.carsData} /> */}
-            <CardAction />
-          </div>
-        ))}
-      </div>
-      {/* <ScrollBar orientation="horizontal" /> */}
-    </ScrollArea>
+          {/* <ShowCars cars={client.carsData} /> */}
+          <CardAction />
+        </div>
+      ))}
+    </div>
+
+    // </ScrollArea>
   );
 }
 export default ShowClientCard

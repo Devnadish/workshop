@@ -1,163 +1,20 @@
-"use client"
-import React, { useState, useEffect, useCallback } from "react";
+
 import { Car } from "lucide-react";
-import {
+import { fetchClientNames } from "@/db/clients";
 
-  checkClientByIDExists,
-  fetchClientNames,
-} from "@/db/clients";
-import { toast } from "react-hot-toast";
-import Submit from "@/components/shared/Submit";
-import { validateForm } from "@/lib/validation/addCar";
-import INPUT from "@/components/shared/INPUT";
-import { GiKeyCard } from "react-icons/gi";
-import { RiCalendar2Fill } from "react-icons/ri";
-import { SiAdobeindesign as ID } from "react-icons/si";
-import { VscColorMode } from "react-icons/vsc";
-import ClientSelectComponent from "@/components/shared/ClientSelectComponent";
 import PageTitle from "@/components/shared/PageTitle";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import ClearButton from "@/components/shared/ClearButton";
-import { AddNewCar } from "@/db/cars";
-function AddCar() {
-  const [client, setClient] = useState("");
-  const [ClientCars, setClientCars] = useState([]);
-  const [clientId, setClientId] = useState()
- const [CLIENTS, setCLIENTS] = useState([]);
- const [CLIENTSloading, setCLIENTSloading] = useState(false);
+import CarForm from "@/components/pagecomponent/back/clients/cars/CarForm";
+
+async function AddCar() {
 
 
-   const [selectedOption, setSelectedOption] = useState("");
-
-
-   const handleSelectChange = (e) => {
-       setSelectedOption((prevState) => e.target.value);
-   };
-
-const getClientInfo = useCallback(async () => {
-  const check = await checkClientByIDExists(selectedOption);
-
-  if (check) {
-    setClient(check.name);
-    setClientId(check.id);
-    setClientCars(check.cars);
-  } else {
-    toast.error("العميل غير موجود");
-    setClient("");
-    setClientId("");
-  }
-}, [selectedOption]);
-
-
-
-
-  const handleSubmit = async (data) => {
-    const carName = data.get("carName");
-    const Model = data.get("Model");
-    const color = data.get("color");
-    const CarNo = data.get("CarNo");
-    const BodyNo = data.get("BodyNo");
-
-    const car = {
-      carName,
-      Model,
-      color,
-      CarNo,
-      BodyNo,
-      clientId: parseInt(selectedOption),
-      clientName: client,
-      CId: clientId,
-    };
-
-    const validation = validateForm(car);
-    if (!validation.isValid) {
-      toast.error(validation.errorMessage);
-      return;
-    }
-    const result = await AddNewCar(car);
-    toast.success(result);
-    return;
-  };
-useEffect(() => {
-  const fetchClientData = async () => {
-    setCLIENTSloading(false);
-    const data = await fetchClientNames();
-    setCLIENTS(data);
-      setCLIENTSloading(true);
-  };
-  fetchClientData();
-}, []);
-
-// useEffect(() => {
-//   if (selectedOption) {
-//     getClientInfo();
-//   }
-// }, [selectedOption, getClientInfo]);
-
-
-useEffect(() => {
-  getClientInfo();
-}, [getClientInfo]);
+const CLIENTS=await fetchClientNames()
 
   return (
-    <div className="flex items-center justify-center flex-col w-full ">
+    <div className="flex items-center justify-center flex-col max-w-md mx-auto ">
       <PageTitle title={"اضافة سيارة"} icon={<Car />} />
-      {CLIENTSloading ? (
-        <ClientSelectComponent
-          options={CLIENTS}
-          value={selectedOption}
-          onChange={handleSelectChange}
-        />
-      ) : (
-        <p>جاري التحميل ... </p>
-      )}
-
-      {selectedOption && (
-        <form
-          action={handleSubmit}
-          className="flex flex-col gap-4 p-4 w-full  text-white "
-          id="Newcar"
-        >
-          <INPUT
-            type="text"
-            name="carName"
-            placeholder="نوع السيارة"
-            icon={<Car />}
-            id="carNameId"
-          />
-          <INPUT
-            type="text"
-            name="Model"
-            placeholder="الموديل"
-            icon={<RiCalendar2Fill />}
-          />
-
-          <INPUT
-            type="text"
-            name="CarNo"
-            placeholder="رقم اللوحة"
-            icon={<ID color={"red"} />}
-          />
-          <INPUT
-            type="text"
-            name="BodyNo"
-            placeholder="رقم الهيكل"
-            icon={<GiKeyCard />}
-          />
-          <INPUT
-            type="text"
-            name="color"
-            placeholder="اللون"
-            icon={<VscColorMode />}
-          />
-          <div className="flex items-center justify-around">
-            <Submit />
-            <ClearButton formId={"Newcar"} FoucFiled={"carNameId"} />
-          </div>
-        </form>
-      )}
-      {CLIENTSloading && <ShowCars cars={ClientCars} />}
+      <CarForm clientData={CLIENTS}/>
+      {/* <ShowCars cars={ClientCars} /> */}
     </div>
   );
 }

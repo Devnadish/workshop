@@ -1,12 +1,11 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { getOpenCards, getFixingOrder } from "@/db/payment";
+import { getFixingOrder } from "@/db/payment";
+import ShowCardInfo from "./ShowCardInfo";
 
-const OpenFixingCard = ({ setInfo }) => {
-  const [openCards, setOpenCards] = React.useState([]);
-
+const OpenFixingCard = ({ data, setInfo,info }) => {
   const handleGetData = async (id) => {
     try {
       const data = await getFixingOrder(id);
@@ -19,49 +18,51 @@ const OpenFixingCard = ({ setInfo }) => {
         totalSpent: data.totalSpent,
       });
     } catch (error) {
-      // Handle error appropriately, e.g., log error or display a user-friendly message
       console.error("Error fetching open cards:", error);
     }
   };
 
-  useEffect(() => {
-    const fetchOpenCards = async () => {
-      try {
-        const openCardsData = await getOpenCards();
-        // Do something with the fetched openCardsData, e.g., set state
-        setOpenCards(openCardsData);
-      } catch (error) {
-        // Handle error appropriately, e.g., log error or display a user-friendly message
-        console.error("Error fetching open cards:", error);
-      }
-    };
-
-    fetchOpenCards();
-  }, []);
   return (
-    <div className="text-white  w-full h-18 ">
-      <ScrollArea className="border rounded-md px-3">
-        <div className="flex w-max space-x-4 p-4">
-          {openCards.map((el) => {
-            return (
-              <div key={el.id}>
-                <Button
-                  className="border w-[130px] h-18 flex flex-col divide-y-2 divide-gray-300 bg-orange-400"
-                  variant="secondary"
-                  onClick={() => {
-                    handleGetData(el.id);
-                  }}
-                >
-                  <p>{el.selectedCar}</p>
-                  {/* <p className="text-[.7rem]]">{el.clientName}</p> */}
-                </Button>
-              </div>
-            );
-          })}
+    <>
+      <div className="text-white max-w-md  h-18 ">
+        <div className="flex justify-between w-full">
+          <p className="bg-white text-black w-fit px-3 text-[.7rem] rounded-md">
+            سيارات تحت الصيانة
+          </p>
+          <p className="bg-white text-black w-fit px-3 text-[.7rem] rounded-md">
+            {data.length}
+          </p>
         </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
-    </div>
+        <ScrollArea className=" rounded-b-md px-3 ">
+          <div className="flex w-max space-x-4 p-4">
+            {data.map((el) => {
+              return (
+                <div key={el.id}>
+                  <Button
+                    className="border  h-8  w-24 flex flex-col rounded-2xl  bg-white/40"
+                    variant="secondary"
+                    onClick={() => {
+                      handleGetData(el.id);
+                    }}
+                  >
+                    <p>{el.selectedCar}</p>
+                    {/* <p className="text-[.7rem]]">{el.clientName}</p> */}
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+        {info.clientName ? (
+          <div className="p-2">
+            <ShowCardInfo info={info} />
+          </div>
+        ) : (
+          <div className="text-white w-full h-18">اختار السيارة</div>
+        )}
+      </div>
+    </>
   );
 };
 
