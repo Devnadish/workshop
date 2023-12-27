@@ -47,10 +47,10 @@ const handleSubmit = async (data) => {
     msg: Reciet.msg,
   });
 
-  toast.custom((t) => <AlertStyle result={Reciet} id={t.id} />, {
-    position: "bottom-center",
-    duration: Infinity, // To disable auto-close
-  });
+//   toast.custom((t) => <AlertStyle result={Reciet} id={t.id} />, {
+//     position: "bottom-center",
+//     duration: Infinity, // To disable auto-close
+//   });
 };
 
   return (

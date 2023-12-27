@@ -89,7 +89,7 @@ async function addFixCardValue(clientIdNo, newFixCardValue) {
 
   // Retrieve the client by ID
   const clientId = parseInt(clientIdNo);
-  const client = await prisma.client.findUnique({
+  const client = await db.client.findUnique({
     where: { clientIDs: clientId },
   });
 
@@ -130,7 +130,7 @@ async function createOpenFixingOrder(cardData) {
   const fixOrederAmt =cardData.total
   const data={selectedCar,clientId,clientName,fixOrederId,fixOrederAmt}
 
-  const existingOrder = await prisma.openFixingOrder.findUnique({
+  const existingOrder = await db.openFixingOrder.findUnique({
     where: { selectedCar },
   });
 
@@ -140,7 +140,7 @@ async function createOpenFixingOrder(cardData) {
   }
 
   // Create a new openFixingOrder
-  const newOrder = await prisma.openFixingOrder.create({ data});
+  const newOrder = await db.openFixingOrder.create({ data});
 
   // If the new order is created successfully, return false
   if (newOrder) {
@@ -204,7 +204,7 @@ export async function getAllOpenFixOrder() {
   const ordersWithSums = [];
 
   for (const order of existingOrder) {
-    const paymentSum = await prisma.paymentVoucher.aggregate({
+    const paymentSum = await db.paymentVoucher.aggregate({
       _sum: {
         amount: true,
       },
@@ -213,7 +213,7 @@ export async function getAllOpenFixOrder() {
       },
     });
 
-    const recietSum = await prisma.recietVoucher.aggregate({
+    const recietSum = await db.recietVoucher.aggregate({
       _sum: {
         amount: true,
       },
