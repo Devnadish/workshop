@@ -4,7 +4,6 @@ import { Textarea } from "@/components/ui/textarea";
 import Submit from "@/components/shared/Submit";
 import { newFixingOrder } from "@/db/fixing";
 import { saveRecietVoucher, updateClientReceiptBalance } from "@/db/reciet";
-import DocementNO from "@/components/shared/DocementNO";
 import PageTitle from "@/components/shared/PageTitle";
 import { PiEngineDuotone } from "react-icons/pi";
 import toast from "react-hot-toast";
@@ -24,7 +23,6 @@ import { getCarInfo } from "@/db/cars";
 function NewFixOrder({ clientsWithCars }) {
   const [totalCost, setTotalCost] = useState(0);
   const [receivedAmount, setReceivedAmount] = useState(0);
-
   const [dueAmount, setDueAmount] = useState(totalCost - receivedAmount);
   const [FixCardNO, setFixCardNO] = useState(0);
   const [ClientID, setClientID] = useState("");
@@ -134,7 +132,7 @@ const handleGetCar = async () => {
 
             <Button
               onClick={() => handleGetCar()}
-              className="text-white bg-orange-600 h-14 w-14  rounded-full"
+              className="text-white bg-orange-600 h-12 w-12  rounded"
             >
               <Search />
             </Button>
@@ -156,11 +154,17 @@ const handleGetCar = async () => {
           className="border border-gray-300 rounded px-4 py-2 w-full resize-none"
         />
         <div className="flex items-center flex-col md:flex-row gap-2 w-full">
-          <INPUT placeholder="المهندس" name="engName" icon={<BiHardHat />} />
+          <INPUT
+            placeholder="المهندس"
+            name="engName"
+            icon={<BiHardHat />}
+            h="h-10"
+          />
           <INPUT
             placeholder="موعد التسليم"
             name="deliveryDate"
             icon={<FaCalendarCheck />}
+            h="h-10"
           />
         </div>
 
@@ -172,7 +176,7 @@ const handleGetCar = async () => {
             onChange={(event) => setTotalCost(event.target.value)}
             bgColor="bg-red-300"
             icon={<FaCashRegister />}
-            h="h-16"
+            h="h-12"
           />
           <INPUT
             placeholder="المبلغ المستلم"
@@ -182,7 +186,7 @@ const handleGetCar = async () => {
             onChange={(event) => setReceivedAmount(event.target.value)}
             bgColor="bg-blue-300"
             icon={<BsCashStack />}
-            h="h-16"
+            h="h-12"
           />
 
           <INPUT
@@ -191,7 +195,7 @@ const handleGetCar = async () => {
             disabled
             onChange={(event) => setDueAmount(event.target.value)}
             icon={<FaBalanceScale />}
-            h="h-16"
+            h="h-12"
           />
         </div>
 

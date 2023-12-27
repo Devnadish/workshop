@@ -5,12 +5,10 @@ import { AddRecietCounter } from "./reciet";
 
 
 export async function newFixingOrder(fixingData) {
-console.log(fixingData.receive, typeof fixingData.receive);
 let addReciptVoucher;
   try {
     // check if the maintenance exisit>>>>>>>>
     const checkOpenOrder = await CheckOpenFixingOrder(fixingData.selectedCar);
-     console.log({checkOpenOrder});
 
     if (checkOpenOrder) {
       return {
@@ -54,7 +52,6 @@ let addReciptVoucher;
 }
 async function CheckOpenFixingOrder(selectedCar) {
   // Check if the openFixingOrder already exists
-  console.log({selectedCar});
   const existingOrder = await db.openFixingOrder.findUnique({
     where: { selectedCar },
   });
@@ -178,4 +175,84 @@ export async function createReciptVocher(Voucherdata) {
     throw new Error("Failed to create fixing order: " + error.message);
     return { err: error.message };
   }
+}
+
+export async function getAllFixOrder(){
+const existingOrder = await db.fixingOrder.findMany({
+
+});
+return existingOrder;
+
+}
+
+
+
+export async function deleteFixOrder(id) {
+ // check if close you can not delete
+//  check if there receipt update the recipet to zero  and save the previuse data in detail
+  const deletedItem = await db.fixingOrder.delete({
+    where: {
+      id: id,
+    },
+  });
+  revalidatePath("/dashboard/fixing/displayorders");
+  return deletedItem;
+}
+
+export async function getAllOpenFixOrder() {
+  const existingOrder = await db.openFixingOrder.findMany({});
+  const ordersWithSums = [];
+
+  for (const order of existingOrder) {
+    const paymentSum = await prisma.paymentVoucher.aggregate({
+      _sum: {
+        amount: true,
+      },
+      where: {
+        fixingCode: order.fixOrederId,
+      },
+    });
+
+    const recietSum = await prisma.recietVoucher.aggregate({
+      _sum: {
+        amount: true,
+      },
+      where: {
+        fixingCode: order.fixOrederId,
+      },
+    });
+
+    ordersWithSums.push({
+      ...order,
+      paymentSum: paymentSum._sum.amount,
+      recietSum: recietSum._sum.amount,
+    });
+  }
+
+  return ordersWithSums;
+}
+export async function deleteAndCloseFixOrder(id, fixOrederId) {
+ const deletedItem = await db.openFixingOrder.delete({
+   where: {
+     id: id,
+   },
+ });
+
+ const fixingOrderId = await db.fixingOrder.findMany({
+   where: { fixingId: fixOrederId },
+ });
+console.log(fixingOrderId.id);
+
+
+  await db.fixingOrder.update({
+    where: { fixingId: fixOrederId },
+    data: { isClosed: true },
+  });
+
+ revalidatePath("/dashboard/fixing/closeorder");
+ return deletedItem;
+
+
+
+
 }

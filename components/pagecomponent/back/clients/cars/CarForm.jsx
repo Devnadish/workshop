@@ -57,9 +57,10 @@ const [ClientId, setClientId] = useState("");
       <INPUT
         type="text"
         name="CarNo"
-        placeholder="رقم اللوحة"
+        placeholder="استخدم رقم اللوحة الاجنبي"
         icon={<ID color={"red"} />}
       />
+
       <INPUT
         type="text"
         name="carName"

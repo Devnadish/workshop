@@ -14,7 +14,7 @@ const INPUT = ({
   h = "h-7",
   w = "w-full",
   textsize = "text-[1rem]",
-  bgColor="bg-white",
+  bgColor="bg-white/80",
   ...setting
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -38,7 +38,8 @@ const INPUT = ({
         style={{ "::placeholder": { color: "red", fontSize: "1rem" } }}
       />
       {icon && (
-        <div className="absolute inset-y-0 right-0 flex items-center justify-center w-[40px] pointer-events-none bg-gray-700">
+        <div
+        className="absolute inset-y-0 right-0 flex items-center justify-center w-[40px] pointer-events-none bg-gray-700">
           {icon}
         </div>
       )}

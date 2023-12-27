@@ -65,7 +65,7 @@ model counters {
 
 model fixingOrder {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  fixingId    Int      @default(0)
+  fixingId    Int      @unique
   clientId    Int      @default(0)
   clientName  String   @default("")
   selectedCar String   @default("")

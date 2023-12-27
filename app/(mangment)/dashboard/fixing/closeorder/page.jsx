@@ -1,88 +1,82 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Search } from "lucide-react";
-import { useState, useEffect } from "react";
+import CloseCardActions from '@/components/pagecomponent/back/fixing/CloseCardActions';
+import { getAllOpenFixOrder } from '@/db/fixing'
+import { getTimeElapsed } from '@/lib/timeanddate';
+import React from 'react'
 
-function NewOrder() {
-  const [customerNumber, setCustomerNumber] = useState("");
-  const [customerName, setCustomerName] = useState("");
-  const [customerHomeNumber, setCustomerHomeNumber] = useState("");
-  const [serviceDescription, setServiceDescription] = useState("");
-  const [deliveryDate, setDeliveryDate] = useState("");
-  const [totalCost, setTotalCost] = useState("");
-  const [receivedAmount, setReceivedAmount] = useState("");
-  const [dueAmount, setDueAmount] = useState(totalCost - receivedAmount);
+async function page() {
+  const OpenCard=await getAllOpenFixOrder()
+  console.log(OpenCard);
 
-  useEffect(() => {
-    setDueAmount(totalCost - receivedAmount);
-  }, [totalCost, receivedAmount]);
 
   return (
-    <div className="container flex items-center">
-      <div className="flex flex-col items-center justify-center  w-full gap-3">
-        <p className="bg-white/50 rounded-sm  text-center w-full py-2">
-          اقفال الامر
-        </p>
-        <div className="flex flex-col gap-4 border  border-white/30  p-4 rounded-md w-full">
-          <div className="flex items-center gap-4 w-full">
-            <div className="flex items-center gap-4 w-1/2 ">
-              <Input
-                placeholder="رقم امر الاصلاح"
-                value={customerNumber}
-                onChange={(event) => setCustomerNumber(event.target.value)}
-              />
-              <Search className="bg-blue-500 rounded-md h-10 w-10 p-2" />
+    <div className="overflow-x-auto flex flex-wrap items-start justify-center w-full">
+      <p className="bg-orange-500 mt-4 rounded px-6">
+        عدد الكروت : <span>{OpenCard.length}</span>
+      </p>
+      <div className="overflow-x-auto flex flex-wrap items-start justify-center w-full">
+        {OpenCard.map((fix) =>{
+          const balance= fix.recietSum - fix.paymentSum
+          return (
+            <div
+              key={fix.id}
+              className={`max-w-sm rounded overflow-hidden shadow-lg m-4 border min-w-[300px]   ${
+                !fix.isClosed ? "border-red-500 border-2" : "border-white/30"
+              } `}
+            >
+              <div className="flex flex-col gap-2 px-6 py-4">
+                <div className="font-bold text-xl ">
+                  <span>الكرت رقم :</span> {fix.fixOrederId}
+                </div>
+                <p className="text-gray-400 text-base ">
+                  <span className="bg-gray-600 px-4 rounded ml-2">
+                    اسم العميل
+                  </span>
+                  {fix.clientName}
+                </p>
+                <p className="text-gray-400 text-base ">
+                  <span className="bg-gray-600 px-2 rounded ml-2">
+                    رقم السيارة
+                  </span>
+                  {fix.selectedCar}
+                </p>
+
+                <p className="text-gray-400 text-base">
+                  <span className="bg-gray-600 px-2 rounded ml-2">التاريخ</span>
+                  {getTimeElapsed(fix.updatedDate)}
+                </p>
+                <div className="flex items-center gap-3 border rounded  text-black flex-col p-1">
+                  <div className="flex items-center gap-3 text-white">
+                    <p className="text-gray-200 text-base">
+                      <span className="px-2 rounded ml-2">المستلم</span>
+                      <span className="text-gray-800 text-base bg-orange-500 px-3 rounded font-bold">
+                        {fix.recietSum}
+                      </span>
+                    </p>
+                    <p className="text-gray-200 text-base">
+                      <span className="px-2 rounded ml-2">المصروف</span>
+                      <span className="text-gray-800 text-base bg-orange-500 px-3 rounded font-bold">
+                        {fix.paymentSum}
+                      </span>
+                    </p>
+                  </div>
+                  <p className="text-gray-800 text-base">
+                    <span className="bg-gray-200 px-2  ">الرصيد</span>
+                    <span className="text-gray-800 text-base bg-orange-500 px-3  font-bold">
+                      {balance}
+                    </span>
+                  </p>
+                </div>
+                <CloseCardActions
+                  id={fix.id}
+                  balance={balance}
+                  fixOrederId={fix.fixOrederId}
+                />
+              </div>
             </div>
-
-            <div className="flex items-center gap-4 w-1/2 ">
-              <Input
-                placeholder="رقم العميل"
-                value={customerNumber}
-                onChange={(event) => setCustomerNumber(event.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4 ">
-            <Input
-              placeholder="اسم العميل"
-              value={customerName}
-              onChange={(event) => setCustomerName(event.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className="flex  gap-4 border  border-white/30  p-4 rounded-md w-12/12">
-          {/* <p className="bg-white/50 rounded-sm py-1 text-center">
-            معلومات العميل
-          </p> */}
-          <Input
-            placeholder="التكلفة الاجمالية"
-            type="number"
-            value={totalCost}
-            onChange={(event) => setTotalCost(event.target.value)}
-          />
-          <Input
-            placeholder="المبلغ المستلم"
-            type="number"
-            value={receivedAmount}
-            onChange={(event) => setReceivedAmount(event.target.value)}
-          />
-
-          <Input
-            placeholder="المتبفيى"
-            value={dueAmount}
-            disabled
-            onChange={(event) => setDueAmount(event.target.value)}
-          />
-        </div>
-        <Button className="bg-red-500 w-7/12 mb-4">اضافة</Button>
-        <p className="border-b-4">لا يمكن الاقفال بوجود متعلقات مالية للامر</p>
+          );})}
       </div>
     </div>
   );
 }
 
-export default NewOrder;
+export default page

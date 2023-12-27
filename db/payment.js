@@ -9,6 +9,7 @@ export const savePaymentVoucher = async (formData) => {
     const data = { ...formData, paymentId: newDocId, docDate };
     const newVoucher = await db.PaymentVoucher.create({ data });
     revalidatePath("/dashboard");
+        revalidatePath("/dashboard/fixing/closeorder");
     return newVoucher;
 
   } catch (error) {
@@ -101,27 +102,35 @@ export async function addCategory(categoryName) {
 
 
 
-export async function updateClientPaymetBalance(Cid, amount) {
+export async function updateClientPaymentBalance(Cid, amount) {
   const existingRecord = await db.client.findUnique({
     where: { clientIDs: Cid },
   });
 
-  if (!existingRecord.payment) {
-    // If no receipts exist, set the receipt count to the provided amount
-    await db.client.update({
-      where: { clientIDs: Cid },
-      data: { payment: amount },
-    });
-
+  if (existingRecord === null) {
+    // Handle the case where the record does not exist
+    console.error("Record not found for clientIDs: ", Cid);
   } else {
-    // If receipts exist, add the provided amount to the existing receipt count
-    const updatedAmount = existingRecord.payment + amount;
-    await db.client.update({
-      where: { clientIDs: Cid },
-      data: { payment: updatedAmount },
-    });
+    if (
+      existingRecord.payment === null ||
+      existingRecord.payment === undefined
+    ) {
+      // If payment field does not exist, set the payment to the provided amount
+      await db.client.update({
+        where: { clientIDs: Cid },
+        data: { payment: amount },
+      });
+    } else {
+      // If payment exists, add the provided amount to the existing payment
+      const updatedAmount = existingRecord.payment + amount;
+      await db.client.update({
+        where: { clientIDs: Cid },
+        data: { payment: updatedAmount },
+      });
+    }
   }
 }
+
 
 
 export async function getOpenCards() {

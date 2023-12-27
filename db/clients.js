@@ -18,6 +18,8 @@ export async function addClient(client) {
     const data = { ...client, clientIDs: ClientCounter };
     const result = await db.client.create({ data });
     revalidatePath("/dashboard/clients/display");
+    revalidatePath("/dashboard/clients/addcar");
+
     return {
       msg: "تم تأسيس كرت للعميل بنجاح ",
       clientId: ClientCounter,

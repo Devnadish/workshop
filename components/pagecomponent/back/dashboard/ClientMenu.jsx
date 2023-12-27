@@ -37,7 +37,7 @@ const ClientMenu = ({ toggleSidebar }) => {
               onClick={() => toggleSidebar()}
               prefetch={true}
             >
-              <p>عرض</p>
+              <p>ارصدة العملاء</p>
               <UsersRound size={30} />
             </Link>
 
@@ -46,7 +46,7 @@ const ClientMenu = ({ toggleSidebar }) => {
               className={menuStyle}
               prefetch={true}
             >
-              <p>اضافة </p>
+              <p>اضافة سيارة </p>
               <Car size={30} strokeWidth={1} onClick={() => toggleSidebar()} />
             </Link>
 
@@ -57,7 +57,7 @@ const ClientMenu = ({ toggleSidebar }) => {
               onClick={() => toggleSidebar()}
             >
               {/* <FileCheck size={35} /> */}
-              <p>كشف حساب </p>
+              <p>كشف حساب عميل </p>
               <Receipt size={30} strokeWidth={1} />
             </Link>
           </div>

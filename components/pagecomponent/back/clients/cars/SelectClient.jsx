@@ -19,7 +19,7 @@ function SelectClient({ clientData, ClientId, setClientId }) {
         value={ClientId}
         onChange={handleSelectChange}
       >
-        <option value="">Select the client</option>
+        <option value="">اختار العميل</option>
         {clientData.map((option, index) => (
           <option key={index} value={option.clientIDs}>
             {`${option.clientIDs} - ${option.name} `}
