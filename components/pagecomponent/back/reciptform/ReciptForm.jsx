@@ -8,7 +8,7 @@ import INPUT from "@/components/shared/INPUT";
 import DocementNO from "@/components/shared/DocementNO";
 import ClearButton from "@/components/shared/ClearButton";
 import ClientsWithOpenFixingOrder from "@/components/shared/ClientsWithOpenFixingOrder";
-import FindCar from "./Findcar";
+import FindCar from "@/components/pagecomponent/back/reciptform/FindCar"
 
 
 
